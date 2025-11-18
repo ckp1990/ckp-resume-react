@@ -343,42 +343,6 @@ function App() {
           </div>
         </section>
 
-        {/* Experience Section - Commented Out */}
-        {/* <section id="experience" className="mb-24 animate-slide-up animate-delay-200 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
-            {experienceData.heading}
-          </h2>
-
-          <div className="space-y-12">
-            {experienceData.jobs.map((job) => (
-              <div key={job.id} className="border-l-2 border-blue-900 pl-6 hover:border-blue-600 transition-colors duration-300">
-                <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-3">
-                  <h3 className="font-serif font-bold text-2xl md:text-3xl text-black">
-                    {job.organization}
-                  </h3>
-                  <span className="font-mono text-sm text-gray-600">
-                    {job.startDate} - {job.endDate}
-                  </span>
-                </div>
-                <div className="font-sans text-xl text-blue-900 mb-4">{job.position}</div>
-                {job.location && (
-                  <p className="text-gray-600 italic mb-2">{job.location}</p>
-                )}
-                {job.description && (
-                  <p className="text-black">{job.description}</p>
-                )}
-                {job.responsibilities && job.responsibilities.length > 0 && (
-                  <ul className="space-y-2 text-black list-disc list-inside">
-                    {job.responsibilities.map((resp, index) => (
-                      <li key={index}>{parseText(resp)}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        </section> */}
-
         {/* Education Section */}
         <section id="education" className="mb-24 animate-slide-up animate-delay-300 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
@@ -396,6 +360,55 @@ function App() {
                 </div>
                 <div className="text-gray-700">{degree.field}</div>
                 <div className="font-mono text-sm text-gray-600 mt-2">{degree.year}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Experience Section */}
+        <section id="experience" className="mb-24 animate-slide-up animate-delay-350 scroll-mt-20">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
+            {experienceData.heading}
+          </h2>
+
+          <div className="space-y-8">
+            {experienceData.jobs.map((job) => (
+              <div key={job.id} className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-colors duration-300">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                  <div className="flex-1">
+                    <h3 className="font-serif font-bold text-2xl text-black mb-2">
+                      {job.position}
+                    </h3>
+                    <div className="text-blue-900 font-sans text-lg mb-1">
+                      {job.organization}
+                    </div>
+                    {job.location && (
+                      <div className="text-gray-600 text-sm mb-2">
+                        {job.location}
+                      </div>
+                    )}
+                  </div>
+                  <div className="font-mono text-sm text-gray-600 md:ml-4 flex-shrink-0">
+                    {job.startDate} - {job.endDate}
+                  </div>
+                </div>
+
+                {job.description && (
+                  <p className="text-gray-700 mb-3">
+                    {parseText(job.description)}
+                  </p>
+                )}
+
+                {job.responsibilities && job.responsibilities.length > 0 && (
+                  <ul className="space-y-2 text-gray-700">
+                    {job.responsibilities.map((resp, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
+                        <span>{parseText(resp)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
