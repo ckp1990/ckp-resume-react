@@ -40,7 +40,7 @@ All content is in the `src/data/` folder. Each file contains different parts of 
 - Your job titles
 - Your profile image
 - Your email
-- Your LinkedIn URL
+- Your social media links (LinkedIn, GitHub, ORCID, ResearchGate)
 - Your location
 - Footer text
 
@@ -53,9 +53,17 @@ All content is in the `src/data/` folder. Each file contains different parts of 
   "profileImage": "/path/to/your/image.jpg",
   "email": "your.email@example.com",
   "linkedin": "https://www.linkedin.com/in/yourprofile",
+  "github": "https://github.com/yourusername",
+  "orcid": "https://orcid.org/0000-0000-0000-0000",
+  "researchgate": "https://www.researchgate.net/profile/Your-Name",
   "location": "Your City, Country"
 }
 ```
+
+**Social Media Links:**
+- Each social link appears as an icon button below your name
+- Icons have hover effects with brand colors (LinkedIn blue, GitHub dark, ORCID green, ResearchGate cyan)
+- Simply update the URL to change where the icon links to
 
 **Adding Your Profile Image:**
 1. Upload your image to the `public` folder in the repository

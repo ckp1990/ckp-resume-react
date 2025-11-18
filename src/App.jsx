@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa'
+import { SiOrcid, SiResearchgate } from 'react-icons/si'
+import { HiLocationMarker } from 'react-icons/hi'
 import personalData from './data/personal.json'
 import aboutData from './data/about.json'
 import experienceData from './data/experience.json'
@@ -158,19 +161,59 @@ function App() {
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 mt-8 font-mono text-sm">
-            <a href={`mailto:${personalData.email}`}
-               className="px-4 py-2 bg-white hover:bg-blue-50 border border-gray-300 hover:border-blue-900 rounded transition-all duration-300 text-black">
-              {personalData.email}
-            </a>
-            <a href={personalData.linkedin}
-               target="_blank"
-               rel="noopener noreferrer"
-               className="px-4 py-2 bg-white hover:bg-blue-50 border border-gray-300 hover:border-blue-900 rounded transition-all duration-300 text-black">
-              {personalData.linkedinDisplay}
-            </a>
-            <div className="px-4 py-2 bg-white border border-gray-300 rounded text-black">
-              {personalData.location}
+          {/* Contact and Social Links */}
+          <div className="flex flex-col items-center gap-6 mt-8">
+            {/* Email and Location */}
+            <div className="flex flex-wrap justify-center gap-4 font-mono text-sm">
+              <a href={`mailto:${personalData.email}`}
+                 className="px-4 py-2 bg-white hover:bg-blue-50 border border-gray-300 hover:border-blue-900 rounded transition-all duration-300 text-black flex items-center gap-2">
+                <FaEnvelope className="w-4 h-4" />
+                {personalData.email}
+              </a>
+              <div className="px-4 py-2 bg-white border border-gray-300 rounded text-black flex items-center gap-2">
+                <HiLocationMarker className="w-4 h-4" />
+                {personalData.location}
+              </div>
+            </div>
+
+            {/* Social Media Links */}
+            <div className="flex gap-4">
+              <a
+                href={personalData.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-white hover:bg-blue-900 border border-gray-300 hover:border-blue-900 rounded-full transition-all duration-300 text-gray-700 hover:text-white group"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin className="w-6 h-6" />
+              </a>
+              <a
+                href={personalData.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-white hover:bg-gray-900 border border-gray-300 hover:border-gray-900 rounded-full transition-all duration-300 text-gray-700 hover:text-white group"
+                aria-label="GitHub"
+              >
+                <FaGithub className="w-6 h-6" />
+              </a>
+              <a
+                href={personalData.orcid}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-white hover:bg-green-600 border border-gray-300 hover:border-green-600 rounded-full transition-all duration-300 text-gray-700 hover:text-white group"
+                aria-label="ORCID"
+              >
+                <SiOrcid className="w-6 h-6" />
+              </a>
+              <a
+                href={personalData.researchgate}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-white hover:bg-cyan-600 border border-gray-300 hover:border-cyan-600 rounded-full transition-all duration-300 text-gray-700 hover:text-white group"
+                aria-label="ResearchGate"
+              >
+                <SiResearchgate className="w-6 h-6" />
+              </a>
             </div>
           </div>
         </header>
