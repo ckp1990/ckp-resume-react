@@ -145,14 +145,24 @@ collections:
             widget: "object"
             fields:
               - {label: "Section Heading", name: "heading", widget: "string", default: "Awards"}
-              - label: "Default Icon", name: "icon", widget: "select", default: "FaTrophy", options: ["FaTrophy", "FaAward", "FaMedal", "FaStar", "FaCertificate"], hint: "Default icon for awards (can be overridden per award)"
+              - label: "Default Icon"
+                name: "icon"
+                widget: "select"
+                default: "FaTrophy"
+                options: ["FaTrophy", "FaAward", "FaMedal", "FaStar", "FaCertificate"]
+                hint: "Default icon for awards (can be overridden per award)"
               - label: "Awards List"
                 name: "items"
                 widget: "list"
                 hint: "Each award can have its own icon"
                 fields:
                   - {label: "Award Text", name: "text", widget: "string", hint: "Award name and year"}
-                  - {label: "Icon", name: "icon", widget: "select", default: "FaTrophy", options: ["FaTrophy", "FaAward", "FaMedal", "FaStar", "FaCertificate"], hint: "Icon for this award"}
+                  - label: "Icon"
+                    name: "icon"
+                    widget: "select"
+                    default: "FaTrophy"
+                    options: ["FaTrophy", "FaAward", "FaMedal", "FaStar", "FaCertificate"]
+                    hint: "Icon for this award"
 
   # Blog Section
   - name: "blog"
