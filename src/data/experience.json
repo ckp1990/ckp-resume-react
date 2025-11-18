@@ -1,0 +1,77 @@
+{
+  "heading": "Experience",
+  "jobs": [
+    {
+      "id": 1,
+      "organization": "Centre for Wildlife Studies",
+      "position": "Doctoral Fellow",
+      "startDate": "Jul 2022",
+      "endDate": "Present",
+      "location": "Bengaluru, Karnataka, India",
+      "description": "",
+      "responsibilities": []
+    },
+    {
+      "id": 2,
+      "organization": "Centre for Wildlife Studies",
+      "position": "Research Assistant: Analysis and Programming",
+      "startDate": "Feb 2019",
+      "endDate": "Jul 2022",
+      "location": "Bengaluru, Karnataka, India",
+      "description": "",
+      "responsibilities": [
+        "Oversee database development using <code>SQL</code> for camera trap images, line transect, and long-term monitoring projects",
+        "Written code snippets in <code>R</code> and <code>Python</code> for automatic data retrieval, reducing processing time by <strong>90%</strong>",
+        "Develop statistical models to estimate wildlife populations from camera trap and line transect data",
+        "Implementation on cloud-computational cluster (NCBS), reducing analysis time by <strong>99%</strong>",
+        "Lead machine learning project with Prof. Kartic Subr (University of Edinburgh) to automate classification of individual felines using deep learning (AlexNet and WSDDN)",
+        "Manuscript preparation for peer-reviewed journals"
+      ]
+    },
+    {
+      "id": 3,
+      "organization": "Adavi Trust",
+      "position": "Research Associate",
+      "startDate": "Mar 2019",
+      "endDate": "Jan 2020",
+      "location": "Chennekothapalli Village, Anantapur District, Andhra Pradesh",
+      "description": "Research consultancy in designing questions and applications for conservation work with Timbuktu Collective",
+      "responsibilities": []
+    },
+    {
+      "id": 4,
+      "organization": "Self-employed",
+      "position": "Freelance Researcher",
+      "startDate": "Aug 2018",
+      "endDate": "Jan 2019",
+      "location": "Bengaluru Area, India",
+      "description": "Data analysis and experimental design consultancy using statistical tools in R and Python",
+      "responsibilities": []
+    },
+    {
+      "id": 5,
+      "organization": "Centre for Ecological Sciences, IISc",
+      "position": "Research Assistant",
+      "startDate": "Jun 2018",
+      "endDate": "Aug 2018",
+      "location": "Bangalore, Karnataka, India",
+      "description": "",
+      "responsibilities": [
+        "Analysis of biotic/abiotic factors in Leucocytozoon transmission in Himalayan bird species",
+        "Developed Generalized Linear Mixed Effect Models for parasite prevalence and intensity analysis",
+        "Built Phylogeny Tree using Bayesian models",
+        "Automated genetic data mining from web sources, reducing effort by 10×"
+      ]
+    },
+    {
+      "id": 6,
+      "organization": "Tata Institute of Fundamental Research",
+      "position": "Junior Research Scholar",
+      "startDate": "Aug 2013",
+      "endDate": "May 2018",
+      "location": "Bengaluru Area, India",
+      "description": "Designed and executed collaborative projects across multiple educational institutes at National Centre for Biological Sciences, TIFR",
+      "responsibilities": []
+    }
+  ]
+}

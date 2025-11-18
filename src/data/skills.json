@@ -1,0 +1,26 @@
+{
+  "heading": "Skills & Certifications",
+  "skills": {
+    "heading": "Top Skills",
+    "items": [
+      "Research and Development (R&D)",
+      "Ecological Research",
+      "Field Biology",
+      "Statistical Modeling",
+      "Machine Learning",
+      "Python",
+      "R",
+      "SQL"
+    ]
+  },
+  "certifications": {
+    "heading": "Certifications",
+    "items": [
+      "GIS Data Formats, Design and Quality",
+      "Fundamentals of GIS",
+      "Overview of Geocomputation and Geo-web services",
+      "Data Visualization",
+      "The Data Scientist's Toolbox"
+    ]
+  }
+}
