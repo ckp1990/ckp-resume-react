@@ -1,0 +1,26 @@
+{
+  "heading": "Education",
+  "degrees": [
+    {
+      "id": 1,
+      "degree": "Doctor of Philosophy (PhD)",
+      "institution": "Manipal Institute of Technology",
+      "field": "Ecology, Evolution, Systematics, and Population Biology",
+      "year": "June 2023"
+    },
+    {
+      "id": 2,
+      "degree": "Master's Degree (M.Sc in Biology by Research)",
+      "institution": "Tata Institute of Fundamental Research, Mumbai",
+      "field": "Ecology",
+      "year": "2013 - 2016"
+    },
+    {
+      "id": 3,
+      "degree": "Bachelor's Degree",
+      "institution": "Sri Jayachamarajendra College of Engineering, Mysore",
+      "field": "Biotechnology",
+      "year": "2009 - 2013"
+    }
+  ]
+}

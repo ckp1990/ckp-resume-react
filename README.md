@@ -33,6 +33,29 @@ npm run build
 npm run preview
 ```
 
+## Content Management
+
+**Easy to Update - No Coding Required!**
+
+All resume content is stored in JSON files in the `src/data/` folder. Non-technical users can easily update:
+
+- **Personal Info**: `src/data/personal.json` - Name, email, LinkedIn, location
+- **About Section**: `src/data/about.json` - Your summary/bio
+- **Experience**: `src/data/experience.json` - Work history and achievements
+- **Education**: `src/data/education.json` - Degrees and institutions
+- **Skills**: `src/data/skills.json` - Skills and certifications
+- **Honors**: `src/data/honors.json` - Awards and publications
+
+### 📖 For Non-Technical Users
+
+See the [MAINTENANCE_GUIDE.md](./MAINTENANCE_GUIDE.md) for step-by-step instructions on:
+- How to edit each section
+- How to add/remove items
+- Common mistakes to avoid
+- Special formatting options
+
+Simply edit the JSON files, commit changes, and the website automatically rebuilds!
+
 ## Deployment
 
 This site is automatically deployed to GitHub Pages via GitHub Actions when changes are pushed to the main or claude/* branches.
