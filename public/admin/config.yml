@@ -119,35 +119,35 @@ collections:
                 widget: "list"
                 field: {label: "Certification", name: "certification", widget: "string"}
 
-  # Honors & Publications Section
-  - name: "honors"
-    label: "Honors & Publications"
+  # Publications & Awards Section
+  - name: "publications_awards"
+    label: "Publications & Awards"
     files:
-      - label: "Honors"
+      - label: "Publications & Awards"
         name: "honors"
         file: "src/data/honors.json"
         fields:
-          - {label: "Heading", name: "heading", widget: "string"}
-          - label: "Awards"
-            name: "awards"
-            widget: "object"
-            fields:
-              - {label: "Heading", name: "heading", widget: "string"}
-              - label: "Items"
-                name: "items"
-                widget: "list"
-                field: {label: "Award", name: "award", widget: "string"}
+          - {label: "Legacy Heading (Not Used)", name: "heading", widget: "hidden", default: "Honors & Publications"}
           - label: "Publications"
             name: "publications"
             widget: "object"
             fields:
-              - {label: "Heading", name: "heading", widget: "string"}
-              - label: "Items"
+              - {label: "Section Heading", name: "heading", widget: "string", default: "Publications"}
+              - label: "Publications List"
                 name: "items"
                 widget: "list"
                 fields:
-                  - {label: "Title", name: "title", widget: "text"}
+                  - {label: "Title", name: "title", widget: "text", hint: "Full publication title or citation"}
                   - {label: "Link (Optional)", name: "link", widget: "string", required: false, hint: "URL to the publication (DOI, journal link, etc.)"}
+          - label: "Awards"
+            name: "awards"
+            widget: "object"
+            fields:
+              - {label: "Section Heading", name: "heading", widget: "string", default: "Awards"}
+              - label: "Awards List"
+                name: "items"
+                widget: "list"
+                field: {label: "Award", name: "award", widget: "string", hint: "Award name and year"}
 
   # Blog Section
   - name: "blog"
