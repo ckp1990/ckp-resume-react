@@ -20,6 +20,7 @@ function App() {
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [mediaItems, setMediaItems] = useState(mediaData.items)
   const [mediaLoading, setMediaLoading] = useState(true)
+  const [randomPreviewIndex, setRandomPreviewIndex] = useState(0)
 
   // Icon mapping for awards
   const iconMap = {
@@ -45,10 +46,16 @@ function App() {
       if (driveMedia && driveMedia.length > 0) {
         // Successfully fetched from Google Drive API
         setMediaItems(driveMedia)
+        // Set random preview index
+        setRandomPreviewIndex(Math.floor(Math.random() * driveMedia.length))
         console.log('Media loaded from Google Drive API')
       } else {
         // Fallback to media.json
         setMediaItems(mediaData.items)
+        // Set random preview index
+        if (mediaData.items.length > 0) {
+          setRandomPreviewIndex(Math.floor(Math.random() * mediaData.items.length))
+        }
         console.log('Using fallback media from media.json')
       }
 
@@ -505,14 +512,13 @@ function App() {
           {!mediaLoading && mediaItems.length > 0 && (
             <div
               className="relative bg-white border-2 border-gray-300 rounded-lg overflow-hidden hover:border-blue-900 transition-all duration-300 cursor-pointer group max-w-5xl mx-auto"
-              onClick={() => openLightbox(0)}
+              onClick={() => openLightbox(randomPreviewIndex)}
             >
               {/* Preview Image */}
               <div className="aspect-video bg-gray-100 relative">
                 {(() => {
-                  // Select a random image from the gallery
-                  const randomIndex = Math.floor(Math.random() * mediaItems.length)
-                  const randomItem = mediaItems[randomIndex]
+                  // Use the random preview image
+                  const randomItem = mediaItems[randomPreviewIndex]
                   const mediaUrl = getGoogleDriveUrl(randomItem.googleDriveId, randomItem.type)
 
                   return mediaUrl ? (
@@ -558,22 +564,6 @@ function App() {
                       </svg>
                     </div>
                     <p className="text-white text-2xl font-bold drop-shadow-lg">Click to view slideshow</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Info Bar */}
-              <div className="p-6 bg-gradient-to-r from-blue-50 to-white">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-serif font-bold text-2xl text-blue-900">
-                      {mediaItems.length} {mediaItems.length === 1 ? 'Item' : 'Items'} in Gallery
-                    </h3>
-                  </div>
-                  <div className="hidden md:block">
-                    <div className="bg-blue-900 text-white px-6 py-3 rounded-full font-sans font-semibold">
-                      View Slideshow →
-                    </div>
                   </div>
                 </div>
               </div>
