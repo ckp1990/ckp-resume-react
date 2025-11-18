@@ -1,0 +1,150 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update (main or your preferred branch)
+
+# Uncomment below to enable local backend for testing
+# local_backend: true
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  # Personal Information
+  - name: "personal"
+    label: "Personal Information"
+    files:
+      - label: "Personal Info"
+        name: "personal"
+        file: "src/data/personal.json"
+        fields:
+          - {label: "Name", name: "name", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Subtitle", name: "subtitle", widget: "string"}
+          - {label: "Separator", name: "separator", widget: "string", default: "|"}
+          - {label: "Profile Image", name: "profileImage", widget: "string", required: false, hint: "Path to your profile image (e.g., /profile.jpg) or leave empty for placeholder"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "LinkedIn URL", name: "linkedin", widget: "string"}
+          - {label: "GitHub URL", name: "github", widget: "string"}
+          - {label: "ORCID URL", name: "orcid", widget: "string"}
+          - {label: "ResearchGate URL", name: "researchgate", widget: "string"}
+          - {label: "Location", name: "location", widget: "string"}
+          - {label: "Footer Text", name: "footerText", widget: "string"}
+
+  # About Section
+  - name: "about"
+    label: "About Section"
+    files:
+      - label: "About"
+        name: "about"
+        file: "src/data/about.json"
+        fields:
+          - {label: "Heading", name: "heading", widget: "string"}
+          - label: "Paragraphs"
+            name: "paragraphs"
+            widget: "list"
+            hint: "Each paragraph of your about section. You can use <strong>text</strong> for bold, <em>text</em> for italic, <code>text</code> for code."
+            field: {label: "Paragraph", name: "paragraph", widget: "text"}
+
+  # Experience Section
+  - name: "experience"
+    label: "Experience"
+    files:
+      - label: "Work Experience"
+        name: "experience"
+        file: "src/data/experience.json"
+        fields:
+          - {label: "Heading", name: "heading", widget: "string"}
+          - label: "Jobs"
+            name: "jobs"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "number"}
+              - {label: "Organization", name: "organization", widget: "string"}
+              - {label: "Position", name: "position", widget: "string"}
+              - {label: "Start Date", name: "startDate", widget: "string", hint: "e.g., Jan 2020"}
+              - {label: "End Date", name: "endDate", widget: "string", hint: "e.g., Present or Dec 2022"}
+              - {label: "Location", name: "location", widget: "string", required: false}
+              - {label: "Description", name: "description", widget: "text", required: false, hint: "Single paragraph description (alternative to responsibilities)"}
+              - label: "Responsibilities"
+                name: "responsibilities"
+                widget: "list"
+                required: false
+                hint: "Use <code>text</code> for technical terms, <strong>text</strong> for emphasis"
+                field: {label: "Responsibility", name: "responsibility", widget: "text"}
+
+  # Education Section
+  - name: "education"
+    label: "Education"
+    files:
+      - label: "Education"
+        name: "education"
+        file: "src/data/education.json"
+        fields:
+          - {label: "Heading", name: "heading", widget: "string"}
+          - label: "Degrees"
+            name: "degrees"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "number"}
+              - {label: "Degree", name: "degree", widget: "string", hint: "e.g., Master of Science"}
+              - {label: "Institution", name: "institution", widget: "string"}
+              - {label: "Field", name: "field", widget: "string", hint: "e.g., Computer Science"}
+              - {label: "Year", name: "year", widget: "string", hint: "e.g., 2020 - 2022"}
+
+  # Skills Section
+  - name: "skills"
+    label: "Skills & Certifications"
+    files:
+      - label: "Skills"
+        name: "skills"
+        file: "src/data/skills.json"
+        fields:
+          - {label: "Heading", name: "heading", widget: "string"}
+          - label: "Skills"
+            name: "skills"
+            widget: "object"
+            fields:
+              - {label: "Heading", name: "heading", widget: "string"}
+              - label: "Items"
+                name: "items"
+                widget: "list"
+                field: {label: "Skill", name: "skill", widget: "string"}
+          - label: "Certifications"
+            name: "certifications"
+            widget: "object"
+            fields:
+              - {label: "Heading", name: "heading", widget: "string"}
+              - label: "Items"
+                name: "items"
+                widget: "list"
+                field: {label: "Certification", name: "certification", widget: "string"}
+
+  # Honors & Publications Section
+  - name: "honors"
+    label: "Honors & Publications"
+    files:
+      - label: "Honors"
+        name: "honors"
+        file: "src/data/honors.json"
+        fields:
+          - {label: "Heading", name: "heading", widget: "string"}
+          - label: "Awards"
+            name: "awards"
+            widget: "object"
+            fields:
+              - {label: "Heading", name: "heading", widget: "string"}
+              - label: "Items"
+                name: "items"
+                widget: "list"
+                field: {label: "Award", name: "award", widget: "string"}
+          - label: "Publications"
+            name: "publications"
+            widget: "object"
+            fields:
+              - {label: "Heading", name: "heading", widget: "string"}
+              - label: "Items"
+                name: "items"
+                widget: "list"
+                fields:
+                  - {label: "Title", name: "title", widget: "text"}
+                  - {label: "Link (Optional)", name: "link", widget: "string", required: false, hint: "URL to the publication (DOI, journal link, etc.)"}
