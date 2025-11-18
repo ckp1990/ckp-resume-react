@@ -206,10 +206,30 @@ function App() {
               <h3 className="font-serif font-bold text-2xl text-blue-900 mb-4">
                 {honorsData.publications.heading}
               </h3>
-              <div className="text-black italic">
-                {honorsData.publications.items.map((pub, index) => (
-                  <p key={index}>"{pub}"</p>
-                ))}
+              <div className="text-black italic space-y-3">
+                {honorsData.publications.items.map((pub, index) => {
+                  // Support both string format and object format
+                  const isString = typeof pub === 'string'
+                  const title = isString ? pub : pub.title
+                  const link = isString ? null : pub.link
+
+                  return (
+                    <p key={index}>
+                      {link ? (
+                        <a
+                          href={link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-900 hover:underline"
+                        >
+                          "{title}"
+                        </a>
+                      ) : (
+                        `"${title}"`
+                      )}
+                    </p>
+                  )
+                })}
               </div>
             </div>
           </div>

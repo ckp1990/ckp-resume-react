@@ -173,7 +173,27 @@ All content is in the `src/data/` folder. Each file contains different parts of 
 
 ### 6. Honors & Publications (`honors.json`)
 
-**Example:**
+**Awards** - Simple list of award names
+
+**Publications** - Can be added with or without links:
+
+**Without Link (simple text):**
+```json
+{
+  "title": "Your publication title",
+  "link": ""
+}
+```
+
+**With Link (clickable):**
+```json
+{
+  "title": "Your publication title",
+  "link": "https://example.com/your-publication"
+}
+```
+
+**Full Example:**
 ```json
 {
   "heading": "Honors & Publications",
@@ -187,11 +207,24 @@ All content is in the `src/data/` folder. Each file contains different parts of 
   "publications": {
     "heading": "Publications",
     "items": [
-      "Publication title or description"
+      {
+        "title": "Publication without a link",
+        "link": ""
+      },
+      {
+        "title": "Publication with a link to journal",
+        "link": "https://doi.org/10.1234/example"
+      }
     ]
   }
 }
 ```
+
+**Tips for Publications:**
+- If you have a link (DOI, journal URL, etc.), add it to the `link` field
+- If no link, leave it as empty quotes: `"link": ""`
+- Publications with links will appear in blue and be clickable
+- Publications without links will appear as regular text
 
 ---
 
