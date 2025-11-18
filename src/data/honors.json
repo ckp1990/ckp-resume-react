@@ -21,12 +21,13 @@
   "publications": {
     "heading": "Publications",
     "items": [
-
       {
         "title": "Understanding the variation in wood densities of trees and its implications for carbon assessments",
-        "link": "https://www.biorxiv.org/content/10.1101/523480v3"
+        "authors": "Pandey, C.K., et al.",
+        "year": 2020,
+        "journal": "bioRxiv",
+        "url": "https://www.biorxiv.org/content/10.1101/523480v3"
       }
-
     ]
   }
 }
