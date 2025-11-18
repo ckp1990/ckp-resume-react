@@ -2,15 +2,18 @@ import React, { useState } from 'react'
 import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa'
 import { SiOrcid, SiResearchgate } from 'react-icons/si'
 import { HiLocationMarker } from 'react-icons/hi'
+import ReactMarkdown from 'react-markdown'
 import personalData from './data/personal.json'
 import aboutData from './data/about.json'
 import experienceData from './data/experience.json'
 import educationData from './data/education.json'
 import skillsData from './data/skills.json'
 import honorsData from './data/honors.json'
+import blogData from './data/blog.json'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [selectedPost, setSelectedPost] = useState(null)
 
   // Helper function to parse HTML tags in text
   const parseText = (text) => {
@@ -64,6 +67,7 @@ function App() {
               <a href="#education" className="text-gray-700 hover:text-blue-900 transition-colors">Education</a>
               <a href="#skills" className="text-gray-700 hover:text-blue-900 transition-colors">Skills</a>
               <a href="#honors" className="text-gray-700 hover:text-blue-900 transition-colors">Honors</a>
+              <a href="#blog" className="text-gray-700 hover:text-blue-900 transition-colors">Blog</a>
             </div>
             {/* Mobile menu button */}
             <div className="md:hidden">
@@ -120,9 +124,16 @@ function App() {
                 <a
                   href="#honors"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 hover:text-blue-900 transition-colors py-2"
+                  className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
                 >
                   Honors
+                </a>
+                <a
+                  href="#blog"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-gray-700 hover:text-blue-900 transition-colors py-2"
+                >
+                  Blog
                 </a>
               </div>
             </div>
@@ -325,7 +336,7 @@ function App() {
         </section>
 
         {/* Honors & Publications */}
-        <section id="honors" className="mb-16 animate-slide-up animate-delay-500 scroll-mt-20">
+        <section id="honors" className="mb-24 animate-slide-up animate-delay-500 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {honorsData.heading}
           </h2>
@@ -376,6 +387,125 @@ function App() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Blog Section */}
+        <section id="blog" className="mb-16 animate-slide-up animate-delay-600 scroll-mt-20">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
+            {blogData.heading}
+          </h2>
+
+          {selectedPost ? (
+            /* Blog Post Detail View */
+            <div className="max-w-4xl">
+              <button
+                onClick={() => setSelectedPost(null)}
+                className="mb-6 px-4 py-2 bg-white hover:bg-blue-50 border border-gray-300 hover:border-blue-900 rounded transition-all duration-300 text-black flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Blog
+              </button>
+
+              <article className="bg-white border border-gray-300 rounded-lg p-8">
+                <div className="mb-6">
+                  <h3 className="font-serif font-bold text-3xl md:text-4xl text-black mb-3">
+                    {selectedPost.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                    <time className="font-mono">{new Date(selectedPost.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                    <span className="px-3 py-1 bg-blue-100 text-blue-900 rounded-full">{selectedPost.category}</span>
+                  </div>
+                  {selectedPost.tags && selectedPost.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {selectedPost.tags.map((tag, index) => (
+                        <span key={index} className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="prose prose-lg max-w-none">
+                  <ReactMarkdown
+                    components={{
+                      h1: ({node, ...props}) => <h1 className="font-serif font-bold text-3xl text-blue-900 mb-4 mt-8" {...props} />,
+                      h2: ({node, ...props}) => <h2 className="font-serif font-bold text-2xl text-blue-900 mb-3 mt-6" {...props} />,
+                      h3: ({node, ...props}) => <h3 className="font-serif font-bold text-xl text-blue-900 mb-2 mt-4" {...props} />,
+                      p: ({node, ...props}) => <p className="text-black leading-relaxed mb-4" {...props} />,
+                      ul: ({node, ...props}) => <ul className="list-disc list-inside space-y-2 mb-4 text-black" {...props} />,
+                      ol: ({node, ...props}) => <ol className="list-decimal list-inside space-y-2 mb-4 text-black" {...props} />,
+                      li: ({node, ...props}) => <li className="ml-4" {...props} />,
+                      code: ({node, inline, ...props}) =>
+                        inline ?
+                          <code className="bg-gray-100 px-2 py-1 rounded font-mono text-sm" {...props} /> :
+                          <code className="block bg-gray-100 p-4 rounded font-mono text-sm overflow-x-auto mb-4" {...props} />,
+                      blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-blue-900 pl-4 italic text-gray-700 my-4" {...props} />,
+                      a: ({node, ...props}) => <a className="text-blue-900 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                      strong: ({node, ...props}) => <strong className="font-bold text-black" {...props} />,
+                      em: ({node, ...props}) => <em className="italic" {...props} />
+                    }}
+                  >
+                    {selectedPost.content}
+                  </ReactMarkdown>
+                </div>
+              </article>
+            </div>
+          ) : (
+            /* Blog Posts List View */
+            <div className="space-y-6">
+              {blogData.posts
+                .filter(post => post.published)
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .map((post) => (
+                  <article
+                    key={post.id}
+                    className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-all duration-300 cursor-pointer"
+                    onClick={() => setSelectedPost(post)}
+                  >
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                      <h3 className="font-serif font-bold text-2xl md:text-3xl text-black hover:text-blue-900 transition-colors">
+                        {post.title}
+                      </h3>
+                      <time className="font-mono text-sm text-gray-600 md:ml-4 flex-shrink-0">
+                        {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                      </time>
+                    </div>
+
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-900 rounded-full text-sm">
+                        {post.category}
+                      </span>
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {post.tags.slice(0, 3).map((tag, index) => (
+                            <span key={index} className="text-xs text-gray-500">
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <p className="text-gray-700 leading-relaxed mb-3">
+                      {post.excerpt}
+                    </p>
+
+                    <div className="text-blue-900 font-sans text-sm hover:underline">
+                      Read more →
+                    </div>
+                  </article>
+                ))}
+
+              {blogData.posts.filter(post => post.published).length === 0 && (
+                <div className="text-center py-12 text-gray-500">
+                  <p className="font-sans text-lg">No blog posts yet. Check back soon!</p>
+                </div>
+              )}
+            </div>
+          )}
         </section>
 
         {/* Footer */}

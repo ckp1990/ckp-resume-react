@@ -12,6 +12,7 @@ All content is in the `src/data/` folder. Each file contains different parts of 
 - `education.json` - Your degrees and education
 - `skills.json` - Your skills and certifications
 - `honors.json` - Your awards and publications
+- `blog.json` - Your blog posts
 
 ## 🔧 How to Edit
 
@@ -249,6 +250,58 @@ All content is in the `src/data/` folder. Each file contains different parts of 
 
 ---
 
+### 7. Blog (`blog.json`)
+
+**What it contains:**
+- Blog post titles
+- Publication dates
+- Post categories and tags
+- Excerpts (short summaries)
+- Full content in Markdown format
+
+**Structure:**
+Each blog post has these fields:
+- `id`: Unique number for the post
+- `title`: Post title
+- `slug`: URL-friendly version (use lowercase, hyphens, no spaces)
+- `date`: Publication date (YYYY-MM-DD format)
+- `excerpt`: Short summary (1-2 sentences)
+- `category`: e.g., "Research", "Tutorial", "Opinion"
+- `tags`: Keywords (optional)
+- `published`: `true` to show, `false` to hide
+- `content`: Full post content in Markdown
+
+**Example:**
+```json
+{
+  "heading": "Blog",
+  "posts": [
+    {
+      "id": 1,
+      "title": "My First Blog Post",
+      "slug": "my-first-blog-post",
+      "date": "2025-01-15",
+      "excerpt": "This is a brief summary of what the post is about.",
+      "category": "General",
+      "tags": ["introduction", "welcome"],
+      "published": true,
+      "content": "# My First Blog Post\n\nThis is the full content of my post.\n\n## A Subheading\n\nMore content here with **bold** and *italic* text."
+    }
+  ]
+}
+```
+
+**Tips for Blog Posts:**
+- Each post needs a unique `id` number
+- The `slug` becomes part of the URL, so keep it simple
+- Use Markdown in the `content` field for formatting
+- Set `published: false` to hide a post without deleting it
+- Posts are automatically sorted by date (newest first)
+
+**For detailed blogging instructions, see `BLOG_GUIDE.md`**
+
+---
+
 ## 🚨 Common Mistakes to Avoid
 
 1. **Missing Commas**: Always put commas between items in a list
@@ -320,6 +373,7 @@ If you accidentally break something:
 | Add/remove education | `education.json` |
 | Update skills | `skills.json` |
 | Add awards/publications | `honors.json` |
+| Add/edit blog posts | `blog.json` |
 
 ---
 

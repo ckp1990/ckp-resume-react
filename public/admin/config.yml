@@ -148,3 +148,31 @@ collections:
                 fields:
                   - {label: "Title", name: "title", widget: "text"}
                   - {label: "Link (Optional)", name: "link", widget: "string", required: false, hint: "URL to the publication (DOI, journal link, etc.)"}
+
+  # Blog Section
+  - name: "blog"
+    label: "Blog"
+    files:
+      - label: "Blog Settings & Posts"
+        name: "blog"
+        file: "src/data/blog.json"
+        fields:
+          - {label: "Heading", name: "heading", widget: "string", default: "Blog"}
+          - label: "Posts"
+            name: "posts"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "number", hint: "Unique post ID"}
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Slug", name: "slug", widget: "string", hint: "URL-friendly version of title (e.g., my-blog-post)"}
+              - {label: "Date", name: "date", widget: "date", format: "YYYY-MM-DD"}
+              - {label: "Excerpt", name: "excerpt", widget: "text", hint: "Short summary shown in blog list"}
+              - {label: "Category", name: "category", widget: "string", hint: "e.g., Research, Tutorial, Opinion"}
+              - label: "Tags"
+                name: "tags"
+                widget: "list"
+                required: false
+                hint: "Keywords for this post"
+                field: {label: "Tag", name: "tag", widget: "string"}
+              - {label: "Published", name: "published", widget: "boolean", default: true, hint: "Uncheck to hide this post"}
+              - {label: "Content", name: "content", widget: "markdown", hint: "Full blog post content (supports Markdown formatting)"}
