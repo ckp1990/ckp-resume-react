@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar, FaCertificate } from 'react-icons/fa'
 import { SiOrcid, SiResearchgate } from 'react-icons/si'
 import { HiLocationMarker } from 'react-icons/hi'
@@ -11,12 +11,15 @@ import skillsData from './data/skills.json'
 import honorsData from './data/honors.json'
 import blogData from './data/blog.json'
 import mediaData from './data/media.json'
+import { fetchGoogleDriveMedia, getGoogleDriveUrl } from './utils/googleDrive'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedPost, setSelectedPost] = useState(null)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
+  const [mediaItems, setMediaItems] = useState(mediaData.items)
+  const [mediaLoading, setMediaLoading] = useState(true)
 
   // Icon mapping for awards
   const iconMap = {
@@ -33,18 +36,27 @@ function App() {
     return IconComponent
   }
 
-  // Helper function to convert Google Drive ID to embed URL
-  const getGoogleDriveUrl = (fileId, type) => {
-    if (!fileId) return null
-    if (type === 'image') {
-      // Use Google Drive thumbnail API with large size for better embedding
-      // File must be publicly shared ("Anyone with the link can view")
-      return `https://drive.google.com/thumbnail?id=${fileId}&sz=w2000`
-    } else if (type === 'video') {
-      return `https://drive.google.com/file/d/${fileId}/preview`
+  // Fetch media from Google Drive on component mount
+  useEffect(() => {
+    const loadMedia = async () => {
+      setMediaLoading(true)
+      const driveMedia = await fetchGoogleDriveMedia()
+
+      if (driveMedia && driveMedia.length > 0) {
+        // Successfully fetched from Google Drive API
+        setMediaItems(driveMedia)
+        console.log('Media loaded from Google Drive API')
+      } else {
+        // Fallback to media.json
+        setMediaItems(mediaData.items)
+        console.log('Using fallback media from media.json')
+      }
+
+      setMediaLoading(false)
     }
-    return null
-  }
+
+    loadMedia()
+  }, [])
 
   // Lightbox handlers
   const openLightbox = (index) => {
@@ -57,11 +69,11 @@ function App() {
   }
 
   const nextMedia = () => {
-    setLightboxIndex((prev) => (prev + 1) % mediaData.items.length)
+    setLightboxIndex((prev) => (prev + 1) % mediaItems.length)
   }
 
   const prevMedia = () => {
-    setLightboxIndex((prev) => (prev - 1 + mediaData.items.length) % mediaData.items.length)
+    setLightboxIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length)
   }
 
   // Keyboard navigation for lightbox
@@ -480,8 +492,19 @@ function App() {
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {mediaData.heading}
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mediaData.items.map((item, index) => {
+
+          {/* Loading State */}
+          {mediaLoading && (
+            <div className="text-center py-12">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900"></div>
+              <p className="mt-4 text-gray-600">Loading media from Google Drive...</p>
+            </div>
+          )}
+
+          {/* Media Grid */}
+          {!mediaLoading && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {mediaItems.map((item, index) => {
               const mediaUrl = getGoogleDriveUrl(item.googleDriveId, item.type)
 
               return (
@@ -539,15 +562,16 @@ function App() {
                 </div>
               )
             })}
-          </div>
+            </div>
+          )}
 
           {/* Empty State */}
-          {mediaData.items.length === 0 && (
+          {!mediaLoading && mediaItems.length === 0 && (
             <div className="text-center py-12 text-gray-500">
               <svg className="w-24 h-24 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <p className="font-sans text-lg">No media items yet. Add some from the CMS!</p>
+              <p className="font-sans text-lg">No media items yet. Add some from the CMS or check your Google Drive API configuration!</p>
             </div>
           )}
         </section>
@@ -678,7 +702,7 @@ function App() {
       </div>
 
       {/* Lightbox Modal */}
-      {lightboxOpen && mediaData.items.length > 0 && (
+      {lightboxOpen && mediaItems.length > 0 && (
         <div
           className="fixed inset-0 z-[100] bg-black bg-opacity-95 flex items-center justify-center"
           onClick={closeLightbox}
@@ -696,11 +720,11 @@ function App() {
 
           {/* Media Counter */}
           <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-[110] text-white text-lg font-mono">
-            {lightboxIndex + 1} / {mediaData.items.length}
+            {lightboxIndex + 1} / {mediaItems.length}
           </div>
 
           {/* Previous Button */}
-          {mediaData.items.length > 1 && (
+          {mediaItems.length > 1 && (
             <button
               onClick={(e) => {
                 e.stopPropagation()
@@ -721,7 +745,7 @@ function App() {
             onClick={(e) => e.stopPropagation()}
           >
             {(() => {
-              const currentItem = mediaData.items[lightboxIndex]
+              const currentItem = mediaItems[lightboxIndex]
               const mediaUrl = getGoogleDriveUrl(currentItem.googleDriveId, currentItem.type)
 
               return (
@@ -775,7 +799,7 @@ function App() {
           </div>
 
           {/* Next Button */}
-          {mediaData.items.length > 1 && (
+          {mediaItems.length > 1 && (
             <button
               onClick={(e) => {
                 e.stopPropagation()
@@ -791,9 +815,9 @@ function App() {
           )}
 
           {/* Thumbnail Strip at Bottom (Optional - for easy navigation) */}
-          {mediaData.items.length > 1 && (
+          {mediaItems.length > 1 && (
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-[110] flex gap-2 max-w-[90vw] overflow-x-auto px-4">
-              {mediaData.items.map((item, idx) => {
+              {mediaItems.map((item, idx) => {
                 const thumbUrl = getGoogleDriveUrl(item.googleDriveId, item.type)
                 return (
                   <div
