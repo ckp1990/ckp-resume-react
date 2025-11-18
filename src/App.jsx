@@ -510,21 +510,23 @@ function App() {
               {/* Preview Image */}
               <div className="aspect-video bg-gray-100 relative">
                 {(() => {
-                  const firstItem = mediaItems[0]
-                  const mediaUrl = getGoogleDriveUrl(firstItem.googleDriveId, firstItem.type)
+                  // Select a random image from the gallery
+                  const randomIndex = Math.floor(Math.random() * mediaItems.length)
+                  const randomItem = mediaItems[randomIndex]
+                  const mediaUrl = getGoogleDriveUrl(randomItem.googleDriveId, randomItem.type)
 
                   return mediaUrl ? (
-                    firstItem.type === 'image' ? (
+                    randomItem.type === 'image' ? (
                       <img
                         src={mediaUrl}
-                        alt={firstItem.title}
+                        alt={randomItem.title}
                         className="w-full h-full object-cover"
                       />
-                    ) : firstItem.type === 'video' ? (
+                    ) : randomItem.type === 'video' ? (
                       <div className="relative w-full h-full">
                         <img
                           src={mediaUrl}
-                          alt={firstItem.title}
+                          alt={randomItem.title}
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
@@ -564,12 +566,9 @@ function App() {
               <div className="p-6 bg-gradient-to-r from-blue-50 to-white">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-serif font-bold text-2xl text-blue-900 mb-2">
+                    <h3 className="font-serif font-bold text-2xl text-blue-900">
                       {mediaItems.length} {mediaItems.length === 1 ? 'Item' : 'Items'} in Gallery
                     </h3>
-                    <p className="text-gray-600">
-                      Click to start slideshow • Use arrow keys to navigate • Press ESC to close
-                    </p>
                   </div>
                   <div className="hidden md:block">
                     <div className="bg-blue-900 text-white px-6 py-3 rounded-full font-sans font-semibold">
