@@ -38,6 +38,7 @@ All content is in the `src/data/` folder. Each file contains different parts of 
 **What you can change:**
 - Your name
 - Your job titles
+- Your profile image
 - Your email
 - Your LinkedIn URL
 - Your location
@@ -49,11 +50,23 @@ All content is in the `src/data/` folder. Each file contains different parts of 
   "name": "Your Name Here",
   "title": "Your Job Title",
   "subtitle": "Your Second Title",
+  "profileImage": "/path/to/your/image.jpg",
   "email": "your.email@example.com",
   "linkedin": "https://www.linkedin.com/in/yourprofile",
   "location": "Your City, Country"
 }
 ```
+
+**Adding Your Profile Image:**
+1. Upload your image to the `public` folder in the repository
+2. Use the path like this: `"/your-image.jpg"` (if image is in public folder)
+3. Or use a full URL: `"https://example.com/your-image.jpg"`
+4. Leave it empty `""` to show a default placeholder icon
+
+**Tips:**
+- Best image size: 500x500 pixels or larger (square)
+- Supported formats: JPG, PNG, WebP
+- The image will display as a circle
 
 ---
 

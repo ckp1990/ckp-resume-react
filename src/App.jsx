@@ -46,10 +46,55 @@ function App() {
 
   return (
     <div className="min-h-screen bg-stone-50">
+      {/* Navigation Bar */}
+      <nav className="sticky top-0 z-50 bg-white border-b border-gray-300 shadow-sm">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex items-center justify-between h-16">
+            <div className="font-serif font-bold text-xl text-blue-900">
+              {personalData.name}
+            </div>
+            <div className="hidden md:flex space-x-8 font-sans text-sm">
+              <a href="#about" className="text-gray-700 hover:text-blue-900 transition-colors">About</a>
+              <a href="#experience" className="text-gray-700 hover:text-blue-900 transition-colors">Experience</a>
+              <a href="#education" className="text-gray-700 hover:text-blue-900 transition-colors">Education</a>
+              <a href="#skills" className="text-gray-700 hover:text-blue-900 transition-colors">Skills</a>
+              <a href="#honors" className="text-gray-700 hover:text-blue-900 transition-colors">Honors</a>
+            </div>
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button className="text-gray-700 hover:text-blue-900">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-24">
         {/* Hero Section */}
-        <header className="mb-24 animate-fade-in">
-          <div className="mb-6">
+        <header id="home" className="mb-24 animate-fade-in">
+          {/* Profile Image Placeholder */}
+          {personalData.profileImage ? (
+            <div className="flex justify-center mb-8">
+              <img
+                src={personalData.profileImage}
+                alt={personalData.name}
+                className="w-48 h-48 rounded-full object-cover border-4 border-blue-900 shadow-lg"
+              />
+            </div>
+          ) : (
+            <div className="flex justify-center mb-8">
+              <div className="w-48 h-48 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 border-4 border-blue-900 shadow-lg flex items-center justify-center">
+                <svg className="w-24 h-24 text-blue-900" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+          )}
+
+          <div className="mb-6 text-center">
             <h1 className="font-serif font-black text-7xl md:text-8xl lg:text-9xl mb-4 text-gradient leading-none">
               {personalData.name}
             </h1>
@@ -58,7 +103,7 @@ function App() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-4 mt-8 font-mono text-sm">
+          <div className="flex flex-wrap justify-center gap-4 mt-8 font-mono text-sm">
             <a href={`mailto:${personalData.email}`}
                className="px-4 py-2 bg-white hover:bg-blue-50 border border-gray-300 hover:border-blue-900 rounded transition-all duration-300 text-black">
               {personalData.email}
@@ -76,7 +121,7 @@ function App() {
         </header>
 
         {/* Summary Section */}
-        <section className="mb-24 animate-slide-up animate-delay-100">
+        <section id="about" className="mb-24 animate-slide-up animate-delay-100 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-8 text-blue-900">
             {aboutData.heading}
           </h2>
@@ -88,7 +133,7 @@ function App() {
         </section>
 
         {/* Experience Section */}
-        <section className="mb-24 animate-slide-up animate-delay-200">
+        <section id="experience" className="mb-24 animate-slide-up animate-delay-200 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {experienceData.heading}
           </h2>
@@ -124,7 +169,7 @@ function App() {
         </section>
 
         {/* Education Section */}
-        <section className="mb-24 animate-slide-up animate-delay-300">
+        <section id="education" className="mb-24 animate-slide-up animate-delay-300 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {educationData.heading}
           </h2>
@@ -146,7 +191,7 @@ function App() {
         </section>
 
         {/* Skills & Certifications */}
-        <section className="mb-24 animate-slide-up animate-delay-400">
+        <section id="skills" className="mb-24 animate-slide-up animate-delay-400 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {skillsData.heading}
           </h2>
@@ -182,7 +227,7 @@ function App() {
         </section>
 
         {/* Honors & Publications */}
-        <section className="mb-16 animate-slide-up animate-delay-500">
+        <section id="honors" className="mb-16 animate-slide-up animate-delay-500 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {honorsData.heading}
           </h2>
