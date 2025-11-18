@@ -442,56 +442,168 @@ function App() {
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {honorsData.publications.heading}
           </h2>
-          <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
-            {honorsData.publications.items
-              .sort((a, b) => (b.year || 0) - (a.year || 0)) // Reverse chronological order
-              .slice(0, 5) // Show only first 5 publications
-              .map((pub, index) => {
-                // Support both legacy and new format
-                const isLegacy = pub.link !== undefined && !pub.url
-                const title = pub.title
-                const authors = pub.authors
-                const year = pub.year
-                const journal = pub.journal
-                const url = pub.url || pub.link // Support both 'url' and legacy 'link'
 
-                return (
-                  <li key={index} className="pl-4 marker:text-blue-900 marker:font-bold">
-                    <div className="space-y-1">
-                      {/* Title */}
-                      {url ? (
-                        <a
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-900 hover:underline font-serif text-xl font-semibold block"
-                        >
-                          {title}
-                        </a>
-                      ) : (
-                        <div className="text-black font-serif text-xl font-semibold">
-                          {title}
+          {/* Scientific Articles */}
+          {honorsData.publications.scientificArticles.items.length > 0 && (
+            <div className="mb-12">
+              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900">
+                {honorsData.publications.scientificArticles.heading}
+              </h3>
+              <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
+                {honorsData.publications.scientificArticles.items
+                  .sort((a, b) => (b.year || 0) - (a.year || 0))
+                  .slice(0, 5)
+                  .map((pub, index) => {
+                    const title = pub.title
+                    const authors = pub.authors
+                    const year = pub.year
+                    const journal = pub.journal
+                    const url = pub.url || pub.link
+
+                    return (
+                      <li key={index} className="pl-4 marker:text-blue-900 marker:font-bold">
+                        <div className="space-y-1">
+                          {url ? (
+                            <a
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-900 hover:underline font-serif text-xl font-semibold block"
+                            >
+                              {title}
+                            </a>
+                          ) : (
+                            <div className="text-black font-serif text-xl font-semibold">
+                              {title}
+                            </div>
+                          )}
+
+                          {authors && (
+                            <div className="text-gray-700 text-base italic">
+                              {authors}
+                            </div>
+                          )}
+
+                          <div className="text-gray-600 text-base">
+                            {year && <span className="font-semibold">{year}</span>}
+                            {year && journal && <span className="mx-2">•</span>}
+                            {journal && <span className="italic">{journal}</span>}
+                          </div>
                         </div>
-                      )}
+                      </li>
+                    )
+                  })}
+              </ol>
+            </div>
+          )}
 
-                      {/* Authors */}
-                      {authors && (
-                        <div className="text-gray-700 text-base italic">
-                          {authors}
+          {/* Book Chapters */}
+          {honorsData.publications.bookChapters.items.length > 0 && (
+            <div className="mb-12">
+              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900">
+                {honorsData.publications.bookChapters.heading}
+              </h3>
+              <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
+                {honorsData.publications.bookChapters.items
+                  .sort((a, b) => (b.year || 0) - (a.year || 0))
+                  .slice(0, 5)
+                  .map((pub, index) => {
+                    const title = pub.title
+                    const authors = pub.authors
+                    const year = pub.year
+                    const journal = pub.journal
+                    const url = pub.url || pub.link
+
+                    return (
+                      <li key={index} className="pl-4 marker:text-blue-900 marker:font-bold">
+                        <div className="space-y-1">
+                          {url ? (
+                            <a
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-900 hover:underline font-serif text-xl font-semibold block"
+                            >
+                              {title}
+                            </a>
+                          ) : (
+                            <div className="text-black font-serif text-xl font-semibold">
+                              {title}
+                            </div>
+                          )}
+
+                          {authors && (
+                            <div className="text-gray-700 text-base italic">
+                              {authors}
+                            </div>
+                          )}
+
+                          <div className="text-gray-600 text-base">
+                            {year && <span className="font-semibold">{year}</span>}
+                            {year && journal && <span className="mx-2">•</span>}
+                            {journal && <span className="italic">{journal}</span>}
+                          </div>
                         </div>
-                      )}
+                      </li>
+                    )
+                  })}
+              </ol>
+            </div>
+          )}
 
-                      {/* Year and Journal */}
-                      <div className="text-gray-600 text-base">
-                        {year && <span className="font-semibold">{year}</span>}
-                        {year && journal && <span className="mx-2">•</span>}
-                        {journal && <span className="italic">{journal}</span>}
-                      </div>
-                    </div>
-                  </li>
-                )
-              })}
-          </ol>
+          {/* Other Literature */}
+          {honorsData.publications.otherLiterature.items.length > 0 && (
+            <div className="mb-12">
+              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900">
+                {honorsData.publications.otherLiterature.heading}
+              </h3>
+              <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
+                {honorsData.publications.otherLiterature.items
+                  .sort((a, b) => (b.year || 0) - (a.year || 0))
+                  .slice(0, 5)
+                  .map((pub, index) => {
+                    const title = pub.title
+                    const authors = pub.authors
+                    const year = pub.year
+                    const journal = pub.journal
+                    const url = pub.url || pub.link
+
+                    return (
+                      <li key={index} className="pl-4 marker:text-blue-900 marker:font-bold">
+                        <div className="space-y-1">
+                          {url ? (
+                            <a
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-900 hover:underline font-serif text-xl font-semibold block"
+                            >
+                              {title}
+                            </a>
+                          ) : (
+                            <div className="text-black font-serif text-xl font-semibold">
+                              {title}
+                            </div>
+                          )}
+
+                          {authors && (
+                            <div className="text-gray-700 text-base italic">
+                              {authors}
+                            </div>
+                          )}
+
+                          <div className="text-gray-600 text-base">
+                            {year && <span className="font-semibold">{year}</span>}
+                            {year && journal && <span className="mx-2">•</span>}
+                            {journal && <span className="italic">{journal}</span>}
+                          </div>
+                        </div>
+                      </li>
+                    )
+                  })}
+              </ol>
+            </div>
+          )}
 
           {/* Google Scholar Link */}
           <div className="mt-8 max-w-4xl">
