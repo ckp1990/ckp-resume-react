@@ -66,7 +66,8 @@ function App() {
               <a href="#experience" className="text-gray-700 hover:text-blue-900 transition-colors">Experience</a>
               <a href="#education" className="text-gray-700 hover:text-blue-900 transition-colors">Education</a>
               <a href="#skills" className="text-gray-700 hover:text-blue-900 transition-colors">Skills</a>
-              <a href="#honors" className="text-gray-700 hover:text-blue-900 transition-colors">Honors</a>
+              <a href="#publications" className="text-gray-700 hover:text-blue-900 transition-colors">Publications</a>
+              <a href="#awards" className="text-gray-700 hover:text-blue-900 transition-colors">Awards</a>
               <a href="#blog" className="text-gray-700 hover:text-blue-900 transition-colors">Blog</a>
             </div>
             {/* Mobile menu button */}
@@ -122,11 +123,18 @@ function App() {
                   Skills
                 </a>
                 <a
-                  href="#honors"
+                  href="#publications"
                   onClick={() => setMobileMenuOpen(false)}
                   className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
                 >
-                  Honors
+                  Publications
+                </a>
+                <a
+                  href="#awards"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
+                >
+                  Awards
                 </a>
                 <a
                   href="#blog"
@@ -335,57 +343,54 @@ function App() {
           </div>
         </section>
 
-        {/* Honors & Publications */}
-        <section id="honors" className="mb-24 animate-slide-up animate-delay-500 scroll-mt-20">
+        {/* Publications Section */}
+        <section id="publications" className="mb-24 animate-slide-up animate-delay-500 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
-            {honorsData.heading}
+            {honorsData.publications.heading}
           </h2>
+          <div className="space-y-4 max-w-4xl">
+            {honorsData.publications.items.map((pub, index) => {
+              // Support both string format and object format
+              const isString = typeof pub === 'string'
+              const title = isString ? pub : pub.title
+              const link = isString ? null : pub.link
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="font-serif font-bold text-2xl text-blue-900 mb-4">
-                {honorsData.awards.heading}
-              </h3>
-              <ul className="space-y-3 text-black">
-                {honorsData.awards.items.map((award, index) => (
-                  <li key={index} className="flex items-start">
-                    <span className="text-blue-900 mr-2 text-xl">★</span>
-                    <span>{award}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              return (
+                <div key={index} className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-colors duration-300">
+                  <p className="text-black italic text-lg">
+                    {link ? (
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-900 hover:underline"
+                      >
+                        "{title}"
+                      </a>
+                    ) : (
+                      `"${title}"`
+                    )}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </section>
 
-            <div>
-              <h3 className="font-serif font-bold text-2xl text-blue-900 mb-4">
-                {honorsData.publications.heading}
-              </h3>
-              <div className="text-black italic space-y-3">
-                {honorsData.publications.items.map((pub, index) => {
-                  // Support both string format and object format
-                  const isString = typeof pub === 'string'
-                  const title = isString ? pub : pub.title
-                  const link = isString ? null : pub.link
-
-                  return (
-                    <p key={index}>
-                      {link ? (
-                        <a
-                          href={link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-900 hover:underline"
-                        >
-                          "{title}"
-                        </a>
-                      ) : (
-                        `"${title}"`
-                      )}
-                    </p>
-                  )
-                })}
+        {/* Awards Section */}
+        <section id="awards" className="mb-24 animate-slide-up animate-delay-550 scroll-mt-20">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
+            {honorsData.awards.heading}
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {honorsData.awards.items.map((award, index) => (
+              <div key={index} className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-colors duration-300">
+                <div className="flex items-start gap-3">
+                  <span className="text-blue-900 text-2xl flex-shrink-0">★</span>
+                  <span className="text-black text-lg">{award}</span>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </section>
 
