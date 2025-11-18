@@ -41,7 +41,7 @@ npm run preview
 
 All resume content is stored in JSON files in the `src/data/` folder. Non-technical users can easily update:
 
-- **Personal Info**: `src/data/personal.json` - Name, email, LinkedIn, location, profile image
+- **Personal Info**: `src/data/personal.json` - Name, email, social links (LinkedIn, GitHub, ORCID, ResearchGate), location, profile image
 - **About Section**: `src/data/about.json` - Your summary/bio
 - **Experience**: `src/data/experience.json` - Work history and achievements
 - **Education**: `src/data/education.json` - Degrees and institutions
