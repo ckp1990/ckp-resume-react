@@ -2,19 +2,19 @@
   "heading": "Honors & Publications",
   "awards": {
     "heading": "Awards",
-    "icon": "FaTrophy",
+    "icon": "FaMedal",
     "items": [
       {
         "text": "Annual Talk-2017, Best Poster Award",
-        "icon": "FaAward"
+        "icon": "FaMedal"
       },
       {
         "text": "British Ecological Society Training and Travel Grant",
-        "icon": "FaTrophy"
+        "icon": "FaStar"
       },
       {
         "text": "KaggleX BIPOC Mentorship Award",
-        "icon": "FaMedal"
+        "icon": "FaCertificate"
       }
     ]
   },
@@ -23,7 +23,7 @@
     "items": [
       {
         "title": "Understanding the variation in wood densities of trees and its implications for carbon assessments",
-        "authors": "Pandey, C.K., et al.",
+        "authors": "Karthik Teegalapalli, Chandan Kumar Pandey, Anand M Osuri, Jayashree Ratnam, Mahesh Sankaran",
         "year": 2020,
         "journal": "bioRxiv",
         "url": "https://www.biorxiv.org/content/10.1101/523480v3"

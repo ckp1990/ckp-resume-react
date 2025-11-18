@@ -3,19 +3,11 @@
   "items": [
     {
       "id": 1,
-      "title": "Sample Image",
+      "title": "Cactus ka Phool",
       "description": "Example image from Google Drive",
       "type": "image",
-      "googleDriveId": "",
+      "googleDriveId": "1GJgqPQpfSIWvB3ltwyrYyvvnJLLegKY3",
       "category": "Photos"
-    },
-    {
-      "id": 2,
-      "title": "Sample Video",
-      "description": "Example video from Google Drive",
-      "type": "video",
-      "googleDriveId": "",
-      "category": "Videos"
     }
   ]
 }

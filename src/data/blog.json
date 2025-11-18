@@ -2,26 +2,34 @@
   "heading": "Blog",
   "posts": [
     {
-      "id": 1,
-      "title": "Welcome to My Blog",
+      "excerpt": "Crazy word.",
       "slug": "welcome-to-my-blog",
-      "date": "2025-01-15",
-      "excerpt": "This is the first post on my blog. Learn about what I'll be sharing here.",
-      "category": "General",
-      "tags": ["welcome", "introduction"],
       "published": true,
-      "content": "# Welcome to My Blog\n\nI'm excited to share my thoughts, research findings, and insights on ecology, data science, and conservation.\n\n## What to Expect\n\nOn this blog, I'll be sharing:\n\n- **Research insights**: Deep dives into my ecological studies\n- **Data science tutorials**: Tips and tricks for analyzing ecological data\n- **Conservation updates**: Important developments in the field\n- **Career advice**: Lessons learned from my journey\n\nStay tuned for more content!"
+      "date": "2025-01-15",
+      "title": "Hello World",
+      "tags": [
+        "welcome",
+        "introduction"
+      ],
+      "content": "Hello Word\n\n![](/images/c5078734-deb0-41d1-949e-bd55ebe42cd7.jpg)",
+      "id": 1,
+      "category": "Tesing"
     },
     {
-      "id": 2,
-      "title": "Understanding Wood Density Variation in Trees",
-      "slug": "wood-density-variation-trees",
-      "date": "2025-01-10",
       "excerpt": "Exploring the factors that influence wood density across different tree species and ecosystems.",
-      "category": "Research",
-      "tags": ["ecology", "research", "trees", "wood-density"],
+      "slug": "wood-density-variation-trees",
       "published": true,
-      "content": "# Understanding Wood Density Variation in Trees\n\nWood density is a critical functional trait that varies significantly across tree species and ecosystems.\n\n## Why Wood Density Matters\n\nWood density affects:\n\n1. **Carbon storage**: Denser wood stores more carbon\n2. **Growth rates**: Lower density often correlates with faster growth\n3. **Drought tolerance**: Density influences water transport\n4. **Ecosystem dynamics**: Impacts forest succession patterns\n\n## Key Findings\n\nOur research has revealed several important patterns:\n\n- Environmental conditions significantly influence wood density\n- Species-specific traits play a crucial role\n- Climate change may alter density distributions\n\n*Read the full publication [here](https://www.biorxiv.org/content/10.1101/523480v3).*"
+      "date": "2025-01-10",
+      "title": "Understanding Wood Density Variation in Trees",
+      "tags": [
+        "ecology",
+        "research",
+        "trees",
+        "wood-density"
+      ],
+      "content": "# Understanding Wood Density Variation in Trees\n\nWood density is a critical functional trait that varies significantly across tree species and ecosystems.\n\n## Why Wood Density Matters\n\nWood density affects:\n\n1. **Carbon storage**: Denser wood stores more carbon\n2. **Growth rates**: Lower density often correlates with faster growth\n3. **Drought tolerance**: Density influences water transport\n4. **Ecosystem dynamics**: Impacts forest succession patterns\n\n## Key Findings\n\nOur research has revealed several important patterns:\n\n- Environmental conditions significantly influence wood density\n- Species-specific traits play a crucial role\n- Climate change may alter density distributions\n\n*Read the full publication [here](https://www.biorxiv.org/content/10.1101/523480v3).*",
+      "id": 2,
+      "category": "Research"
     }
   ]
 }
