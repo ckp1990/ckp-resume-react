@@ -35,7 +35,9 @@ function App() {
   const getGoogleDriveUrl = (fileId, type) => {
     if (!fileId) return null
     if (type === 'image') {
-      return `https://drive.google.com/uc?export=view&id=${fileId}`
+      // Use Google Drive thumbnail API with large size for better embedding
+      // File must be publicly shared ("Anyone with the link can view")
+      return `https://drive.google.com/thumbnail?id=${fileId}&sz=w2000`
     } else if (type === 'video') {
       return `https://drive.google.com/file/d/${fileId}/preview`
     }
