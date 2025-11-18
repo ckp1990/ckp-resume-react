@@ -501,67 +501,83 @@ function App() {
             </div>
           )}
 
-          {/* Media Grid */}
-          {!mediaLoading && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mediaItems.map((item, index) => {
-              const mediaUrl = getGoogleDriveUrl(item.googleDriveId, item.type)
+          {/* Single Slideshow Window */}
+          {!mediaLoading && mediaItems.length > 0 && (
+            <div
+              className="relative bg-white border-2 border-gray-300 rounded-lg overflow-hidden hover:border-blue-900 transition-all duration-300 cursor-pointer group max-w-5xl mx-auto"
+              onClick={() => openLightbox(0)}
+            >
+              {/* Preview Image */}
+              <div className="aspect-video bg-gray-100 relative">
+                {(() => {
+                  const firstItem = mediaItems[0]
+                  const mediaUrl = getGoogleDriveUrl(firstItem.googleDriveId, firstItem.type)
 
-              return (
-                <div
-                  key={item.id}
-                  className="bg-white border border-gray-300 rounded-lg overflow-hidden hover:border-blue-900 transition-colors duration-300 cursor-pointer"
-                  onClick={() => openLightbox(index)}
-                >
-                  {/* Media Display */}
-                  <div className="aspect-video bg-gray-100 relative">
-                    {mediaUrl ? (
-                      item.type === 'image' ? (
+                  return mediaUrl ? (
+                    firstItem.type === 'image' ? (
+                      <img
+                        src={mediaUrl}
+                        alt={firstItem.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : firstItem.type === 'video' ? (
+                      <div className="relative w-full h-full">
                         <img
                           src={mediaUrl}
-                          alt={item.title}
+                          alt={firstItem.title}
                           className="w-full h-full object-cover"
-                          loading="lazy"
                         />
-                      ) : item.type === 'video' ? (
-                        <iframe
-                          src={mediaUrl}
-                          className="w-full h-full"
-                          allow="autoplay"
-                          title={item.title}
-                        />
-                      ) : null
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400">
-                        <div className="text-center">
-                          <svg className="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                          <svg className="w-24 h-24 text-white opacity-80" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                           </svg>
-                          <p className="text-sm">No media</p>
                         </div>
                       </div>
-                    )}
-                  </div>
+                    ) : null
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                      <div className="text-center">
+                        <svg className="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <p className="text-lg">No media available</p>
+                      </div>
+                    </div>
+                  )
+                })()}
 
-                  {/* Media Info */}
-                  <div className="p-4">
-                    <h3 className="font-serif font-bold text-lg text-black mb-1">
-                      {item.title}
-                    </h3>
-                    {item.description && (
-                      <p className="text-gray-600 text-sm mb-2">
-                        {item.description}
-                      </p>
-                    )}
-                    {item.category && (
-                      <span className="inline-block px-3 py-1 bg-blue-100 text-blue-900 rounded-full text-xs">
-                        {item.category}
-                      </span>
-                    )}
+                {/* Overlay with instruction */}
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center">
+                    <div className="bg-white rounded-full p-6 shadow-2xl mb-4 inline-block">
+                      <svg className="w-12 h-12 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    </div>
+                    <p className="text-white text-2xl font-bold drop-shadow-lg">Click to view slideshow</p>
                   </div>
                 </div>
-              )
-            })}
+              </div>
+
+              {/* Info Bar */}
+              <div className="p-6 bg-gradient-to-r from-blue-50 to-white">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-serif font-bold text-2xl text-blue-900 mb-2">
+                      {mediaItems.length} {mediaItems.length === 1 ? 'Item' : 'Items'} in Gallery
+                    </h3>
+                    <p className="text-gray-600">
+                      Click to start slideshow • Use arrow keys to navigate • Press ESC to close
+                    </p>
+                  </div>
+                  <div className="hidden md:block">
+                    <div className="bg-blue-900 text-white px-6 py-3 rounded-full font-sans font-semibold">
+                      View Slideshow →
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
