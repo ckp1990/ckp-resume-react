@@ -4,6 +4,8 @@ A distinctive, modern resume website for Chandan Kumar Pandey, Ecologist and Dat
 
 ## Design Features
 
+- **Sticky Navigation Bar**: Easy access to all sections with smooth scroll
+- **Profile Image**: Customizable profile photo with elegant placeholder
 - **Unique Typography**: Crimson Pro, Newsreader, and JetBrains Mono fonts
 - **Minimalistic Light Theme**: Clean off-white background with black text
 - **Navy Blue Accents**: Professional navy blue for headings and minimal highlights
@@ -39,7 +41,7 @@ npm run preview
 
 All resume content is stored in JSON files in the `src/data/` folder. Non-technical users can easily update:
 
-- **Personal Info**: `src/data/personal.json` - Name, email, LinkedIn, location
+- **Personal Info**: `src/data/personal.json` - Name, email, LinkedIn, location, profile image
 - **About Section**: `src/data/about.json` - Your summary/bio
 - **Experience**: `src/data/experience.json` - Work history and achievements
 - **Education**: `src/data/education.json` - Degrees and institutions
