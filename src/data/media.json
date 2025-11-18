@@ -1,0 +1,21 @@
+{
+  "heading": "Media Gallery",
+  "items": [
+    {
+      "id": 1,
+      "title": "Sample Image",
+      "description": "Example image from Google Drive",
+      "type": "image",
+      "googleDriveId": "",
+      "category": "Photos"
+    },
+    {
+      "id": 2,
+      "title": "Sample Video",
+      "description": "Example video from Google Drive",
+      "type": "video",
+      "googleDriveId": "",
+      "category": "Videos"
+    }
+  ]
+}
