@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar, FaCertificate } from 'react-icons/fa'
-import { SiOrcid, SiResearchgate } from 'react-icons/si'
+import { FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar, FaCertificate, FaGraduationCap, FaExternalLinkAlt } from 'react-icons/fa'
+import { SiOrcid, SiResearchgate, SiGooglescholar } from 'react-icons/si'
 import { HiLocationMarker } from 'react-icons/hi'
 import ReactMarkdown from 'react-markdown'
 import personalData from './data/personal.json'
@@ -174,8 +174,8 @@ function App() {
             <div className="hidden md:flex space-x-8 font-sans text-sm">
               <a href="#about" className="text-gray-700 hover:text-blue-900 transition-colors">About</a>
               <a href="#education" className="text-gray-700 hover:text-blue-900 transition-colors">Education</a>
+              <a href="#awards" className="text-gray-700 hover:text-blue-900 transition-colors">Awards</a>
               <a href="#publications" className="text-gray-700 hover:text-blue-900 transition-colors">Publications</a>
-              <a href="#media" className="text-gray-700 hover:text-blue-900 transition-colors">Media</a>
               <a href="#blog" className="text-gray-700 hover:text-blue-900 transition-colors">Blog</a>
             </div>
             {/* Mobile menu button */}
@@ -217,18 +217,18 @@ function App() {
                   Education
                 </a>
                 <a
+                  href="#awards"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
+                >
+                  Awards
+                </a>
+                <a
                   href="#publications"
                   onClick={() => setMobileMenuOpen(false)}
                   className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
                 >
                   Publications
-                </a>
-                <a
-                  href="#media"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
-                >
-                  Media
                 </a>
                 <a
                   href="#blog"
@@ -445,6 +445,7 @@ function App() {
           <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
             {honorsData.publications.items
               .sort((a, b) => (b.year || 0) - (a.year || 0)) // Reverse chronological order
+              .slice(0, 5) // Show only first 5 publications
               .map((pub, index) => {
                 // Support both legacy and new format
                 const isLegacy = pub.link !== undefined && !pub.url
@@ -491,6 +492,20 @@ function App() {
                 )
               })}
           </ol>
+
+          {/* Google Scholar Link */}
+          <div className="mt-8 max-w-4xl">
+            <a
+              href="https://scholar.google.com/citations?user=CCHMzREAAAAJ&hl=en"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-4 bg-white hover:bg-blue-50 border-2 border-blue-900 hover:border-blue-700 rounded-lg transition-all duration-300 text-blue-900 hover:text-blue-700 font-sans font-semibold shadow-md hover:shadow-lg"
+            >
+              <SiGooglescholar className="text-2xl" />
+              <span>View All Publications on Google Scholar</span>
+              <FaExternalLinkAlt className="text-sm" />
+            </a>
+          </div>
         </section>
 
         {/* Awards Section */}
@@ -518,13 +533,12 @@ function App() {
           </div>
         </section>
 
-        {/* Media Gallery Section */}
-        <section id="media" className="mb-24 animate-slide-up animate-delay-600 scroll-mt-20">
+        {/* Media Gallery Section - Commented Out */}
+        {/* <section id="media" className="mb-24 animate-slide-up animate-delay-600 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {mediaData.heading}
           </h2>
 
-          {/* Loading State */}
           {mediaLoading && (
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900"></div>
@@ -532,12 +546,9 @@ function App() {
             </div>
           )}
 
-          {/* Carousel */}
           {!mediaLoading && mediaItems.length > 0 && (
             <div className="relative max-w-6xl mx-auto">
-              {/* Main Carousel Container */}
               <div className="relative bg-white border-2 border-gray-300 rounded-lg overflow-hidden shadow-lg">
-                {/* Carousel Images */}
                 <div className="relative aspect-video bg-gray-900">
                   {mediaItems.map((item, index) => {
                     const mediaUrl = getGoogleDriveUrl(item.googleDriveId, item.type)
@@ -578,7 +589,6 @@ function App() {
                     )
                   })}
 
-                  {/* Previous Button */}
                   {mediaItems.length > 1 && (
                     <button
                       onClick={prevSlide}
@@ -591,7 +601,6 @@ function App() {
                     </button>
                   )}
 
-                  {/* Next Button */}
                   {mediaItems.length > 1 && (
                     <button
                       onClick={nextSlide}
@@ -604,13 +613,11 @@ function App() {
                     </button>
                   )}
 
-                  {/* Slide Counter */}
                   <div className="absolute top-4 right-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-sm font-mono z-10">
                     {currentSlide + 1} / {mediaItems.length}
                   </div>
                 </div>
 
-                {/* Slide Indicators (Dots) */}
                 {mediaItems.length > 1 && (
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
                     {mediaItems.map((_, index) => (
@@ -628,7 +635,6 @@ function App() {
                   </div>
                 )}
 
-                {/* Image Title Bar */}
                 {mediaItems[currentSlide] && (
                   <div className="bg-gradient-to-r from-blue-50 to-white p-4 border-t border-gray-200">
                     <h3 className="font-serif font-bold text-xl text-blue-900">
@@ -645,7 +651,6 @@ function App() {
             </div>
           )}
 
-          {/* Empty State */}
           {!mediaLoading && mediaItems.length === 0 && (
             <div className="text-center py-12 text-gray-500">
               <svg className="w-24 h-24 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -654,7 +659,7 @@ function App() {
               <p className="font-sans text-lg">No media items yet. Add some from the CMS or check your Google Drive API configuration!</p>
             </div>
           )}
-        </section>
+        </section> */}
 
         {/* Blog Section */}
         <section id="blog" className="mb-16 animate-slide-up animate-delay-600 scroll-mt-20">
