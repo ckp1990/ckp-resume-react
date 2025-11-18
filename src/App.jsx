@@ -363,30 +363,54 @@ function App() {
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {honorsData.publications.heading}
           </h2>
-          <ol className="space-y-6 max-w-4xl list-decimal list-outside ml-6">
-            {honorsData.publications.items.map((pub, index) => {
-              // Support both string format and object format
-              const isString = typeof pub === 'string'
-              const title = isString ? pub : pub.title
-              const link = isString ? null : pub.link
+          <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
+            {honorsData.publications.items
+              .sort((a, b) => (b.year || 0) - (a.year || 0)) // Reverse chronological order
+              .map((pub, index) => {
+                // Support both legacy and new format
+                const isLegacy = pub.link !== undefined && !pub.url
+                const title = pub.title
+                const authors = pub.authors
+                const year = pub.year
+                const journal = pub.journal
+                const url = pub.url || pub.link // Support both 'url' and legacy 'link'
 
-              return (
-                <li key={index} className="text-black italic text-lg pl-4 marker:text-blue-900 marker:font-bold">
-                  {link ? (
-                    <a
-                      href={link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-900 hover:underline"
-                    >
-                      {title}
-                    </a>
-                  ) : (
-                    title
-                  )}
-                </li>
-              )
-            })}
+                return (
+                  <li key={index} className="pl-4 marker:text-blue-900 marker:font-bold">
+                    <div className="space-y-1">
+                      {/* Title */}
+                      {url ? (
+                        <a
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-900 hover:underline font-serif text-xl font-semibold block"
+                        >
+                          {title}
+                        </a>
+                      ) : (
+                        <div className="text-black font-serif text-xl font-semibold">
+                          {title}
+                        </div>
+                      )}
+
+                      {/* Authors */}
+                      {authors && (
+                        <div className="text-gray-700 text-base italic">
+                          {authors}
+                        </div>
+                      )}
+
+                      {/* Year and Journal */}
+                      <div className="text-gray-600 text-base">
+                        {year && <span className="font-semibold">{year}</span>}
+                        {year && journal && <span className="mx-2">•</span>}
+                        {journal && <span className="italic">{journal}</span>}
+                      </div>
+                    </div>
+                  </li>
+                )
+              })}
           </ol>
         </section>
 

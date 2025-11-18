@@ -136,10 +136,13 @@ collections:
               - label: "Publications List"
                 name: "items"
                 widget: "list"
-                hint: "Publications appear as a numbered list"
+                hint: "Publications appear as a numbered list in reverse chronological order (newest first)"
                 fields:
-                  - {label: "Title", name: "title", widget: "text", hint: "Full publication title or citation"}
-                  - {label: "Link (Optional)", name: "link", widget: "string", required: false, hint: "URL to the publication (DOI, journal link, etc.)"}
+                  - {label: "Title", name: "title", widget: "text", hint: "Full publication title"}
+                  - {label: "Authors", name: "authors", widget: "string", hint: "Author list (e.g., Smith, J., Doe, A., et al.)"}
+                  - {label: "Year", name: "year", widget: "number", hint: "Year of publication (used for sorting)"}
+                  - {label: "Journal Details", name: "journal", widget: "string", hint: "Journal name, volume, pages, etc."}
+                  - {label: "URL", name: "url", widget: "string", required: false, hint: "Link to publication (DOI, journal URL, etc.)"}
           - label: "Awards"
             name: "awards"
             widget: "object"
