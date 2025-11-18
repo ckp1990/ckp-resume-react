@@ -2,10 +2,20 @@
   "heading": "Honors & Publications",
   "awards": {
     "heading": "Awards",
+    "icon": "FaTrophy",
     "items": [
-      "Annual Talk-2017, Best Poster Award",
-      "British Ecological Society Training and Travel Grant",
-      "KaggleX BIPOC Mentorship Award"
+      {
+        "text": "Annual Talk-2017, Best Poster Award",
+        "icon": "FaAward"
+      },
+      {
+        "text": "British Ecological Society Training and Travel Grant",
+        "icon": "FaTrophy"
+      },
+      {
+        "text": "KaggleX BIPOC Mentorship Award",
+        "icon": "FaMedal"
+      }
     ]
   },
   "publications": {

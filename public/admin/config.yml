@@ -136,6 +136,7 @@ collections:
               - label: "Publications List"
                 name: "items"
                 widget: "list"
+                hint: "Publications appear as a numbered list"
                 fields:
                   - {label: "Title", name: "title", widget: "text", hint: "Full publication title or citation"}
                   - {label: "Link (Optional)", name: "link", widget: "string", required: false, hint: "URL to the publication (DOI, journal link, etc.)"}
@@ -144,10 +145,14 @@ collections:
             widget: "object"
             fields:
               - {label: "Section Heading", name: "heading", widget: "string", default: "Awards"}
+              - label: "Default Icon", name: "icon", widget: "select", default: "FaTrophy", options: ["FaTrophy", "FaAward", "FaMedal", "FaStar", "FaCertificate"], hint: "Default icon for awards (can be overridden per award)"
               - label: "Awards List"
                 name: "items"
                 widget: "list"
-                field: {label: "Award", name: "award", widget: "string", hint: "Award name and year"}
+                hint: "Each award can have its own icon"
+                fields:
+                  - {label: "Award Text", name: "text", widget: "string", hint: "Award name and year"}
+                  - {label: "Icon", name: "icon", widget: "select", default: "FaTrophy", options: ["FaTrophy", "FaAward", "FaMedal", "FaStar", "FaCertificate"], hint: "Icon for this award"}
 
   # Blog Section
   - name: "blog"

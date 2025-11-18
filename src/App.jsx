@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa'
+import { FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar, FaCertificate } from 'react-icons/fa'
 import { SiOrcid, SiResearchgate } from 'react-icons/si'
 import { HiLocationMarker } from 'react-icons/hi'
 import ReactMarkdown from 'react-markdown'
@@ -14,6 +14,21 @@ import blogData from './data/blog.json'
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedPost, setSelectedPost] = useState(null)
+
+  // Icon mapping for awards
+  const iconMap = {
+    'FaTrophy': FaTrophy,
+    'FaAward': FaAward,
+    'FaMedal': FaMedal,
+    'FaStar': FaStar,
+    'FaCertificate': FaCertificate
+  }
+
+  // Helper function to get icon component by name
+  const getIcon = (iconName) => {
+    const IconComponent = iconMap[iconName] || FaTrophy
+    return IconComponent
+  }
 
   // Helper function to parse HTML tags in text
   const parseText = (text) => {
@@ -348,7 +363,7 @@ function App() {
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {honorsData.publications.heading}
           </h2>
-          <div className="space-y-4 max-w-4xl">
+          <ol className="space-y-6 max-w-4xl list-decimal list-outside ml-6">
             {honorsData.publications.items.map((pub, index) => {
               // Support both string format and object format
               const isString = typeof pub === 'string'
@@ -356,25 +371,23 @@ function App() {
               const link = isString ? null : pub.link
 
               return (
-                <div key={index} className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-colors duration-300">
-                  <p className="text-black italic text-lg">
-                    {link ? (
-                      <a
-                        href={link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-900 hover:underline"
-                      >
-                        "{title}"
-                      </a>
-                    ) : (
-                      `"${title}"`
-                    )}
-                  </p>
-                </div>
+                <li key={index} className="text-black italic text-lg pl-4 marker:text-blue-900 marker:font-bold">
+                  {link ? (
+                    <a
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-900 hover:underline"
+                    >
+                      {title}
+                    </a>
+                  ) : (
+                    title
+                  )}
+                </li>
               )
             })}
-          </div>
+          </ol>
         </section>
 
         {/* Awards Section */}
@@ -383,14 +396,22 @@ function App() {
             {honorsData.awards.heading}
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {honorsData.awards.items.map((award, index) => (
-              <div key={index} className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-colors duration-300">
-                <div className="flex items-start gap-3">
-                  <span className="text-blue-900 text-2xl flex-shrink-0">★</span>
-                  <span className="text-black text-lg">{award}</span>
+            {honorsData.awards.items.map((award, index) => {
+              // Support both string format and object format
+              const isString = typeof award === 'string'
+              const text = isString ? award : award.text
+              const iconName = isString ? honorsData.awards.icon : (award.icon || honorsData.awards.icon)
+              const IconComponent = getIcon(iconName)
+
+              return (
+                <div key={index} className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-colors duration-300">
+                  <div className="flex items-start gap-3">
+                    <IconComponent className="text-blue-900 text-2xl flex-shrink-0" />
+                    <span className="text-black text-lg">{text}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </section>
 
