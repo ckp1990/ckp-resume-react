@@ -10,6 +10,7 @@ import educationData from './data/education.json'
 import skillsData from './data/skills.json'
 import honorsData from './data/honors.json'
 import blogData from './data/blog.json'
+import mediaData from './data/media.json'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -28,6 +29,17 @@ function App() {
   const getIcon = (iconName) => {
     const IconComponent = iconMap[iconName] || FaTrophy
     return IconComponent
+  }
+
+  // Helper function to convert Google Drive ID to embed URL
+  const getGoogleDriveUrl = (fileId, type) => {
+    if (!fileId) return null
+    if (type === 'image') {
+      return `https://drive.google.com/uc?export=view&id=${fileId}`
+    } else if (type === 'video') {
+      return `https://drive.google.com/file/d/${fileId}/preview`
+    }
+    return null
   }
 
   // Helper function to parse HTML tags in text
@@ -78,11 +90,9 @@ function App() {
             </div>
             <div className="hidden md:flex space-x-8 font-sans text-sm">
               <a href="#about" className="text-gray-700 hover:text-blue-900 transition-colors">About</a>
-              <a href="#experience" className="text-gray-700 hover:text-blue-900 transition-colors">Experience</a>
               <a href="#education" className="text-gray-700 hover:text-blue-900 transition-colors">Education</a>
-              <a href="#skills" className="text-gray-700 hover:text-blue-900 transition-colors">Skills</a>
               <a href="#publications" className="text-gray-700 hover:text-blue-900 transition-colors">Publications</a>
-              <a href="#awards" className="text-gray-700 hover:text-blue-900 transition-colors">Awards</a>
+              <a href="#media" className="text-gray-700 hover:text-blue-900 transition-colors">Media</a>
               <a href="#blog" className="text-gray-700 hover:text-blue-900 transition-colors">Blog</a>
             </div>
             {/* Mobile menu button */}
@@ -117,25 +127,11 @@ function App() {
                   About
                 </a>
                 <a
-                  href="#experience"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
-                >
-                  Experience
-                </a>
-                <a
                   href="#education"
                   onClick={() => setMobileMenuOpen(false)}
                   className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
                 >
                   Education
-                </a>
-                <a
-                  href="#skills"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
-                >
-                  Skills
                 </a>
                 <a
                   href="#publications"
@@ -145,11 +141,11 @@ function App() {
                   Publications
                 </a>
                 <a
-                  href="#awards"
+                  href="#media"
                   onClick={() => setMobileMenuOpen(false)}
                   className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
                 >
-                  Awards
+                  Media
                 </a>
                 <a
                   href="#blog"
@@ -437,6 +433,79 @@ function App() {
               )
             })}
           </div>
+        </section>
+
+        {/* Media Gallery Section */}
+        <section id="media" className="mb-24 animate-slide-up animate-delay-600 scroll-mt-20">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
+            {mediaData.heading}
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mediaData.items.map((item) => {
+              const mediaUrl = getGoogleDriveUrl(item.googleDriveId, item.type)
+
+              return (
+                <div key={item.id} className="bg-white border border-gray-300 rounded-lg overflow-hidden hover:border-blue-900 transition-colors duration-300">
+                  {/* Media Display */}
+                  <div className="aspect-video bg-gray-100 relative">
+                    {mediaUrl ? (
+                      item.type === 'image' ? (
+                        <img
+                          src={mediaUrl}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : item.type === 'video' ? (
+                        <iframe
+                          src={mediaUrl}
+                          className="w-full h-full"
+                          allow="autoplay"
+                          title={item.title}
+                        />
+                      ) : null
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-400">
+                        <div className="text-center">
+                          <svg className="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          <p className="text-sm">No media</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Media Info */}
+                  <div className="p-4">
+                    <h3 className="font-serif font-bold text-lg text-black mb-1">
+                      {item.title}
+                    </h3>
+                    {item.description && (
+                      <p className="text-gray-600 text-sm mb-2">
+                        {item.description}
+                      </p>
+                    )}
+                    {item.category && (
+                      <span className="inline-block px-3 py-1 bg-blue-100 text-blue-900 rounded-full text-xs">
+                        {item.category}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Empty State */}
+          {mediaData.items.length === 0 && (
+            <div className="text-center py-12 text-gray-500">
+              <svg className="w-24 h-24 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <p className="font-sans text-lg">No media items yet. Add some from the CMS!</p>
+            </div>
+          )}
         </section>
 
         {/* Blog Section */}
