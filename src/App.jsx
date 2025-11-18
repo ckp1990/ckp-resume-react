@@ -174,7 +174,7 @@ function App() {
             <div className="hidden md:flex space-x-8 font-sans text-sm">
               <a href="#about" className="text-gray-700 hover:text-blue-900 transition-colors">About</a>
               <a href="#education" className="text-gray-700 hover:text-blue-900 transition-colors">Education</a>
-              <a href="#awards" className="text-gray-700 hover:text-blue-900 transition-colors">Awards</a>
+              <a href="#skills" className="text-gray-700 hover:text-blue-900 transition-colors">Skills</a>
               <a href="#publications" className="text-gray-700 hover:text-blue-900 transition-colors">Publications</a>
               <a href="#blog" className="text-gray-700 hover:text-blue-900 transition-colors">Blog</a>
             </div>
@@ -217,11 +217,11 @@ function App() {
                   Education
                 </a>
                 <a
-                  href="#awards"
+                  href="#skills"
                   onClick={() => setMobileMenuOpen(false)}
                   className="text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-200"
                 >
-                  Awards
+                  Skills
                 </a>
                 <a
                   href="#publications"
@@ -343,8 +343,8 @@ function App() {
           </div>
         </section>
 
-        {/* Experience Section */}
-        <section id="experience" className="mb-24 animate-slide-up animate-delay-200 scroll-mt-20">
+        {/* Experience Section - Commented Out */}
+        {/* <section id="experience" className="mb-24 animate-slide-up animate-delay-200 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {experienceData.heading}
           </h2>
@@ -377,7 +377,7 @@ function App() {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Education Section */}
         <section id="education" className="mb-24 animate-slide-up animate-delay-300 scroll-mt-20">
@@ -631,13 +631,26 @@ function App() {
               const isString = typeof award === 'string'
               const text = isString ? award : award.text
               const iconName = isString ? honorsData.awards.icon : (award.icon || honorsData.awards.icon)
+              const url = isString ? null : award.url
               const IconComponent = getIcon(iconName)
 
               return (
                 <div key={index} className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-colors duration-300">
                   <div className="flex items-start gap-3">
                     <IconComponent className="text-blue-900 text-2xl flex-shrink-0" />
-                    <span className="text-black text-lg">{text}</span>
+                    {url ? (
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-900 hover:underline text-lg flex items-center gap-2 flex-1"
+                      >
+                        <span>{text}</span>
+                        <FaExternalLinkAlt className="text-sm flex-shrink-0" />
+                      </a>
+                    ) : (
+                      <span className="text-black text-lg">{text}</span>
+                    )}
                   </div>
                 </div>
               )

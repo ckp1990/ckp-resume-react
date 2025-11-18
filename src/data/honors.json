@@ -6,15 +6,18 @@
     "items": [
       {
         "text": "Annual Talk-2017, Best Poster Award",
-        "icon": "FaMedal"
+        "icon": "FaMedal",
+        "url": ""
       },
       {
         "text": "British Ecological Society Training and Travel Grant",
-        "icon": "FaStar"
+        "icon": "FaStar",
+        "url": ""
       },
       {
         "text": "KaggleX BIPOC Mentorship Award",
-        "icon": "FaCertificate"
+        "icon": "FaCertificate",
+        "url": ""
       }
     ]
   },
