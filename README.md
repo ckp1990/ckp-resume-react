@@ -5,9 +5,10 @@ A distinctive, modern resume website for Chandan Kumar Pandey, Ecologist and Dat
 ## Design Features
 
 - **Unique Typography**: Crimson Pro, Newsreader, and JetBrains Mono fonts
-- **Organic Dark Theme**: Deep slate backgrounds with amber and emerald accents
+- **Minimalistic Light Theme**: Clean off-white background with black text
+- **Navy Blue Accents**: Professional navy blue for headings and minimal highlights
 - **Smooth Animations**: Staggered page load animations for visual interest
-- **Nature-Inspired**: Design blends ecology and data science aesthetics
+- **Clean & Professional**: Design emphasizes readability and professionalism
 
 ## Tech Stack
 
