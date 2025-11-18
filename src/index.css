@@ -6,13 +6,13 @@
   }
 
   body {
-    @apply bg-slate-950 text-stone-100;
+    @apply bg-stone-50 text-black;
   }
 }
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-amber-400 via-orange-500 to-amber-600 bg-clip-text text-transparent;
+    @apply text-black;
   }
 
   .animate-fade-in {
