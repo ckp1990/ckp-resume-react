@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar, FaCertificate, FaGraduationCap, FaExternalLinkAlt } from 'react-icons/fa'
-import { SiOrcid, SiResearchgate, SiGooglescholar } from 'react-icons/si'
+import { FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar, FaCertificate, FaGraduationCap, FaExternalLinkAlt, FaLeaf } from 'react-icons/fa'
+import { SiOrcid, SiResearchgate, SiGooglescholar, SiKaggle } from 'react-icons/si'
 import { HiLocationMarker } from 'react-icons/hi'
 import ReactMarkdown from 'react-markdown'
 import personalData from './data/personal.json'
@@ -326,6 +326,24 @@ function App() {
                 aria-label="ResearchGate"
               >
                 <SiResearchgate className="w-6 h-6" />
+              </a>
+              <a
+                href={personalData.inaturalist}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-white hover:bg-green-700 border border-gray-300 hover:border-green-700 rounded-full transition-all duration-300 text-gray-700 hover:text-white group"
+                aria-label="iNaturalist"
+              >
+                <FaLeaf className="w-6 h-6" />
+              </a>
+              <a
+                href={personalData.kaggle}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-white hover:bg-blue-500 border border-gray-300 hover:border-blue-500 rounded-full transition-all duration-300 text-gray-700 hover:text-white group"
+                aria-label="Kaggle"
+              >
+                <SiKaggle className="w-6 h-6" />
               </a>
             </div>
           </div>
