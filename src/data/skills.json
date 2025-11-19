@@ -3,14 +3,15 @@
   "skills": {
     "heading": "Top Skills",
     "items": [
-      "Research and Development (R&D)",
-      "Ecological Research",
-      "Field Biology",
+      "Bayesian Hierarchical Model",
       "Statistical Modeling",
-      "Machine Learning",
-      "Python",
+      "Population Biology and Modelling",
       "R",
-      "SQL"
+      "Python",
+      "RDBMS",
+      "Deep Machine Learning",
+      "Cloud Computation",
+      "Ecological Research"
     ]
   },
   "certifications": {
