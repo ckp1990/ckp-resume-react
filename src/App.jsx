@@ -12,6 +12,7 @@ import honorsData from './data/honors.json'
 import blogData from './data/blog.json'
 import mediaData from './data/media.json'
 import affiliationsData from './data/affiliations.json'
+import teachingData from './data/teaching.json'
 import { fetchGoogleDriveMedia, getGoogleDriveUrl } from './utils/googleDrive'
 
 function App() {
@@ -428,6 +429,67 @@ function App() {
                     ))}
                   </ul>
                 )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Teaching and Workshop Section */}
+        <section id="teaching" className="mb-24 animate-slide-up animate-delay-360 scroll-mt-20">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
+            {teachingData.heading}
+          </h2>
+
+          <div className="space-y-6">
+            {teachingData.workshops.map((workshop) => (
+              <div key={workshop.id} className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-colors duration-300">
+                <h3 className="font-serif font-bold text-xl md:text-2xl text-black mb-3">
+                  {workshop.title}
+                </h3>
+
+                <div className="space-y-2 text-gray-700">
+                  <div className="flex items-start">
+                    <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
+                    <span className="font-sans">
+                      <strong>Event:</strong> {workshop.event}
+                    </span>
+                  </div>
+
+                  <div className="flex items-start">
+                    <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
+                    <span className="font-sans">
+                      <strong>Date:</strong> {workshop.date}
+                    </span>
+                  </div>
+
+                  <div className="flex items-start">
+                    <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
+                    <span className="font-sans">
+                      <strong>Venue:</strong> {workshop.venue}
+                    </span>
+                  </div>
+
+                  {workshop.description && (
+                    <div className="flex items-start mt-3">
+                      <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
+                      <p className="text-gray-600">{workshop.description}</p>
+                    </div>
+                  )}
+
+                  {workshop.url && workshop.url.trim() !== '' && (
+                    <div className="mt-3">
+                      <a
+                        href={workshop.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-blue-900 hover:underline font-sans text-sm"
+                      >
+                        <span>View Details</span>
+                        <FaExternalLinkAlt className="text-xs" />
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>

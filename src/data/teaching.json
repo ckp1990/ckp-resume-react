@@ -1,0 +1,23 @@
+{
+  "heading": "Teaching and Workshop Conducted",
+  "workshops": [
+    {
+      "id": 1,
+      "title": "Preparing documents in R; application of R Markdown to create notebook, pdf and HTML documents",
+      "event": "Student Conference on Conservation Science (SCCS)-Bengaluru",
+      "date": "October 09-12, 2023",
+      "venue": "J N Tata Auditorium, Indian Institute of Science, Bengaluru",
+      "description": "",
+      "url": ""
+    },
+    {
+      "id": 2,
+      "title": "Preparing documents in R; application of R Markdown to create notebook, pdf and HTML documents",
+      "event": "Student Conference on Conservation Science (SCCS)-Bengaluru",
+      "date": "October 21, 2024",
+      "venue": "J N Tata Auditorium, Indian Institute of Science, Bengaluru",
+      "description": "",
+      "url": ""
+    }
+  ]
+}
