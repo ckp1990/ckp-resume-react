@@ -439,16 +439,9 @@ function App() {
             {affiliationsData.heading}
           </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-            {affiliationsData.institutions.map((institution) => (
-              <a
-                key={institution.id}
-                href={institution.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group"
-                aria-label={institution.name}
-              >
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {affiliationsData.institutions.map((institution) => {
+              const LogoCard = (
                 <div className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-all duration-300 hover:shadow-lg flex items-center justify-center aspect-square">
                   <div className="w-full h-full flex items-center justify-center">
                     <img
@@ -463,11 +456,39 @@ function App() {
                     />
                   </div>
                 </div>
+              )
+
+              const InstitutionName = (
                 <p className="text-center text-sm text-gray-600 mt-3 font-sans group-hover:text-blue-900 transition-colors">
                   {institution.name}
                 </p>
-              </a>
-            ))}
+              )
+
+              // If URL exists, wrap in anchor tag
+              if (institution.url && institution.url.trim() !== '') {
+                return (
+                  <a
+                    key={institution.id}
+                    href={institution.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group"
+                    aria-label={institution.name}
+                  >
+                    {LogoCard}
+                    {InstitutionName}
+                  </a>
+                )
+              }
+
+              // Otherwise, just render without link
+              return (
+                <div key={institution.id} className="group">
+                  {LogoCard}
+                  {InstitutionName}
+                </div>
+              )
+            })}
           </div>
         </section>
 
