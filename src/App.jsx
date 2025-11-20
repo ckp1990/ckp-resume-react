@@ -11,6 +11,7 @@ import skillsData from './data/skills.json'
 import honorsData from './data/honors.json'
 import blogData from './data/blog.json'
 import mediaData from './data/media.json'
+import affiliationsData from './data/affiliations.json'
 import { fetchGoogleDriveMedia, getGoogleDriveUrl } from './utils/googleDrive'
 
 function App() {
@@ -428,6 +429,44 @@ function App() {
                   </ul>
                 )}
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Affiliations Section */}
+        <section id="affiliations" className="mb-24 animate-slide-up animate-delay-375 scroll-mt-20">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
+            {affiliationsData.heading}
+          </h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+            {affiliationsData.institutions.map((institution) => (
+              <a
+                key={institution.id}
+                href={institution.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group"
+                aria-label={institution.name}
+              >
+                <div className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-all duration-300 hover:shadow-lg flex items-center justify-center aspect-square">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <img
+                      src={institution.logo}
+                      alt={institution.name}
+                      className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-105"
+                      onError={(e) => {
+                        // Fallback to text if image fails to load
+                        e.target.style.display = 'none'
+                        e.target.parentElement.innerHTML = `<div class="text-center text-gray-400 group-hover:text-blue-900 transition-colors text-sm font-serif">${institution.name}</div>`
+                      }}
+                    />
+                  </div>
+                </div>
+                <p className="text-center text-sm text-gray-600 mt-3 font-sans group-hover:text-blue-900 transition-colors">
+                  {institution.name}
+                </p>
+              </a>
             ))}
           </div>
         </section>

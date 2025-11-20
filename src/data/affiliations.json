@@ -1,0 +1,40 @@
+{
+  "heading": "Affiliations",
+  "institutions": [
+    {
+      "id": 1,
+      "name": "Centre for Wildlife Studies",
+      "logo": "/logos/cws-logo.png",
+      "url": "https://www.cwsindia.org",
+      "role": "Doctoral Fellow"
+    },
+    {
+      "id": 2,
+      "name": "Indian Institute of Science",
+      "logo": "/logos/iisc-logo.png",
+      "url": "https://www.iisc.ac.in",
+      "role": "Research Collaborator"
+    },
+    {
+      "id": 3,
+      "name": "National Centre for Biological Sciences",
+      "logo": "/logos/ncbs-logo.png",
+      "url": "https://www.ncbs.res.in",
+      "role": "Former Research Scholar"
+    },
+    {
+      "id": 4,
+      "name": "Tata Institute of Fundamental Research",
+      "logo": "/logos/tifr-logo.png",
+      "url": "https://www.tifr.res.in",
+      "role": "Alumni"
+    },
+    {
+      "id": 5,
+      "name": "Wildlife Conservation Society",
+      "logo": "/logos/wcs-logo.png",
+      "url": "https://www.wcs.org",
+      "role": "Research Partner"
+    }
+  ]
+}
