@@ -434,128 +434,8 @@ function App() {
           </div>
         </section>
 
-        {/* Teaching and Workshop Section */}
-        <section id="teaching" className="mb-24 animate-slide-up animate-delay-360 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
-            {teachingData.heading}
-          </h2>
-
-          <div className="space-y-6">
-            {teachingData.workshops.map((workshop) => (
-              <div key={workshop.id} className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-colors duration-300">
-                <h3 className="font-serif font-bold text-xl md:text-2xl text-black mb-3">
-                  {workshop.title}
-                </h3>
-
-                <div className="space-y-2 text-gray-700">
-                  <div className="flex items-start">
-                    <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
-                    <span className="font-sans">
-                      <strong>Event:</strong> {workshop.event}
-                    </span>
-                  </div>
-
-                  <div className="flex items-start">
-                    <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
-                    <span className="font-sans">
-                      <strong>Date:</strong> {workshop.date}
-                    </span>
-                  </div>
-
-                  <div className="flex items-start">
-                    <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
-                    <span className="font-sans">
-                      <strong>Venue:</strong> {workshop.venue}
-                    </span>
-                  </div>
-
-                  {workshop.description && (
-                    <div className="flex items-start mt-3">
-                      <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
-                      <p className="text-gray-600">{workshop.description}</p>
-                    </div>
-                  )}
-
-                  {workshop.url && workshop.url.trim() !== '' && (
-                    <div className="mt-3">
-                      <a
-                        href={workshop.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-blue-900 hover:underline font-sans text-sm"
-                      >
-                        <span>View Details</span>
-                        <FaExternalLinkAlt className="text-xs" />
-                      </a>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Affiliations Section */}
-        <section id="affiliations" className="mb-24 animate-slide-up animate-delay-375 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
-            {affiliationsData.heading}
-          </h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {affiliationsData.institutions.map((institution) => {
-              const LogoCard = (
-                <div className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-all duration-300 hover:shadow-lg flex items-center justify-center aspect-square">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <img
-                      src={institution.logo}
-                      alt={institution.name}
-                      className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-105"
-                      onError={(e) => {
-                        // Fallback to text if image fails to load
-                        e.target.style.display = 'none'
-                        e.target.parentElement.innerHTML = `<div class="text-center text-gray-400 group-hover:text-blue-900 transition-colors text-sm font-serif">${institution.name}</div>`
-                      }}
-                    />
-                  </div>
-                </div>
-              )
-
-              const InstitutionName = (
-                <p className="text-center text-sm text-gray-600 mt-3 font-sans group-hover:text-blue-900 transition-colors">
-                  {institution.name}
-                </p>
-              )
-
-              // If URL exists, wrap in anchor tag
-              if (institution.url && institution.url.trim() !== '') {
-                return (
-                  <a
-                    key={institution.id}
-                    href={institution.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group"
-                    aria-label={institution.name}
-                  >
-                    {LogoCard}
-                    {InstitutionName}
-                  </a>
-                )
-              }
-
-              // Otherwise, just render without link
-              return (
-                <div key={institution.id} className="group">
-                  {LogoCard}
-                  {InstitutionName}
-                </div>
-              )
-            })}
-          </div>
-        </section>
-
         {/* Skills & Certifications */}
-        <section id="skills" className="mb-24 animate-slide-up animate-delay-400 scroll-mt-20">
+        <section id="skills" className="mb-24 animate-slide-up animate-delay-360 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {skillsData.heading}
           </h2>
@@ -591,7 +471,7 @@ function App() {
         </section>
 
         {/* Publications Section */}
-        <section id="publications" className="mb-24 animate-slide-up animate-delay-500 scroll-mt-20">
+        <section id="publications" className="mb-24 animate-slide-up animate-delay-370 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
             {honorsData.publications.heading}
           </h2>
@@ -770,6 +650,126 @@ function App() {
               <span>View All Publications on Google Scholar</span>
               <FaExternalLinkAlt className="text-sm" />
             </a>
+          </div>
+        </section>
+
+        {/* Teaching and Workshop Section */}
+        <section id="teaching" className="mb-24 animate-slide-up animate-delay-380 scroll-mt-20">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
+            {teachingData.heading}
+          </h2>
+
+          <div className="space-y-6">
+            {teachingData.workshops.map((workshop) => (
+              <div key={workshop.id} className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-colors duration-300">
+                <h3 className="font-serif font-bold text-xl md:text-2xl text-black mb-3">
+                  {workshop.title}
+                </h3>
+
+                <div className="space-y-2 text-gray-700">
+                  <div className="flex items-start">
+                    <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
+                    <span className="font-sans">
+                      <strong>Event:</strong> {workshop.event}
+                    </span>
+                  </div>
+
+                  <div className="flex items-start">
+                    <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
+                    <span className="font-sans">
+                      <strong>Date:</strong> {workshop.date}
+                    </span>
+                  </div>
+
+                  <div className="flex items-start">
+                    <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
+                    <span className="font-sans">
+                      <strong>Venue:</strong> {workshop.venue}
+                    </span>
+                  </div>
+
+                  {workshop.description && (
+                    <div className="flex items-start mt-3">
+                      <span className="text-blue-900 mr-2 flex-shrink-0">▸</span>
+                      <p className="text-gray-600">{workshop.description}</p>
+                    </div>
+                  )}
+
+                  {workshop.url && workshop.url.trim() !== '' && (
+                    <div className="mt-3">
+                      <a
+                        href={workshop.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-blue-900 hover:underline font-sans text-sm"
+                      >
+                        <span>View Details</span>
+                        <FaExternalLinkAlt className="text-xs" />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Affiliations Section */}
+        <section id="affiliations" className="mb-24 animate-slide-up animate-delay-375 scroll-mt-20">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900">
+            {affiliationsData.heading}
+          </h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {affiliationsData.institutions.map((institution) => {
+              const LogoCard = (
+                <div className="bg-white border border-gray-300 rounded-lg p-6 hover:border-blue-900 transition-all duration-300 hover:shadow-lg flex items-center justify-center aspect-square">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <img
+                      src={institution.logo}
+                      alt={institution.name}
+                      className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-105"
+                      onError={(e) => {
+                        // Fallback to text if image fails to load
+                        e.target.style.display = 'none'
+                        e.target.parentElement.innerHTML = `<div class="text-center text-gray-400 group-hover:text-blue-900 transition-colors text-sm font-serif">${institution.name}</div>`
+                      }}
+                    />
+                  </div>
+                </div>
+              )
+
+              const InstitutionName = (
+                <p className="text-center text-sm text-gray-600 mt-3 font-sans group-hover:text-blue-900 transition-colors">
+                  {institution.name}
+                </p>
+              )
+
+              // If URL exists, wrap in anchor tag
+              if (institution.url && institution.url.trim() !== '') {
+                return (
+                  <a
+                    key={institution.id}
+                    href={institution.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group"
+                    aria-label={institution.name}
+                  >
+                    {LogoCard}
+                    {InstitutionName}
+                  </a>
+                )
+              }
+
+              // Otherwise, just render without link
+              return (
+                <div key={institution.id} className="group">
+                  {LogoCard}
+                  {InstitutionName}
+                </div>
+              )
+            })}
           </div>
         </section>
 
