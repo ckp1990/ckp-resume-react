@@ -191,12 +191,13 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-slate-950 transition-colors duration-300">
+    <div className="min-h-screen bg-stone-50 dark:bg-black transition-colors duration-300">
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-gray-300 dark:border-slate-800 shadow-sm transition-colors duration-300">
+      <nav className="sticky top-0 z-50 bg-white dark:bg-black border-b border-gray-300 dark:border-gray-800 shadow-sm transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-
+            <div className="font-serif font-bold text-xl text-blue-900 dark:text-blue-300">
+              <a href="#home" className="hover:text-blue-700 dark:hover:text-blue-200 transition-colors">
                 {personalData.name}
               </a>
             </div>
@@ -210,7 +211,7 @@ function App() {
               {/* Dark Mode Toggle (Desktop) */}
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+                className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
                 aria-label="Toggle dark mode"
               >
                 {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
@@ -221,7 +222,7 @@ function App() {
               {/* Dark Mode Toggle (Mobile) */}
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+                className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
                 aria-label="Toggle dark mode"
               >
                 {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
@@ -253,28 +254,28 @@ function App() {
                 <a
                   href="#about"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-slate-800"
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
                 >
                   About
                 </a>
                 <a
                   href="#education"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-slate-800"
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
                 >
                   Education
                 </a>
                 <a
                   href="#skills"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-slate-800"
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
                 >
                   Skills
                 </a>
                 <a
                   href="#publications"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-slate-800"
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
                 >
                   Publications
                 </a>
