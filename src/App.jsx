@@ -196,8 +196,7 @@ function App() {
       <nav className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-gray-300 dark:border-slate-800 shadow-sm transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-            <div className="font-serif font-bold text-xl text-blue-900 dark:text-blue-300">
-              <a href="#home" className="hover:text-blue-700 dark:hover:text-blue-200 transition-colors">
+
                 {personalData.name}
               </a>
             </div>
