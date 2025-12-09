@@ -171,7 +171,9 @@ function App() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             <div className="font-serif font-bold text-xl text-blue-900">
-              {personalData.name}
+              <a href="#home" className="hover:text-blue-700 transition-colors">
+                {personalData.name}
+              </a>
             </div>
             <div className="hidden md:flex space-x-8 font-sans text-sm">
               <a href="#about" className="text-gray-700 hover:text-blue-900 transition-colors">About</a>
