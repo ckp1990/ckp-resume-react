@@ -315,7 +315,7 @@ function App() {
           )}
 
           <div className="mb-6 text-center">
-            <h1 className="font-serif font-black text-7xl md:text-8xl lg:text-9xl mb-4 text-gradient dark:text-red-500 leading-none">
+            <h1 className="font-serif font-black text-7xl md:text-8xl lg:text-9xl mb-4 text-red-600 dark:text-red-500 leading-none">
               {personalData.name}
             </h1>
             <div className="font-sans text-2xl md:text-3xl text-gray-700 dark:text-red-400 font-light tracking-wide">
