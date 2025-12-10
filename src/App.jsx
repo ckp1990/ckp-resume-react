@@ -299,9 +299,9 @@ function App() {
           {personalData.profileImage ? (
             <div className="flex justify-center mb-8">
               <img
-                src={personalData.profileImage}
                 alt={personalData.name}
                 className="w-48 h-48 rounded-full object-cover border-4 border-blue-900 dark:border-blue-500 shadow-lg"
+                src={personalData.profileImage}
               />
             </div>
           ) : (
