@@ -162,14 +162,14 @@ function App() {
     parts = parts.flatMap(part => {
       if (part.startsWith('<strong>') && part.endsWith('</strong>')) {
         const content = part.replace(/<\/?strong>/g, '')
-        return <span key={Math.random()} className="font-semibold dark:text-gray-200">{content}</span>
+        return <span key={Math.random()} className="font-semibold dark:text-red-500">{content}</span>
       }
       // Replace <em> tags
       if (part.includes('<em>') || part.includes('</em>')) {
         return part.split(/(<em>.*?<\/em>)/g).map((emPart, i) => {
           if (emPart.startsWith('<em>') && emPart.endsWith('</em>')) {
             const content = emPart.replace(/<\/?em>/g, '')
-            return <span key={i} className="text-gray-700 italic dark:text-gray-300">{content}</span>
+            return <span key={i} className="text-gray-700 italic dark:text-red-400">{content}</span>
           }
           return emPart
         })
@@ -179,7 +179,7 @@ function App() {
         return part.split(/(<code>.*?<\/code>)/g).map((codePart, i) => {
           if (codePart.startsWith('<code>') && codePart.endsWith('</code>')) {
             const content = codePart.replace(/<\/?code>/g, '')
-            return <span key={i} className="font-mono font-semibold dark:text-gray-200">{content}</span>
+            return <span key={i} className="font-mono font-semibold dark:text-red-500">{content}</span>
           }
           return codePart
         })
@@ -196,22 +196,22 @@ function App() {
       <nav className="sticky top-0 z-50 bg-white dark:bg-black border-b border-gray-300 dark:border-gray-800 shadow-sm transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-            <div className="font-serif font-bold text-xl text-blue-900 dark:text-blue-300">
-              <a href="#home" className="hover:text-blue-700 dark:hover:text-blue-200 transition-colors">
+            <div className="font-serif font-bold text-xl text-blue-900 dark:text-red-500">
+              <a href="#home" className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">
                 {personalData.name}
               </a>
             </div>
             <div className="hidden md:flex items-center space-x-8 font-sans text-sm">
-              <a href="#about" className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors">About</a>
-              <a href="#education" className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors">Education</a>
-              <a href="#skills" className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors">Skills</a>
-              <a href="#publications" className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors">Publications</a>
-              <a href="#blog" className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors">Blog</a>
+              <a href="#about" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">About</a>
+              <a href="#education" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Education</a>
+              <a href="#skills" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Skills</a>
+              <a href="#publications" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Publications</a>
+              <a href="#blog" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Blog</a>
 
               {/* Dark Mode Toggle (Desktop) */}
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
+                className="p-2 rounded-full text-gray-700 dark:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
                 aria-label="Toggle dark mode"
               >
                 {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
@@ -222,7 +222,7 @@ function App() {
               {/* Dark Mode Toggle (Mobile) */}
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
+                className="p-2 rounded-full text-gray-700 dark:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
                 aria-label="Toggle dark mode"
               >
                 {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
@@ -231,7 +231,7 @@ function App() {
               {/* Mobile menu button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 p-2"
+                className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 p-2"
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? (
@@ -254,35 +254,35 @@ function App() {
                 <a
                   href="#about"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
+                  className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
                 >
                   About
                 </a>
                 <a
                   href="#education"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
+                  className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
                 >
                   Education
                 </a>
                 <a
                   href="#skills"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
+                  className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
                 >
                   Skills
                 </a>
                 <a
                   href="#publications"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
+                  className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
                 >
                   Publications
                 </a>
                 <a
                   href="#blog"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-300 transition-colors py-2"
+                  className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors py-2"
                 >
                   Blog
                 </a>
@@ -307,7 +307,7 @@ function App() {
           ) : (
             <div className="flex justify-center mb-8">
               <div className="w-48 h-48 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 dark:from-slate-800 dark:to-slate-700 border-4 border-blue-900 dark:border-blue-500 shadow-lg flex items-center justify-center">
-                <svg className="w-24 h-24 text-blue-900 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-24 h-24 text-blue-900 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -315,11 +315,11 @@ function App() {
           )}
 
           <div className="mb-6 text-center">
-            <h1 className="font-serif font-black text-7xl md:text-8xl lg:text-9xl mb-4 text-gradient dark:text-blue-300 leading-none">
+            <h1 className="font-serif font-black text-7xl md:text-8xl lg:text-9xl mb-4 text-gradient dark:text-red-500 leading-none">
               {personalData.name}
             </h1>
-            <div className="font-sans text-2xl md:text-3xl text-gray-700 dark:text-gray-300 font-light tracking-wide">
-              {personalData.title} <span className="text-gray-400 dark:text-gray-500">{personalData.separator}</span> {personalData.subtitle}
+            <div className="font-sans text-2xl md:text-3xl text-gray-700 dark:text-red-400 font-light tracking-wide">
+              {personalData.title} <span className="text-gray-400 dark:text-red-300">{personalData.separator}</span> {personalData.subtitle}
             </div>
           </div>
 
@@ -328,11 +328,11 @@ function App() {
             {/* Email and Location */}
             <div className="flex flex-wrap justify-center gap-4 font-mono text-sm">
               <a href={`mailto:${personalData.email}`}
-                 className="px-4 py-2 bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-slate-800 border border-gray-300 dark:border-slate-700 hover:border-blue-900 dark:hover:border-blue-500 rounded transition-all duration-300 text-black dark:text-gray-200 flex items-center gap-2">
+                 className="px-4 py-2 bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:border-blue-900 dark:hover:border-blue-500 rounded transition-all duration-300 text-black dark:text-red-500 flex items-center gap-2">
                 <FaEnvelope className="w-4 h-4" />
                 {personalData.email}
               </a>
-              <div className="px-4 py-2 bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded text-black dark:text-gray-200 flex items-center gap-2">
+              <div className="px-4 py-2 bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded text-black dark:text-red-500 flex items-center gap-2">
                 <HiLocationMarker className="w-4 h-4" />
                 {personalData.location}
               </div>
@@ -344,7 +344,7 @@ function App() {
                 href={personalData.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white dark:bg-slate-900 hover:bg-blue-900 dark:hover:bg-blue-700 border border-gray-300 dark:border-slate-700 hover:border-blue-900 dark:hover:border-blue-700 rounded-full transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-white dark:hover:text-white group"
+                className="p-3 bg-white dark:bg-slate-900 hover:bg-blue-900 dark:hover:bg-blue-700 border border-gray-300 dark:border-gray-700 hover:border-blue-900 dark:hover:border-blue-700 rounded-full transition-all duration-300 text-gray-700 dark:text-red-500 hover:text-white dark:hover:text-white group"
                 aria-label="LinkedIn"
               >
                 <FaLinkedin className="w-6 h-6" />
@@ -353,7 +353,7 @@ function App() {
                 href={personalData.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white dark:bg-slate-900 hover:bg-gray-900 dark:hover:bg-gray-700 border border-gray-300 dark:border-slate-700 hover:border-gray-900 dark:hover:border-gray-700 rounded-full transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-white dark:hover:text-white group"
+                className="p-3 bg-white dark:bg-slate-900 hover:bg-gray-900 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 hover:border-gray-900 dark:hover:border-gray-700 rounded-full transition-all duration-300 text-gray-700 dark:text-red-500 hover:text-white dark:hover:text-white group"
                 aria-label="GitHub"
               >
                 <FaGithub className="w-6 h-6" />
@@ -362,7 +362,7 @@ function App() {
                 href={personalData.orcid}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white dark:bg-slate-900 hover:bg-green-600 dark:hover:bg-green-500 border border-gray-300 dark:border-slate-700 hover:border-green-600 dark:hover:border-green-500 rounded-full transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-white dark:hover:text-white group"
+                className="p-3 bg-white dark:bg-slate-900 hover:bg-green-600 dark:hover:bg-green-500 border border-gray-300 dark:border-gray-700 hover:border-green-600 dark:hover:border-green-500 rounded-full transition-all duration-300 text-gray-700 dark:text-red-500 hover:text-white dark:hover:text-white group"
                 aria-label="ORCID"
               >
                 <SiOrcid className="w-6 h-6" />
@@ -371,7 +371,7 @@ function App() {
                 href={personalData.researchgate}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white dark:bg-slate-900 hover:bg-cyan-600 dark:hover:bg-cyan-500 border border-gray-300 dark:border-slate-700 hover:border-cyan-600 dark:hover:border-cyan-500 rounded-full transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-white dark:hover:text-white group"
+                className="p-3 bg-white dark:bg-slate-900 hover:bg-cyan-600 dark:hover:bg-cyan-500 border border-gray-300 dark:border-gray-700 hover:border-cyan-600 dark:hover:border-cyan-500 rounded-full transition-all duration-300 text-gray-700 dark:text-red-500 hover:text-white dark:hover:text-white group"
                 aria-label="ResearchGate"
               >
                 <SiResearchgate className="w-6 h-6" />
@@ -380,7 +380,7 @@ function App() {
                 href={personalData.inaturalist}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white dark:bg-slate-900 hover:bg-green-700 dark:hover:bg-green-600 border border-gray-300 dark:border-slate-700 hover:border-green-700 dark:hover:border-green-600 rounded-full transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-white dark:hover:text-white group"
+                className="p-3 bg-white dark:bg-slate-900 hover:bg-green-700 dark:hover:bg-green-600 border border-gray-300 dark:border-gray-700 hover:border-green-700 dark:hover:border-green-600 rounded-full transition-all duration-300 text-gray-700 dark:text-red-500 hover:text-white dark:hover:text-white group"
                 aria-label="iNaturalist"
               >
                 <FaLeaf className="w-6 h-6" />
@@ -389,7 +389,7 @@ function App() {
                 href={personalData.kaggle}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white dark:bg-slate-900 hover:bg-blue-500 dark:hover:bg-blue-400 border border-gray-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-400 rounded-full transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-white dark:hover:text-white group"
+                className="p-3 bg-white dark:bg-slate-900 hover:bg-blue-500 dark:hover:bg-blue-400 border border-gray-300 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 rounded-full transition-all duration-300 text-gray-700 dark:text-red-500 hover:text-white dark:hover:text-white group"
                 aria-label="Kaggle"
               >
                 <SiKaggle className="w-6 h-6" />
@@ -400,10 +400,10 @@ function App() {
 
         {/* Summary Section */}
         <section id="about" className="mb-24 animate-slide-up animate-delay-100 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-8 text-blue-900 dark:text-blue-300">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-8 text-blue-900 dark:text-red-500">
             {aboutData.heading}
           </h2>
-          <div className="font-sans text-lg md:text-xl leading-relaxed text-black dark:text-gray-200 space-y-4 max-w-4xl">
+          <div className="font-sans text-lg md:text-xl leading-relaxed text-black dark:text-red-500 space-y-4 max-w-4xl">
             {aboutData.paragraphs.map((paragraph, index) => (
               <p key={index}>{parseText(paragraph)}</p>
             ))}
@@ -412,21 +412,21 @@ function App() {
 
         {/* Education Section */}
         <section id="education" className="mb-24 animate-slide-up animate-delay-300 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-blue-300">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
             {educationData.heading}
           </h2>
 
           <div className="space-y-8">
             {educationData.degrees.map((degree) => (
-              <div key={degree.id} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
-                <h3 className="font-serif font-bold text-2xl text-black dark:text-white mb-2">
+              <div key={degree.id} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
+                <h3 className="font-serif font-bold text-2xl text-black dark:text-red-500 mb-2">
                   {degree.degree}
                 </h3>
-                <div className="text-blue-900 dark:text-blue-300 font-sans text-lg mb-2">
+                <div className="text-blue-900 dark:text-blue-400 font-sans text-lg mb-2">
                   {degree.institution}
                 </div>
-                <div className="text-gray-700 dark:text-gray-300">{degree.field}</div>
-                <div className="font-mono text-sm text-gray-600 dark:text-gray-400 mt-2">{degree.year}</div>
+                <div className="text-gray-700 dark:text-red-400">{degree.field}</div>
+                <div className="font-mono text-sm text-gray-600 dark:text-red-300 mt-2">{degree.year}</div>
               </div>
             ))}
           </div>
@@ -434,43 +434,43 @@ function App() {
 
         {/* Experience Section */}
         <section id="experience" className="mb-24 animate-slide-up animate-delay-350 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-blue-300">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
             {experienceData.heading}
           </h2>
 
           <div className="space-y-8">
             {experienceData.jobs.map((job) => (
-              <div key={job.id} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
+              <div key={job.id} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
                   <div className="flex-1">
-                    <h3 className="font-serif font-bold text-2xl text-black dark:text-white mb-2">
+                    <h3 className="font-serif font-bold text-2xl text-black dark:text-red-500 mb-2">
                       {job.position}
                     </h3>
-                    <div className="text-blue-900 dark:text-blue-300 font-sans text-lg mb-1">
+                    <div className="text-blue-900 dark:text-blue-400 font-sans text-lg mb-1">
                       {job.organization}
                     </div>
                     {job.location && (
-                      <div className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+                      <div className="text-gray-600 dark:text-red-300 text-sm mb-2">
                         {job.location}
                       </div>
                     )}
                   </div>
-                  <div className="font-mono text-sm text-gray-600 dark:text-gray-400 md:ml-4 flex-shrink-0">
+                  <div className="font-mono text-sm text-gray-600 dark:text-red-300 md:ml-4 flex-shrink-0">
                     {job.startDate} - {job.endDate}
                   </div>
                 </div>
 
                 {job.description && (
-                  <p className="text-gray-700 dark:text-gray-300 mb-3">
+                  <p className="text-gray-700 dark:text-red-400 mb-3">
                     {parseText(job.description)}
                   </p>
                 )}
 
                 {job.responsibilities && job.responsibilities.length > 0 && (
-                  <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                  <ul className="space-y-2 text-gray-700 dark:text-red-400">
                     {job.responsibilities.map((resp, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="text-blue-900 dark:text-blue-300 mr-2 flex-shrink-0">▸</span>
+                        <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
                         <span>{parseText(resp)}</span>
                       </li>
                     ))}
@@ -483,18 +483,18 @@ function App() {
 
         {/* Skills & Certifications */}
         <section id="skills" className="mb-24 animate-slide-up animate-delay-360 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-blue-300">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
             {skillsData.heading}
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="font-serif font-bold text-2xl text-blue-900 dark:text-blue-300 mb-4">
+              <h3 className="font-serif font-bold text-2xl text-blue-900 dark:text-red-500 mb-4">
                 {skillsData.skills.heading}
               </h3>
               <div className="flex flex-wrap gap-3">
                 {skillsData.skills.items.map((skill, index) => (
-                  <span key={index} className="px-4 py-2 bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-full text-black dark:text-white font-mono text-sm">
+                  <span key={index} className="px-4 py-2 bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-full text-black dark:text-red-500 font-mono text-sm">
                     {skill}
                   </span>
                 ))}
@@ -502,13 +502,13 @@ function App() {
             </div>
 
             <div>
-              <h3 className="font-serif font-bold text-2xl text-blue-900 dark:text-blue-300 mb-4">
+              <h3 className="font-serif font-bold text-2xl text-blue-900 dark:text-red-500 mb-4">
                 {skillsData.certifications.heading}
               </h3>
-              <ul className="space-y-2 text-black dark:text-gray-200">
+              <ul className="space-y-2 text-black dark:text-red-400">
                 {skillsData.certifications.items.map((cert, index) => (
                   <li key={index} className="flex items-start">
-                    <span className="text-blue-900 dark:text-blue-300 mr-2">▸</span>
+                    <span className="text-blue-900 dark:text-blue-400 mr-2">▸</span>
                     {cert}
                   </li>
                 ))}
@@ -519,14 +519,14 @@ function App() {
 
         {/* Publications Section */}
         <section id="publications" className="mb-24 animate-slide-up animate-delay-370 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-blue-300">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
             {honorsData.publications.heading}
           </h2>
 
           {/* Scientific Articles */}
           {honorsData.publications.scientificArticles.items.length > 0 && (
             <div className="mb-12">
-              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900 dark:text-blue-300">
+              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900 dark:text-red-500">
                 {honorsData.publications.scientificArticles.heading}
               </h3>
               <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
@@ -541,30 +541,30 @@ function App() {
                     const url = pub.url || pub.link
 
                     return (
-                      <li key={index} className="pl-4 marker:text-blue-900 dark:marker:text-blue-300 marker:font-bold">
+                      <li key={index} className="pl-4 marker:text-blue-900 dark:marker:text-blue-400 marker:font-bold">
                         <div className="space-y-1">
                           {url ? (
                             <a
                               href={url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-900 dark:text-blue-300 hover:underline font-serif text-xl font-semibold block"
+                              className="text-blue-900 dark:text-blue-400 hover:underline font-serif text-xl font-semibold block"
                             >
                               {title}
                             </a>
                           ) : (
-                            <div className="text-black dark:text-white font-serif text-xl font-semibold">
+                            <div className="text-black dark:text-red-500 font-serif text-xl font-semibold">
                               {title}
                             </div>
                           )}
 
                           {authors && (
-                            <div className="text-gray-700 dark:text-gray-300 text-base italic">
+                            <div className="text-gray-700 dark:text-red-400 text-base italic">
                               {authors}
                             </div>
                           )}
 
-                          <div className="text-gray-600 dark:text-gray-400 text-base">
+                          <div className="text-gray-600 dark:text-red-300 text-base">
                             {year && <span className="font-semibold">{year}</span>}
                             {year && journal && <span className="mx-2">•</span>}
                             {journal && <span className="italic">{journal}</span>}
@@ -580,7 +580,7 @@ function App() {
           {/* Book Chapters */}
           {honorsData.publications.bookChapters.items.length > 0 && (
             <div className="mb-12">
-              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900 dark:text-blue-300">
+              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900 dark:text-red-500">
                 {honorsData.publications.bookChapters.heading}
               </h3>
               <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
@@ -595,30 +595,30 @@ function App() {
                     const url = pub.url || pub.link
 
                     return (
-                      <li key={index} className="pl-4 marker:text-blue-900 dark:marker:text-blue-300 marker:font-bold">
+                      <li key={index} className="pl-4 marker:text-blue-900 dark:marker:text-blue-400 marker:font-bold">
                         <div className="space-y-1">
                           {url ? (
                             <a
                               href={url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-900 dark:text-blue-300 hover:underline font-serif text-xl font-semibold block"
+                              className="text-blue-900 dark:text-blue-400 hover:underline font-serif text-xl font-semibold block"
                             >
                               {title}
                             </a>
                           ) : (
-                            <div className="text-black dark:text-white font-serif text-xl font-semibold">
+                            <div className="text-black dark:text-red-500 font-serif text-xl font-semibold">
                               {title}
                             </div>
                           )}
 
                           {authors && (
-                            <div className="text-gray-700 dark:text-gray-300 text-base italic">
+                            <div className="text-gray-700 dark:text-red-400 text-base italic">
                               {authors}
                             </div>
                           )}
 
-                          <div className="text-gray-600 dark:text-gray-400 text-base">
+                          <div className="text-gray-600 dark:text-red-300 text-base">
                             {year && <span className="font-semibold">{year}</span>}
                             {year && journal && <span className="mx-2">•</span>}
                             {journal && <span className="italic">{journal}</span>}
@@ -634,7 +634,7 @@ function App() {
           {/* Other Literature */}
           {honorsData.publications.otherLiterature.items.length > 0 && (
             <div className="mb-12">
-              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900 dark:text-blue-300">
+              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900 dark:text-red-500">
                 {honorsData.publications.otherLiterature.heading}
               </h3>
               <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
@@ -649,30 +649,30 @@ function App() {
                     const url = pub.url || pub.link
 
                     return (
-                      <li key={index} className="pl-4 marker:text-blue-900 dark:marker:text-blue-300 marker:font-bold">
+                      <li key={index} className="pl-4 marker:text-blue-900 dark:marker:text-blue-400 marker:font-bold">
                         <div className="space-y-1">
                           {url ? (
                             <a
                               href={url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-900 dark:text-blue-300 hover:underline font-serif text-xl font-semibold block"
+                              className="text-blue-900 dark:text-blue-400 hover:underline font-serif text-xl font-semibold block"
                             >
                               {title}
                             </a>
                           ) : (
-                            <div className="text-black dark:text-white font-serif text-xl font-semibold">
+                            <div className="text-black dark:text-red-500 font-serif text-xl font-semibold">
                               {title}
                             </div>
                           )}
 
                           {authors && (
-                            <div className="text-gray-700 dark:text-gray-300 text-base italic">
+                            <div className="text-gray-700 dark:text-red-400 text-base italic">
                               {authors}
                             </div>
                           )}
 
-                          <div className="text-gray-600 dark:text-gray-400 text-base">
+                          <div className="text-gray-600 dark:text-red-300 text-base">
                             {year && <span className="font-semibold">{year}</span>}
                             {year && journal && <span className="mx-2">•</span>}
                             {journal && <span className="italic">{journal}</span>}
@@ -691,7 +691,7 @@ function App() {
               href="https://scholar.google.com/citations?user=CCHMzREAAAAJ&hl=en"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-6 py-4 bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-slate-800 border-2 border-blue-900 dark:border-blue-500 hover:border-blue-700 dark:hover:border-blue-400 rounded-lg transition-all duration-300 text-blue-900 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 font-sans font-semibold shadow-md hover:shadow-lg"
+              className="inline-flex items-center gap-3 px-6 py-4 bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-gray-800 border-2 border-blue-900 dark:border-blue-500 hover:border-blue-700 dark:hover:border-blue-400 rounded-lg transition-all duration-300 text-blue-900 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-sans font-semibold shadow-md hover:shadow-lg"
             >
               <SiGooglescholar className="text-2xl" />
               <span>View All Publications on Google Scholar</span>
@@ -702,34 +702,34 @@ function App() {
 
         {/* Teaching and Workshop Section */}
         <section id="teaching" className="mb-24 animate-slide-up animate-delay-380 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-blue-300">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
             {teachingData.heading}
           </h2>
 
           <div className="space-y-6">
             {teachingData.workshops.map((workshop) => (
-              <div key={workshop.id} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
-                <h3 className="font-serif font-bold text-xl md:text-2xl text-black dark:text-white mb-3">
+              <div key={workshop.id} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
+                <h3 className="font-serif font-bold text-xl md:text-2xl text-black dark:text-red-500 mb-3">
                   {workshop.title}
                 </h3>
 
-                <div className="space-y-2 text-gray-700 dark:text-gray-300">
+                <div className="space-y-2 text-gray-700 dark:text-red-300">
                   <div className="flex items-start">
-                    <span className="text-blue-900 dark:text-blue-300 mr-2 flex-shrink-0">▸</span>
+                    <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
                     <span className="font-sans">
                       <strong>Event:</strong> {workshop.event}
                     </span>
                   </div>
 
                   <div className="flex items-start">
-                    <span className="text-blue-900 dark:text-blue-300 mr-2 flex-shrink-0">▸</span>
+                    <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
                     <span className="font-sans">
                       <strong>Date:</strong> {workshop.date}
                     </span>
                   </div>
 
                   <div className="flex items-start">
-                    <span className="text-blue-900 dark:text-blue-300 mr-2 flex-shrink-0">▸</span>
+                    <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
                     <span className="font-sans">
                       <strong>Venue:</strong> {workshop.venue}
                     </span>
@@ -737,8 +737,8 @@ function App() {
 
                   {workshop.description && (
                     <div className="flex items-start mt-3">
-                      <span className="text-blue-900 dark:text-blue-300 mr-2 flex-shrink-0">▸</span>
-                      <p className="text-gray-600 dark:text-gray-400">{workshop.description}</p>
+                      <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
+                      <p className="text-gray-600 dark:text-red-300">{workshop.description}</p>
                     </div>
                   )}
 
@@ -748,7 +748,7 @@ function App() {
                         href={workshop.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-blue-900 dark:text-blue-300 hover:underline font-sans text-sm"
+                        className="inline-flex items-center gap-2 text-blue-900 dark:text-blue-400 hover:underline font-sans text-sm"
                       >
                         <span>View Details</span>
                         <FaExternalLinkAlt className="text-xs" />
@@ -763,14 +763,14 @@ function App() {
 
         {/* Affiliations Section */}
         <section id="affiliations" className="mb-24 animate-slide-up animate-delay-375 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-blue-300">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
             {affiliationsData.heading}
           </h2>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {affiliationsData.institutions.map((institution) => {
               const LogoCard = (
-                <div className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300 hover:shadow-lg flex items-center justify-center aspect-square">
+                <div className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300 hover:shadow-lg flex items-center justify-center aspect-square">
                   <div className="w-full h-full flex items-center justify-center">
                     <img
                       src={institution.logo}
@@ -779,7 +779,7 @@ function App() {
                       onError={(e) => {
                         // Fallback to text if image fails to load
                         e.target.style.display = 'none'
-                        e.target.parentElement.innerHTML = `<div class="text-center text-gray-400 group-hover:text-blue-900 dark:group-hover:text-blue-300 transition-colors text-sm font-serif">${institution.name}</div>`
+                        e.target.parentElement.innerHTML = `<div class="text-center text-gray-400 group-hover:text-blue-900 dark:group-hover:text-blue-400 transition-colors text-sm font-serif">${institution.name}</div>`
                       }}
                     />
                   </div>
@@ -787,7 +787,7 @@ function App() {
               )
 
               const InstitutionName = (
-                <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-3 font-sans group-hover:text-blue-900 dark:group-hover:text-blue-300 transition-colors">
+                <p className="text-center text-sm text-gray-600 dark:text-red-300 mt-3 font-sans group-hover:text-blue-900 dark:group-hover:text-blue-400 transition-colors">
                   {institution.name}
                 </p>
               )
@@ -822,7 +822,7 @@ function App() {
 
         {/* Awards Section */}
         <section id="awards" className="mb-24 animate-slide-up animate-delay-550 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-blue-300">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
             {honorsData.awards.heading}
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
@@ -835,21 +835,21 @@ function App() {
               const IconComponent = getIcon(iconName)
 
               return (
-                <div key={index} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
+                <div key={index} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
                   <div className="flex items-start gap-3">
-                    <IconComponent className="text-blue-900 dark:text-blue-300 text-2xl flex-shrink-0" />
+                    <IconComponent className="text-blue-900 dark:text-blue-400 text-2xl flex-shrink-0" />
                     {url ? (
                       <a
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-900 dark:text-blue-300 hover:underline text-lg flex items-center gap-2 flex-1"
+                        className="text-blue-900 dark:text-blue-400 hover:underline text-lg flex items-center gap-2 flex-1"
                       >
                         <span>{text}</span>
                         <FaExternalLinkAlt className="text-sm flex-shrink-0" />
                       </a>
                     ) : (
-                      <span className="text-black dark:text-white text-lg">{text}</span>
+                      <span className="text-black dark:text-red-500 text-lg">{text}</span>
                     )}
                   </div>
                 </div>
@@ -873,7 +873,7 @@ function App() {
 
           {!mediaLoading && mediaItems.length > 0 && (
             <div className="relative max-w-6xl mx-auto">
-              <div className="relative bg-white dark:bg-slate-900 border-2 border-gray-300 dark:border-slate-700 rounded-lg overflow-hidden shadow-lg">
+              <div className="relative bg-white dark:bg-slate-900 border-2 border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden shadow-lg">
                 <div className="relative aspect-video bg-gray-900">
                   {mediaItems.map((item, index) => {
                     const mediaUrl = getGoogleDriveUrl(item.googleDriveId, item.type)
@@ -961,12 +961,12 @@ function App() {
                 )}
 
                 {mediaItems[currentSlide] && (
-                  <div className="bg-gradient-to-r from-blue-50 to-white dark:from-slate-800 dark:to-slate-900 p-4 border-t border-gray-200 dark:border-slate-700">
-                    <h3 className="font-serif font-bold text-xl text-blue-900 dark:text-blue-300">
+                  <div className="bg-gradient-to-r from-blue-50 to-white dark:from-slate-800 dark:to-slate-900 p-4 border-t border-gray-200 dark:border-gray-700">
+                    <h3 className="font-serif font-bold text-xl text-blue-900 dark:text-red-500">
                       {mediaItems[currentSlide].title}
                     </h3>
                     {mediaItems[currentSlide].description && (
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
+                      <p className="text-gray-600 dark:text-red-300 text-sm mt-1">
                         {mediaItems[currentSlide].description}
                       </p>
                     )}
@@ -988,7 +988,7 @@ function App() {
 
         {/* Blog Section */}
         <section id="blog" className="mb-16 animate-slide-up animate-delay-600 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-blue-300">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
             {blogData.heading}
           </h2>
 
@@ -997,7 +997,7 @@ function App() {
             <div className="max-w-4xl">
               <button
                 onClick={() => setSelectedPost(null)}
-                className="mb-6 px-4 py-2 bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-slate-800 border border-gray-300 dark:border-slate-700 hover:border-blue-900 dark:hover:border-blue-500 rounded transition-all duration-300 text-black dark:text-white flex items-center gap-2"
+                className="mb-6 px-4 py-2 bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:border-blue-900 dark:hover:border-blue-500 rounded transition-all duration-300 text-black dark:text-white flex items-center gap-2"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -1005,19 +1005,19 @@ function App() {
                 Back to Blog
               </button>
 
-              <article className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg p-8">
+              <article className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-8">
                 <div className="mb-6">
                   <h3 className="font-serif font-bold text-3xl md:text-4xl text-black dark:text-white mb-3">
                     {selectedPost.title}
                   </h3>
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-red-300">
                     <time className="font-mono">{new Date(selectedPost.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
                     <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 rounded-full">{selectedPost.category}</span>
                   </div>
                   {selectedPost.tags && selectedPost.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-3">
                       {selectedPost.tags.map((tag, index) => (
-                        <span key={index} className="text-xs px-2 py-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 rounded">
+                        <span key={index} className="text-xs px-2 py-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-red-300 rounded">
                           #{tag}
                         </span>
                       ))}
@@ -1028,19 +1028,19 @@ function App() {
                 <div className="prose prose-lg max-w-none dark:prose-invert">
                   <ReactMarkdown
                     components={{
-                      h1: ({node, ...props}) => <h1 className="font-serif font-bold text-3xl text-blue-900 dark:text-blue-300 mb-4 mt-8" {...props} />,
-                      h2: ({node, ...props}) => <h2 className="font-serif font-bold text-2xl text-blue-900 dark:text-blue-300 mb-3 mt-6" {...props} />,
-                      h3: ({node, ...props}) => <h3 className="font-serif font-bold text-xl text-blue-900 dark:text-blue-300 mb-2 mt-4" {...props} />,
-                      p: ({node, ...props}) => <p className="text-black dark:text-gray-200 leading-relaxed mb-4" {...props} />,
-                      ul: ({node, ...props}) => <ul className="list-disc list-inside space-y-2 mb-4 text-black dark:text-gray-200" {...props} />,
-                      ol: ({node, ...props}) => <ol className="list-decimal list-inside space-y-2 mb-4 text-black dark:text-gray-200" {...props} />,
+                      h1: ({node, ...props}) => <h1 className="font-serif font-bold text-3xl text-blue-900 dark:text-red-500 mb-4 mt-8" {...props} />,
+                      h2: ({node, ...props}) => <h2 className="font-serif font-bold text-2xl text-blue-900 dark:text-red-500 mb-3 mt-6" {...props} />,
+                      h3: ({node, ...props}) => <h3 className="font-serif font-bold text-xl text-blue-900 dark:text-red-500 mb-2 mt-4" {...props} />,
+                      p: ({node, ...props}) => <p className="text-black dark:text-red-400 leading-relaxed mb-4" {...props} />,
+                      ul: ({node, ...props}) => <ul className="list-disc list-inside space-y-2 mb-4 text-black dark:text-red-400" {...props} />,
+                      ol: ({node, ...props}) => <ol className="list-decimal list-inside space-y-2 mb-4 text-black dark:text-red-400" {...props} />,
                       li: ({node, ...props}) => <li className="ml-4" {...props} />,
                       code: ({node, inline, ...props}) =>
                         inline ?
                           <code className="bg-gray-100 dark:bg-slate-800 px-2 py-1 rounded font-mono text-sm" {...props} /> :
                           <code className="block bg-gray-100 dark:bg-slate-800 p-4 rounded font-mono text-sm overflow-x-auto mb-4" {...props} />,
-                      blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-blue-900 dark:border-blue-500 pl-4 italic text-gray-700 dark:text-gray-300 my-4" {...props} />,
-                      a: ({node, ...props}) => <a className="text-blue-900 dark:text-blue-300 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                      blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-blue-900 dark:border-blue-500 pl-4 italic text-gray-700 dark:text-red-300 my-4" {...props} />,
+                      a: ({node, ...props}) => <a className="text-blue-900 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
                       strong: ({node, ...props}) => <strong className="font-bold text-black dark:text-white" {...props} />,
                       em: ({node, ...props}) => <em className="italic" {...props} />
                     }}
@@ -1059,14 +1059,14 @@ function App() {
                 .map((post) => (
                   <article
                     key={post.id}
-                    className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300 cursor-pointer"
+                    className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300 cursor-pointer"
                     onClick={() => setSelectedPost(post)}
                   >
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
-                      <h3 className="font-serif font-bold text-2xl md:text-3xl text-black dark:text-white hover:text-blue-900 dark:hover:text-blue-300 transition-colors">
+                      <h3 className="font-serif font-bold text-2xl md:text-3xl text-black dark:text-white hover:text-blue-900 dark:hover:text-blue-400 transition-colors">
                         {post.title}
                       </h3>
-                      <time className="font-mono text-sm text-gray-600 dark:text-gray-400 md:ml-4 flex-shrink-0">
+                      <time className="font-mono text-sm text-gray-600 dark:text-red-300 md:ml-4 flex-shrink-0">
                         {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                       </time>
                     </div>
@@ -1078,7 +1078,7 @@ function App() {
                       {post.tags && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2">
                           {post.tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="text-xs text-gray-500 dark:text-gray-400">
+                            <span key={index} className="text-xs text-gray-500 dark:text-red-300">
                               #{tag}
                             </span>
                           ))}
@@ -1086,11 +1086,11 @@ function App() {
                       )}
                     </div>
 
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                    <p className="text-gray-700 dark:text-red-400 leading-relaxed mb-3">
                       {post.excerpt}
                     </p>
 
-                    <div className="text-blue-900 dark:text-blue-300 font-sans text-sm hover:underline">
+                    <div className="text-blue-900 dark:text-blue-400 font-sans text-sm hover:underline">
                       Read more →
                     </div>
                   </article>
@@ -1106,7 +1106,7 @@ function App() {
         </section>
 
         {/* Footer */}
-        <footer className="text-center text-gray-500 dark:text-gray-400 font-mono text-sm pt-12 border-t border-gray-300 dark:border-slate-700">
+        <footer className="text-center text-gray-500 dark:text-red-400 font-mono text-sm pt-12 border-t border-gray-300 dark:border-gray-700">
           <p>{personalData.footerText}</p>
         </footer>
       </div>
