@@ -38,7 +38,20 @@ function App() {
         // If we are coming from subscribe page to home, ensure we switch view
         if (currentView === 'subscribe') {
           setCurrentView('home')
-
+          // Wait for render to complete before scrolling
+          setTimeout(() => {
+            const element = document.getElementById(hash.replace('#', ''))
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' })
+            } else {
+              window.scrollTo(0, 0)
+            }
+          }, 100)
+        } else if (hash && hash !== '#subscribe') {
+          // Normal hash navigation within home view
+          setCurrentView('home')
+        } else if (!hash) {
+          setCurrentView('home')
         }
       }
     }

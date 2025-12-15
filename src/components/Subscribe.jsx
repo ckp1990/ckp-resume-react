@@ -30,6 +30,10 @@ const Subscribe = () => {
         const formData = new FormData()
         formData.append(entryName, name)
         formData.append(entryEmail, email)
+        // Add hidden fields required by some Google Forms
+        formData.append('fvv', '1')
+        formData.append('pageHistory', '0')
+        formData.append('fbzx', '-3386094067435634951') // Standard public token often seen, but usually ignored for external posts
 
         await fetch(googleFormActionUrl, {
           method: 'POST',
