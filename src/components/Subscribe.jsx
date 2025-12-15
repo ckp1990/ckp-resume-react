@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
+import subscriptionData from '../data/subscription.json'
 
 const Subscribe = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!name.trim() || !email.trim()) {
       setError('Please fill in all fields')
@@ -17,10 +19,42 @@ const Subscribe = () => {
       return
     }
 
-    // Mock submission
-    console.log('Subscribing:', { name, email })
-    setSubmitted(true)
+    setIsSubmitting(true)
     setError('')
+
+    // Check if Google Forms is configured
+    const { googleFormActionUrl, entryName, entryEmail } = subscriptionData
+
+    if (googleFormActionUrl && entryName && entryEmail) {
+      try {
+        const formData = new FormData()
+        formData.append(entryName, name)
+        formData.append(entryEmail, email)
+
+        await fetch(googleFormActionUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formData
+        })
+
+        // Since mode is no-cors, we can't really know if it failed, so we assume success
+        setSubmitted(true)
+      } catch (err) {
+        console.error('Subscription error:', err)
+        setError('Something went wrong. Please try again later.')
+      } finally {
+        setIsSubmitting(false)
+      }
+    } else {
+      // Fallback for demo / unconfigured state
+      console.warn('Google Forms not configured in src/data/subscription.json')
+
+      // Simulate network delay
+      setTimeout(() => {
+        setSubmitted(true)
+        setIsSubmitting(false)
+      }, 1000)
+    }
   }
 
   if (submitted) {
@@ -35,7 +69,7 @@ const Subscribe = () => {
         </div>
         <h2 className="font-serif font-bold text-3xl mb-4 text-blue-900 dark:text-red-500">Thank You!</h2>
         <p className="text-gray-700 dark:text-red-400 mb-8 font-sans text-lg">
-          You have successfully subscribed to the newsletter. Stay tuned for updates!
+          {subscriptionData.successMessage || "You have successfully subscribed to the newsletter."}
         </p>
         <a
           href="#home"
@@ -53,10 +87,10 @@ const Subscribe = () => {
         <div className="p-8 md:p-12">
           <div className="text-center mb-10">
             <h2 className="font-serif font-bold text-4xl mb-4 text-blue-900 dark:text-red-500">
-              Subscribe to my Newsletter
+              {subscriptionData.heading || "Subscribe to my Newsletter"}
             </h2>
             <p className="text-gray-700 dark:text-red-400 text-lg font-sans">
-              Get the latest blog posts, research updates, and insights delivered directly to your inbox.
+              {subscriptionData.description || "Get the latest blog posts, research updates, and insights delivered directly to your inbox."}
             </p>
           </div>
 
@@ -76,7 +110,8 @@ const Subscribe = () => {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white focus:ring-2 focus:ring-blue-900 dark:focus:ring-red-500 focus:border-transparent transition-all duration-300"
+                disabled={isSubmitting}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white focus:ring-2 focus:ring-blue-900 dark:focus:ring-red-500 focus:border-transparent transition-all duration-300 disabled:opacity-50"
                 placeholder="John Doe"
               />
             </div>
@@ -90,16 +125,24 @@ const Subscribe = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white focus:ring-2 focus:ring-blue-900 dark:focus:ring-red-500 focus:border-transparent transition-all duration-300"
+                disabled={isSubmitting}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white focus:ring-2 focus:ring-blue-900 dark:focus:ring-red-500 focus:border-transparent transition-all duration-300 disabled:opacity-50"
                 placeholder="john@example.com"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-4 bg-blue-900 dark:bg-red-600 hover:bg-blue-800 dark:hover:bg-red-700 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-md"
+              disabled={isSubmitting}
+              className="w-full py-4 bg-blue-900 dark:bg-red-600 hover:bg-blue-800 dark:hover:bg-red-700 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-md disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
             >
-              Subscribe
+              {isSubmitting ? (
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : null}
+              {isSubmitting ? 'Subscribing...' : 'Subscribe'}
             </button>
           </form>
 
