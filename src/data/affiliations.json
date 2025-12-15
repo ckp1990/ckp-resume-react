@@ -1,0 +1,54 @@
+{
+  "heading": "Past and Present Associated Institutions",
+  "institutions": [
+    {
+      "id": 1,
+      "name": "Centre for Wildlife Studies",
+      "logo": "/logos/cws-logo.png",
+      "url": "https://www.cwsindia.org",
+      "role": "Doctoral Fellow"
+    },
+    {
+      "id": 2,
+      "name": "MAHE",
+      "logo": "/logos/mahe-logo.png",
+      "url": "https://manipal.edu",
+      "role": "Affiliated Researcher"
+    },
+    {
+      "id": 3,
+      "name": "National Centre for Biological Sciences",
+      "logo": "/logos/ncbs-logo.png",
+      "url": "https://www.ncbs.res.in",
+      "role": "Research Collaborator"
+    },
+    {
+      "id": 4,
+      "name": "Wildlife Science Asia LLP",
+      "logo": "/logos/wsa-logo.png",
+      "url": "",
+      "role": "Partner"
+    },
+    {
+      "id": 5,
+      "name": "The Nature People Network",
+      "logo": "/logos/tnpn-logo.png",
+      "url": "https://www.thenaturepeoplenetwork.org/",
+      "role": "Network Member"
+    },
+    {
+      "id": 6,
+      "name": "Sri Jayachamarajendra College of Engineering",
+      "logo": "/logos/sjce-logo.png",
+      "url": "https://www.sjce.ac.in",
+      "role": "Alumni"
+    },
+    {
+      "id": 7,
+      "name": "Indian Institute of Science",
+      "logo": "/logos/iisc-logo.png",
+      "url": "https://www.iisc.ac.in",
+      "role": "Research Collaborator"
+    }
+  ]
+}

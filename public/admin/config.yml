@@ -27,6 +27,8 @@ collections:
           - {label: "GitHub URL", name: "github", widget: "string"}
           - {label: "ORCID URL", name: "orcid", widget: "string"}
           - {label: "ResearchGate URL", name: "researchgate", widget: "string"}
+          - {label: "iNaturalist URL", name: "inaturalist", widget: "string", required: false, hint: "Your iNaturalist profile URL"}
+          - {label: "Kaggle URL", name: "kaggle", widget: "string", required: false, hint: "Your Kaggle profile URL"}
           - {label: "Location", name: "location", widget: "string"}
           - {label: "Footer Text", name: "footerText", widget: "string"}
 
@@ -118,6 +120,48 @@ collections:
                 name: "items"
                 widget: "list"
                 field: {label: "Certification", name: "certification", widget: "string"}
+
+  # Teaching and Workshop Section
+  - name: "teaching"
+    label: "Teaching & Workshops"
+    files:
+      - label: "Teaching and Workshop Conducted"
+        name: "teaching"
+        file: "src/data/teaching.json"
+        fields:
+          - {label: "Heading", name: "heading", widget: "string", default: "Teaching and Workshop Conducted"}
+          - label: "Workshops"
+            name: "workshops"
+            widget: "list"
+            hint: "Add workshops, training sessions, or teaching activities you've conducted"
+            fields:
+              - {label: "ID", name: "id", widget: "number", hint: "Unique workshop ID"}
+              - {label: "Workshop Title", name: "title", widget: "text", hint: "Title of the workshop or teaching session"}
+              - {label: "Event Name", name: "event", widget: "string", hint: "Name of the conference/event where workshop was conducted"}
+              - {label: "Date", name: "date", widget: "string", hint: "Date or date range (e.g., October 09-12, 2023)"}
+              - {label: "Venue", name: "venue", widget: "string", hint: "Location/venue of the workshop"}
+              - {label: "Description", name: "description", widget: "text", required: false, hint: "Optional description or details"}
+              - {label: "URL", name: "url", widget: "string", required: false, hint: "Link to event or workshop materials (leave empty if none)"}
+
+  # Affiliations Section
+  - name: "affiliations"
+    label: "Affiliations"
+    files:
+      - label: "Institutional Affiliations"
+        name: "affiliations"
+        file: "src/data/affiliations.json"
+        fields:
+          - {label: "Heading", name: "heading", widget: "string", default: "Affiliations"}
+          - label: "Institutions"
+            name: "institutions"
+            widget: "list"
+            hint: "Add institutions you are affiliated with. Upload logos to public/logos/ folder first."
+            fields:
+              - {label: "ID", name: "id", widget: "number", hint: "Unique institution ID (used for ordering)"}
+              - {label: "Institution Name", name: "name", widget: "string", hint: "Full name of the institution"}
+              - {label: "Logo Path", name: "logo", widget: "string", hint: "Path to logo file (e.g., /logos/institution-logo.png)"}
+              - {label: "Website URL", name: "url", widget: "string", required: false, hint: "Institution website URL (leave empty if no website)"}
+              - {label: "Your Role", name: "role", widget: "string", hint: "Your relationship with the institution (e.g., Doctoral Fellow, Alumni)"}
 
   # Publications & Awards Section
   - name: "publications_awards"
