@@ -38,12 +38,7 @@ function App() {
         // If we are coming from subscribe page to home, ensure we switch view
         if (currentView === 'subscribe') {
           setCurrentView('home')
-        }
-        // For other hashes like #about, browser handles scrolling, but we need to ensure 'home' view is active
-        if (hash && hash !== '#subscribe') {
-          setCurrentView('home')
-        } else if (!hash) {
-            setCurrentView('home')
+
         }
       }
     }
