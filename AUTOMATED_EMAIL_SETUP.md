@@ -2,6 +2,8 @@
 
 Since your website uses **Google Forms** to collect subscriptions, you can use **Google Apps Script** (which is free and built into Google Sheets) to automatically send a "Thank You" email whenever someone subscribes.
 
+**New Feature**: The script below also checks for **duplicate emails**. If someone subscribes with an email address that is already in the list, it will log the duplicate and **skip sending the email** to prevent spamming them.
+
 ## 📋 Overview
 
 This setup involves:
@@ -31,7 +33,6 @@ This setup involves:
 ```javascript
 function sendSubscriptionEmail(e) {
   // 1. Get the data from the form submission
-  // "e.namedValues" gives us data by Column Name (Question Title)
   var name = e.namedValues['Name'] ? e.namedValues['Name'][0] : "Subscriber";
   var email = e.namedValues['Email'] ? e.namedValues['Email'][0] : "";
 
@@ -41,7 +42,44 @@ function sendSubscriptionEmail(e) {
     return;
   }
 
-  // 3. Customize your email content here
+  // 3. CHECK FOR DUPLICATES
+  // Get the active sheet
+  var sheet = e.range.getSheet();
+  // Get the column index of the "Email" header (assumes row 1 is headers)
+  // Or simpler: Get all values in Column C (or wherever Email is)
+
+  // We will search the entire sheet data for the email
+  var data = sheet.getDataRange().getValues();
+  var emailColumnIndex = -1;
+
+  // Find the 'Email' column index in the first row
+  for (var i = 0; i < data[0].length; i++) {
+    if (data[0][i] === "Email") {
+      emailColumnIndex = i;
+      break;
+    }
+  }
+
+  if (emailColumnIndex === -1) {
+    Logger.log("Could not find 'Email' column.");
+    return;
+  }
+
+  // Count how many times this email appears
+  var count = 0;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i][emailColumnIndex] == email) {
+      count++;
+    }
+  }
+
+  // If count > 1, it means the email was already there (count includes the new one just added)
+  if (count > 1) {
+    Logger.log("Duplicate subscription detected for: " + email + ". Email skipped.");
+    return;
+  }
+
+  // 4. Customize your email content here
   var subject = "Thank you for subscribing!";
 
   var messageBody = "Hi " + name + ",\n\n" +
@@ -50,7 +88,7 @@ function sendSubscriptionEmail(e) {
                     "Best regards,\n" +
                     "Chandan Kumar Pandey";
 
-  // 4. Send the email
+  // 5. Send the email
   try {
     MailApp.sendEmail({
       to: email,
@@ -96,7 +134,8 @@ Now we tell Google to run this script *automatically* when a form is submitted.
 1.  Go to your website's Subscribe page.
 2.  Enter a Name and a *real* Email address (one you can check).
 3.  Click Subscribe.
-4.  Check that email's inbox. You should receive the "Thank you" message within a few seconds!
+4.  Check that email's inbox. You should receive the "Thank you" message.
+5.  **Test Duplicate:** Go back and subscribe with the **same email** again. You will see the "Success" message on the website, but you should **NOT** receive a second email.
 
 ## 📝 Customization
 
