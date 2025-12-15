@@ -50,7 +50,6 @@ const Subscribe = () => {
 
         // Since mode is no-cors, we can't really know if it failed, so we assume success
         localStorage.setItem('subscribed_email', email)
-
         setSubmitted(true)
       } catch (err) {
         console.error('Subscription error:', err)
@@ -65,7 +64,6 @@ const Subscribe = () => {
       // Simulate network delay
       setTimeout(() => {
         localStorage.setItem('subscribed_email', email)
-
         setSubmitted(true)
         setIsSubmitting(false)
       }, 1000)
