@@ -14,16 +14,46 @@ import mediaData from './data/media.json'
 import affiliationsData from './data/affiliations.json'
 import teachingData from './data/teaching.json'
 import { fetchGoogleDriveMedia, getGoogleDriveUrl } from './utils/googleDrive'
+import Subscribe from './components/Subscribe'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedPost, setSelectedPost] = useState(null)
+  const [currentView, setCurrentView] = useState('home')
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [mediaItems, setMediaItems] = useState(mediaData.items)
   const [mediaLoading, setMediaLoading] = useState(true)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [darkMode, setDarkMode] = useState(false)
+
+  // Handle URL hash changes for routing
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash
+      if (hash === '#subscribe') {
+        setCurrentView('subscribe')
+        window.scrollTo(0, 0)
+      } else {
+        // If we are coming from subscribe page to home, ensure we switch view
+        if (currentView === 'subscribe') {
+          setCurrentView('home')
+        }
+        // For other hashes like #about, browser handles scrolling, but we need to ensure 'home' view is active
+        if (hash && hash !== '#subscribe') {
+          setCurrentView('home')
+        } else if (!hash) {
+            setCurrentView('home')
+        }
+      }
+    }
+
+    // Initial check
+    handleHashChange()
+
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [currentView])
 
   // Initialize dark mode from local storage or system preference
   useEffect(() => {
@@ -207,6 +237,7 @@ function App() {
               <a href="#skills" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Skills</a>
               <a href="#publications" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Publications</a>
               <a href="#blog" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Blog</a>
+              <a href="#subscribe" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors font-semibold">Subscribe</a>
 
               {/* Dark Mode Toggle (Desktop) */}
               <button
@@ -282,9 +313,16 @@ function App() {
                 <a
                   href="#blog"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors py-2"
+                  className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
                 >
                   Blog
+                </a>
+                <a
+                  href="#subscribe"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors py-2 font-semibold"
+                >
+                  Subscribe
                 </a>
               </div>
             </div>
@@ -293,6 +331,10 @@ function App() {
       </nav>
 
       <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-24">
+        {currentView === 'subscribe' ? (
+          <Subscribe />
+        ) : (
+          <>
         {/* Hero Section */}
         <header id="home" className="mb-24 animate-fade-in">
           {/* Profile Image Placeholder */}
@@ -1109,6 +1151,8 @@ function App() {
         <footer className="text-center text-gray-500 dark:text-red-400 font-mono text-sm pt-12 border-t border-gray-300 dark:border-gray-700">
           <p>{personalData.footerText}</p>
         </footer>
+          </>
+        )}
       </div>
 
       {/* Lightbox Modal */}
