@@ -19,6 +19,13 @@ const Subscribe = () => {
       return
     }
 
+    // Check if user already subscribed in this browser
+    const subscribedEmail = localStorage.getItem('subscribed_email')
+    if (subscribedEmail === email) {
+      setError('You have already subscribed with this email address.')
+      return
+    }
+
     setIsSubmitting(true)
     setError('')
 
@@ -42,6 +49,7 @@ const Subscribe = () => {
         })
 
         // Since mode is no-cors, we can't really know if it failed, so we assume success
+        localStorage.setItem('subscribed_email', email)
 
         setSubmitted(true)
       } catch (err) {
@@ -56,6 +64,7 @@ const Subscribe = () => {
 
       // Simulate network delay
       setTimeout(() => {
+        localStorage.setItem('subscribed_email', email)
 
         setSubmitted(true)
         setIsSubmitting(false)
