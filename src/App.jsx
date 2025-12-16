@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar, FaCertificate, FaGraduationCap, FaExternalLinkAlt, FaLeaf, FaMoon, FaSun, FaChevronDown, FaChevronUp, FaSearch } from 'react-icons/fa'
+import { FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar, FaCertificate, FaGraduationCap, FaExternalLinkAlt, FaLeaf, FaMoon, FaSun, FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import { SiOrcid, SiResearchgate, SiGooglescholar, SiKaggle } from 'react-icons/si'
 import { HiLocationMarker } from 'react-icons/hi'
 import ReactMarkdown from 'react-markdown'
@@ -27,7 +27,6 @@ function App() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [darkMode, setDarkMode] = useState(false)
   const [showAllBlogs, setShowAllBlogs] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
 
   // Handle URL hash changes for routing
   useEffect(() => {
@@ -1141,15 +1140,11 @@ function App() {
             /* Blog Posts List View */
             <div className="space-y-6">
               {(() => {
-                const filteredPosts = blogData.posts
+                const sortedPosts = blogData.posts
                   .filter(post => post.published)
-                  .filter(post =>
-                    post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    post.category.toLowerCase().includes(searchQuery.toLowerCase())
-                  )
                   .sort((a, b) => new Date(b.date) - new Date(a.date))
 
-                const visiblePosts = showAllBlogs || searchQuery ? filteredPosts : filteredPosts.slice(0, 3)
+                const visiblePosts = showAllBlogs ? sortedPosts : sortedPosts.slice(0, 3)
 
                 return (
                   <>
@@ -1193,7 +1188,7 @@ function App() {
                       </article>
                     ))}
 
-                    {!searchQuery && filteredPosts.length > 3 && (
+                    {sortedPosts.length > 3 && (
                       <div className="flex justify-center mt-8">
                         <button
                           onClick={() => setShowAllBlogs(!showAllBlogs)}
@@ -1212,11 +1207,9 @@ function App() {
                       </div>
                     )}
 
-                    {filteredPosts.length === 0 && (
+                    {sortedPosts.length === 0 && (
                       <div className="text-center py-12 text-gray-500">
-                        <p className="font-sans text-lg">
-                          {searchQuery ? 'No blog posts match your search.' : 'No blog posts yet. Check back soon!'}
-                        </p>
+                        <p className="font-sans text-lg">No blog posts yet. Check back soon!</p>
                       </div>
                     )}
                   </>
