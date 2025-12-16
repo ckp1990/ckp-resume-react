@@ -1,6 +1,4 @@
 const fs = require('fs');
-const https = require(process.env.GAS_WEBHOOK_URL.startsWith("http:") ? "http" : "https");
-const https = require('https');
 const { execSync } = require('child_process');
 
 // Configuration
@@ -89,7 +87,6 @@ postsToNotify.forEach(post => {
   const options = {
     hostname: url.hostname,
     port: url.port,
-    hostname: url.hostname, port: url.port,
     path: url.pathname + url.search,
     method: 'POST',
     headers: {
@@ -99,7 +96,6 @@ postsToNotify.forEach(post => {
   };
 
   const req = client.request(options, (res) => {
-  const req = https.request(options, (res) => {
     console.log(`Notification sent for "${post.title}". Status: ${res.statusCode}`);
     res.on('data', (d) => {
       process.stdout.write(d);
