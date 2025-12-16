@@ -34,12 +34,29 @@ function App() {
       if (hash === '#subscribe') {
         setCurrentView('subscribe')
         window.scrollTo(0, 0)
+      } else if (hash.startsWith('#blog/')) {
+        // Handle blog deep linking
+        const slug = hash.replace('#blog/', '')
+        const post = blogData.posts.find(p => p.slug === slug)
+
+        if (post) {
+          setCurrentView('home')
+          setSelectedPost(post)
+          // Wait for render and scroll to blog section
+          setTimeout(() => {
+            const blogSection = document.getElementById('blog')
+            if (blogSection) {
+              blogSection.scrollIntoView({ behavior: 'smooth' })
+            }
+          }, 100)
+        }
       } else {
         // If we are coming from subscribe page to home, ensure we switch view
         if (currentView === 'subscribe') {
           setCurrentView('home')
           // Wait for render to complete before scrolling
           setTimeout(() => {
+            // Handle standard anchors
             const element = document.getElementById(hash.replace('#', ''))
             if (element) {
               element.scrollIntoView({ behavior: 'smooth' })
