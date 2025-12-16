@@ -1,0 +1,31 @@
+name: Notify Subscribers of New Blog Post
+
+on:
+  push:
+    paths:
+      - 'src/data/blog.json'
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history so we can access github.event.before
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Notification Script
+        env:
+          GAS_WEBHOOK_URL: ${{ secrets.GAS_WEBHOOK_URL }}
+          SITE_URL: 'https://chandankp.com'
+          # github.event.before is the SHA of the commit before the push.
+          # For the very first push to a branch, it might be all zeros, so we fallback to HEAD^
+          BASE_SHA: ${{ github.event.before != '0000000000000000000000000000000000000000' && github.event.before || 'HEAD^' }}
+        run: node scripts/notify-subscribers.cjs
