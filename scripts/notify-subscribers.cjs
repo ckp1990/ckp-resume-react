@@ -1,4 +1,6 @@
 const fs = require('fs');
+const https = require(process.env.GAS_WEBHOOK_URL.startsWith("http:") ? "http" : "https");
+const https = require('https');
 const { execSync } = require('child_process');
 
 // Configuration
@@ -11,9 +13,6 @@ if (!WEBHOOK_URL) {
   console.log('No GAS_WEBHOOK_URL environment variable set. Skipping notification.');
   process.exit(0);
 }
-
-// Select http or https module based on the URL
-const client = WEBHOOK_URL.startsWith('http:') ? require('http') : require('https');
 
 // 1. Get Current Content
 let currentBlogData;
@@ -85,8 +84,7 @@ postsToNotify.forEach(post => {
   const url = new URL(WEBHOOK_URL);
 
   const options = {
-    hostname: url.hostname,
-    port: url.port,
+    hostname: url.hostname, port: url.port,
     path: url.pathname + url.search,
     method: 'POST',
     headers: {
@@ -95,7 +93,7 @@ postsToNotify.forEach(post => {
     }
   };
 
-  const req = client.request(options, (res) => {
+  const req = https.request(options, (res) => {
     console.log(`Notification sent for "${post.title}". Status: ${res.statusCode}`);
     res.on('data', (d) => {
       process.stdout.write(d);
