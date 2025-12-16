@@ -1056,9 +1056,27 @@ function App() {
 
         {/* Blog Section */}
         <section id="blog" className="mb-16 animate-slide-up animate-delay-600 scroll-mt-20">
-          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
-            {blogData.heading}
-          </h2>
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+            <h2 className="font-serif font-bold text-4xl md:text-5xl text-blue-900 dark:text-red-500">
+              {blogData.heading}
+            </h2>
+
+            {/* Blog Search Bar */}
+            {!selectedPost && (
+              <div className="relative w-full md:w-72">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaSearch className="text-gray-400 dark:text-red-400" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search articles..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-full bg-white dark:bg-slate-900 text-gray-700 dark:text-red-300 focus:outline-none focus:ring-2 focus:ring-blue-900 dark:focus:ring-blue-500 transition-shadow"
+                />
+              </div>
+            )}
+          </div>
 
           {selectedPost ? (
             /* Blog Post Detail View */
