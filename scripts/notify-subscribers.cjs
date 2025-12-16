@@ -1,5 +1,6 @@
 const fs = require('fs');
 const https = require(process.env.GAS_WEBHOOK_URL.startsWith("http:") ? "http" : "https");
+const https = require('https');
 const { execSync } = require('child_process');
 
 // Configuration
