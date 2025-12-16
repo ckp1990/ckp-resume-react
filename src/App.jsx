@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar, FaCertificate, FaGraduationCap, FaExternalLinkAlt, FaLeaf, FaMoon, FaSun } from 'react-icons/fa'
+import { FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar, FaCertificate, FaGraduationCap, FaExternalLinkAlt, FaLeaf, FaMoon, FaSun, FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import { SiOrcid, SiResearchgate, SiGooglescholar, SiKaggle } from 'react-icons/si'
 import { HiLocationMarker } from 'react-icons/hi'
 import ReactMarkdown from 'react-markdown'
@@ -26,6 +26,7 @@ function App() {
   const [mediaLoading, setMediaLoading] = useState(true)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [darkMode, setDarkMode] = useState(false)
+  const [showAllBlogs, setShowAllBlogs] = useState(false)
 
   // Handle URL hash changes for routing
   useEffect(() => {
@@ -1120,54 +1121,82 @@ function App() {
           ) : (
             /* Blog Posts List View */
             <div className="space-y-6">
-              {blogData.posts
-                .filter(post => post.published)
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .map((post) => (
-                  <article
-                    key={post.id}
-                    className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300 cursor-pointer"
-                    onClick={() => setSelectedPost(post)}
-                  >
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
-                      <h3 className="font-serif font-bold text-2xl md:text-3xl text-black dark:text-white hover:text-blue-900 dark:hover:text-blue-400 transition-colors">
-                        {post.title}
-                      </h3>
-                      <time className="font-mono text-sm text-gray-600 dark:text-red-300 md:ml-4 flex-shrink-0">
-                        {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-                      </time>
-                    </div>
+              {(() => {
+                const sortedPosts = blogData.posts
+                  .filter(post => post.published)
+                  .sort((a, b) => new Date(b.date) - new Date(a.date))
 
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 rounded-full text-sm">
-                        {post.category}
-                      </span>
-                      {post.tags && post.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {post.tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="text-xs text-gray-500 dark:text-red-300">
-                              #{tag}
-                            </span>
-                          ))}
+                const visiblePosts = showAllBlogs ? sortedPosts : sortedPosts.slice(0, 3)
+
+                return (
+                  <>
+                    {visiblePosts.map((post) => (
+                      <article
+                        key={post.id}
+                        className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300 cursor-pointer"
+                        onClick={() => setSelectedPost(post)}
+                      >
+                        <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                          <h3 className="font-serif font-bold text-2xl md:text-3xl text-black dark:text-white hover:text-blue-900 dark:hover:text-blue-400 transition-colors">
+                            {post.title}
+                          </h3>
+                          <time className="font-mono text-sm text-gray-600 dark:text-red-300 md:ml-4 flex-shrink-0">
+                            {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                          </time>
                         </div>
-                      )}
-                    </div>
 
-                    <p className="text-gray-700 dark:text-red-400 leading-relaxed mb-3">
-                      {post.excerpt}
-                    </p>
+                        <div className="flex items-center gap-3 mb-3">
+                          <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 rounded-full text-sm">
+                            {post.category}
+                          </span>
+                          {post.tags && post.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {post.tags.slice(0, 3).map((tag, index) => (
+                                <span key={index} className="text-xs text-gray-500 dark:text-red-300">
+                                  #{tag}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
 
-                    <div className="text-blue-900 dark:text-blue-400 font-sans text-sm hover:underline">
-                      Read more →
-                    </div>
-                  </article>
-                ))}
+                        <p className="text-gray-700 dark:text-red-400 leading-relaxed mb-3">
+                          {post.excerpt}
+                        </p>
 
-              {blogData.posts.filter(post => post.published).length === 0 && (
-                <div className="text-center py-12 text-gray-500">
-                  <p className="font-sans text-lg">No blog posts yet. Check back soon!</p>
-                </div>
-              )}
+                        <div className="text-blue-900 dark:text-blue-400 font-sans text-sm hover:underline">
+                          Read more →
+                        </div>
+                      </article>
+                    ))}
+
+                    {sortedPosts.length > 3 && (
+                      <div className="flex justify-center mt-8">
+                        <button
+                          onClick={() => setShowAllBlogs(!showAllBlogs)}
+                          className="px-6 py-3 bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:border-blue-900 dark:hover:border-blue-500 rounded-full transition-all duration-300 text-blue-900 dark:text-blue-400 font-semibold flex items-center gap-2 shadow-sm"
+                        >
+                          {showAllBlogs ? (
+                            <>
+                              Show Less <FaChevronUp />
+                            </>
+                          ) : (
+                            <>
+                              View All Posts <FaChevronDown />
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    )}
+
+                    {sortedPosts.length === 0 && (
+                      <div className="text-center py-12 text-gray-500">
+                        <p className="font-sans text-lg">No blog posts yet. Check back soon!</p>
+                      </div>
+                    )}
+                  </>
+                )
+              })()}
             </div>
           )}
         </section>
