@@ -1,15 +1,17 @@
 # Email System Setup Guide
 
-This guide explains how to set up the **automated email system** for your website. It covers two features:
+This guide explains how to set up the **automated email system** for your website. It covers three features:
 1.  **Automated "Thank You" Email:** Sent immediately when someone subscribes.
-2.  **Newsletter Blast:** A tool to send new blog post notifications to all subscribers.
+2.  **Newsletter Blast (Manual):** A tool to send new blog post notifications manually from Google Sheets.
+3.  **Newsletter Blast (Automated):** Automatically sends emails when you publish a new blog post via GitHub/CMS.
 
 ## 📋 Overview
 
-Both features use **Google Apps Script** inside your Google Sheet.
+The system uses **Google Apps Script** inside your Google Sheet.
 
 *   **Part 1**: Uses a **Trigger** to run automatically when a form is submitted.
-*   **Part 2**: Adds a **Custom Menu** to your Google Sheet so you can manually trigger a blast when you publish a new blog post.
+*   **Part 2**: Adds a **Custom Menu** to your Google Sheet for manual blasts.
+*   **Part 3**: Exposes a **Web App (Webhook)** that GitHub can call when you publish a new post.
 
 ## 🔧 Step-by-Step Instructions
 
@@ -26,7 +28,7 @@ Both features use **Google Apps Script** inside your Google Sheet.
 ### Step 3: The Complete Code
 
 1.  Delete any existing code.
-2.  **Copy and paste** the following code block. It contains **both** the subscription handler and the newsletter tool.
+2.  **Copy and paste** the following code block. It contains all three parts.
 
 ```javascript
 /*
@@ -98,8 +100,8 @@ function sendSubscriptionEmail(e) {
 }
 
 /*
- * PART 2: NEWSLETTER BLAST TOOL
- * Adds a menu to the sheet to send new blog notifications.
+ * PART 2: NEWSLETTER BLAST TOOL (MANUAL)
+ * Adds a menu to the sheet to send new blog notifications manually.
  */
 
 function onOpen() {
@@ -134,10 +136,35 @@ function showNewsletterDialog() {
       ui.ButtonSet.YES_NO);
 
   if (confirm == ui.Button.YES) {
-    sendBulkEmails(title, summary, link);
+    var result = sendBulkEmails(title, summary, link);
+    ui.alert(result);
   }
 }
 
+/*
+ * PART 3: AUTOMATED NOTIFICATION HANDLER (WEBHOOK)
+ * Listens for POST requests from GitHub Actions.
+ */
+
+function doPost(e) {
+  try {
+    var jsonString = e.postData.getDataAsString();
+    var data = JSON.parse(jsonString);
+
+    if (data.action === "new_post") {
+      var result = sendBulkEmails(data.title, data.summary, data.link);
+      return ContentService.createTextOutput(result);
+    } else {
+      return ContentService.createTextOutput("Invalid Action");
+    }
+  } catch (err) {
+    return ContentService.createTextOutput("Error: " + err.toString());
+  }
+}
+
+/*
+ * SHARED: SEND EMAIL LOGIC
+ */
 function sendBulkEmails(title, summary, link) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
@@ -145,15 +172,13 @@ function sendBulkEmails(title, summary, link) {
   var nameColIndex = headers.indexOf("Name");
 
   if (emailColIndex === -1) {
-    SpreadsheetApp.getUi().alert("Error: Could not find 'Email' column.");
-    return;
+    return "Error: Could not find 'Email' column.";
   }
 
   // Get all data
   var lastRow = sheet.getLastRow();
   if (lastRow < 2) {
-    SpreadsheetApp.getUi().alert("No subscribers found.");
-    return;
+    return "No subscribers found.";
   }
 
   var dataRange = sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn());
@@ -190,13 +215,15 @@ function sendBulkEmails(title, summary, link) {
     }
   }
 
-  SpreadsheetApp.getUi().alert("Success! Sent " + sentCount + " emails.");
+  var resultMsg = "Success! Sent " + sentCount + " emails.";
+  Logger.log(resultMsg);
+  return resultMsg;
 }
 ```
 
 3.  **Save** the script (`Ctrl + S`).
 
-### Step 4: Set Up the Subscription Trigger (If not done already)
+### Step 4: Set Up the Subscription Trigger (For Form Submissions)
 
 1.  Click **Triggers** (alarm clock icon).
 2.  If you already have a trigger, **Edit** it. If not, **Add Trigger**.
@@ -205,15 +232,31 @@ function sendBulkEmails(title, summary, link) {
 5.  Event type: `On form submit`.
 6.  Click **Save**.
 
-### Step 5: Test the Newsletter Tool
+### Step 5: Deploy as Web App (For Automated Blog Notifications)
 
-1.  **Refresh** your Google Sheet page (F5).
-2.  Wait a few seconds. You should see a new menu item called **Newsletter** appear next to "Help".
-3.  Click **Newsletter** > **Send New Post Notification**.
-4.  Follow the prompts.
-5.  It will send emails to everyone in the list!
+To allow GitHub to trigger the emails automatically:
+
+1.  In Apps Script, click **Deploy** (blue button top right) > **New deployment**.
+2.  Click the **Select type** gear icon > **Web app**.
+3.  **Description**: `Blog Notification Webhook`
+4.  **Execute as**: `Me` (your email)
+5.  **Who has access**: `Anyone` (This is required so GitHub can call it without complex OAuth. The script only responds to valid JSON payloads).
+6.  Click **Deploy**.
+7.  **Authorize access** if asked.
+8.  **COPY** the **Web app URL**. It will look like `https://script.google.com/macros/s/.../exec`.
+
+### Step 6: Connect to GitHub
+
+1.  Go to your GitHub Repository: `ckp1990/ckp-resume-react`
+2.  Click **Settings** > **Secrets and variables** > **Actions**.
+3.  Click **New repository secret**.
+4.  **Name**: `GAS_WEBHOOK_URL`
+5.  **Value**: Paste the Web app URL you copied in Step 5.
+6.  Click **Add secret**.
+
+**Done!** Now, whenever you publish a new blog post (by pushing to `main` via Decap CMS or manually), GitHub Actions will detect the new post and trigger your Google Sheet to send emails.
 
 ## ⚠️ Important Notes
 
-*   **Daily Quota:** Gmail accounts (free) can send about **100 emails per day**. Google Workspace accounts can send up to **1,500**. If your list grows larger than this, you should switch to a service like Mailchimp or ConvertKit.
-*   **Permissions:** The first time you use the menu, it will ask for permission.
+*   **Daily Quota:** Gmail accounts (free) can send about **100 emails per day**. Google Workspace accounts can send up to **1,500**.
+*   **Security:** The Web App URL is a secret. Do not share it publicly.
