@@ -1,8 +1,5 @@
 # Social Media Integration Setup
 
-To enable automated posting to Instagram when a new blog post is published, you need to configure the following secrets in your GitHub repository.
-
-## Instagram Setup
 
 ### Requirements
 - An **Instagram Business** or **Creator** account.
@@ -43,3 +40,4 @@ Go to your GitHub Repo -> Settings -> Secrets and variables -> Actions -> New re
 
 - **No Image:** Instagram requires an image. If your blog post markdown does not contain an image (e.g., `![alt](/images/pic.jpg)`), the script will skip Instagram posting.
 - **Token Expiry:** Facebook/Instagram tokens expire (usually every 60 days). If posting stops working, regenerate the tokens and update the GitHub Secrets.
+- **Token Expiry:** Both LinkedIn and Facebook/Instagram tokens expire. If posting stops working, regenerate the tokens and update the GitHub Secrets.
