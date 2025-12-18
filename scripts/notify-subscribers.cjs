@@ -10,8 +10,6 @@ const SITE_URL = process.env.SITE_URL || 'https://chandankp.com';
 const BASE_SHA = process.env.BASE_SHA || 'HEAD^'; // Default to HEAD^ if not provided
 
 // Social Media Configuration
-const LINKEDIN_ACCESS_TOKEN = process.env.LINKEDIN_ACCESS_TOKEN;
-const LINKEDIN_PERSON_URN = process.env.LINKEDIN_PERSON_URN;
 const INSTAGRAM_ACCESS_TOKEN = process.env.INSTAGRAM_ACCESS_TOKEN;
 const INSTAGRAM_ACCOUNT_ID = process.env.INSTAGRAM_ACCOUNT_ID;
 
@@ -71,60 +69,6 @@ function extractImage(content) {
     return imageUrl;
   }
   return null;
-}
-
-// LinkedIn Publishing
-async function postToLinkedIn(post, link) {
-  if (!LINKEDIN_ACCESS_TOKEN || !LINKEDIN_PERSON_URN) {
-    console.log('Skipping LinkedIn: Missing credentials.');
-    return;
-  }
-
-  console.log(`Posting to LinkedIn: ${post.title}`);
-
-  const payload = {
-    author: `urn:li:person:${LINKEDIN_PERSON_URN}`,
-    lifecycleState: "PUBLISHED",
-    specificContent: {
-      "com.linkedin.ugc.ShareContent": {
-        shareCommentary: {
-          text: `${post.title}\n\n${post.excerpt || ''}\n\nRead more: ${link}`
-        },
-        shareMediaCategory: "ARTICLE",
-        media: [
-          {
-            status: "READY",
-            description: {
-              text: post.excerpt || post.title
-            },
-            originalUrl: link,
-            title: {
-              text: post.title
-            }
-          }
-        ]
-      }
-    },
-    visibility: {
-      "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
-    }
-  };
-
-  try {
-    await makeRequest(
-      'https://api.linkedin.com/v2/ugcPosts',
-      'POST',
-      {
-        'Authorization': `Bearer ${LINKEDIN_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
-        'X-Restli-Protocol-Version': '2.0.0'
-      },
-      payload
-    );
-    console.log('Successfully posted to LinkedIn.');
-  } catch (error) {
-    console.error('Error posting to LinkedIn:', error.message);
-  }
 }
 
 // Instagram Publishing
@@ -260,7 +204,6 @@ async function main() {
     }
 
     // Post to Social Media
-    await postToLinkedIn(post, postLink);
     await postToInstagram(post, postLink, imageUrl);
   }
 }
