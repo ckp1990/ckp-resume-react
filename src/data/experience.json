@@ -9,7 +9,12 @@
       "endDate": "Present",
       "location": "Bengaluru, Karnataka, India",
       "description": "",
-      "responsibilities": []
+      "responsibilities": [
+        "<strong>Spatio-Temporal Dynamics:</strong> Investigating how the density and abundance of six ungulate species shift across time and space within the Malenad landscape of India’s Western Ghats.",
+        "<strong>Hierarchical Modeling:</strong> Utilizing advanced Hierarchical Distance Sampling (HDS) to account for imperfect detection, providing a more rigorous estimate of true population states.",
+        "<strong>Ecological Drivers:</strong> Identifying the key environmental and management factors that dictate wildlife population trends at a fine-scale resolution.",
+        "<strong>Conservation Strategy:</strong> Reviewing and refining science-based population estimation methods to ensure they are actionable for large-scale ungulate management in India."
+      ]
     },
     {
       "id": 2,
