@@ -256,7 +256,7 @@ collections:
               - {label: "ID", name: "id", widget: "number", hint: "Unique post ID"}
               - {label: "Title", name: "title", widget: "string"}
               - {label: "Slug", name: "slug", widget: "string", hint: "URL-friendly version of title (e.g., my-blog-post)"}
-              - {label: "Date", name: "date", widget: "date", format: "YYYY-MM-DD"}
+              - {label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false}
               - {label: "Excerpt", name: "excerpt", widget: "text", hint: "Short summary shown in blog list"}
               - {label: "Category", name: "category", widget: "string", hint: "e.g., Research, Tutorial, Opinion"}
               - label: "Tags"
