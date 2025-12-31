@@ -19,6 +19,7 @@ import affiliationsData from './data/affiliations.json'
 import teachingData from './data/teaching.json'
 import { fetchGoogleDriveMedia, getGoogleDriveUrl } from './utils/googleDrive'
 import Subscribe from './components/Subscribe'
+import ShareButtons from './components/ShareButtons'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -1139,6 +1140,10 @@ function App() {
                     {selectedPost.content}
                   </ReactMarkdown>
                 </div>
+
+                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                  <ShareButtons title={selectedPost.title} slug={selectedPost.slug} />
+                </div>
               </article>
             </div>
           ) : (
@@ -1191,8 +1196,14 @@ function App() {
                           {post.excerpt}
                         </p>
 
-                        <div className="text-blue-900 dark:text-blue-400 font-sans text-sm hover:underline">
-                          Read more →
+                        <div className="flex items-center justify-between">
+                          <div className="text-blue-900 dark:text-blue-400 font-sans text-sm hover:underline">
+                            Read more →
+                          </div>
+
+                          <div className="scale-90 origin-right">
+                            <ShareButtons title={post.title} slug={post.slug} />
+                          </div>
                         </div>
                       </article>
                     ))}
