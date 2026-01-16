@@ -10,15 +10,7 @@
       "description": "A comprehensive tool for tracking wildlife population dynamics using hierarchical models. Features real-time data visualization and export capabilities."
     }
   ],
-  "codes": [
-    {
-      "id": 1,
-      "title": "Distance Sampling R Package",
-      "logo": "",
-      "link": "https://github.com/yourusername/distance-sampling-r",
-      "image": "",
-      "description": "Custom R scripts and functions for analyzing distance sampling data, optimizing detection probability estimation for complex terrains."
-    },
+  "codes": [   
     {
       "id": 2,
       "title": "R Markdown Basic",
