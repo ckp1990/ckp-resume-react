@@ -10,14 +10,14 @@
       "description": "A comprehensive tool for tracking wildlife population dynamics using hierarchical models. Features real-time data visualization and export capabilities."
     }
   ],
-  "codes": [
+  "codes": [   
     {
-      "id": 1,
-      "title": "Distance Sampling R Package",
+      "id": 2,
+      "title": "R Markdown Basic",
       "logo": "",
-      "link": "https://github.com/yourusername/distance-sampling-r",
+      "link": "https://github.com/ckp1990/Rmark-SCCS-2024.git",
       "image": "",
-      "description": "Custom R scripts and functions for analyzing distance sampling data, optimizing detection probability estimation for complex terrains."
+      "description": "This is an open public repository of Workshop on Rmarkdown for students in SCCS Bangalore 2024. Some of the important resources can be accessed using: https://github.com/yihui/xaringan and https://rmarkdown.rstudio.com/index.html. For pdf output make sure you have a latex editor; one of the quickest is by running this command: <code>tinytex::reinstall_tinytex(repository = 'Illinois')</code>. Cookbook: https://bookdown.org/yihui/rmarkdown-cookbook/what-to-change.html. Citation style: https://www.zotero.org/styles?fields=anthropology"
     }
   ]
 }
