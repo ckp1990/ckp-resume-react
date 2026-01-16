@@ -12,6 +12,7 @@ All content is in the `src/data/` folder. Each file contains different parts of 
 - `education.json` - Your degrees and education
 - `skills.json` - Your skills and certifications
 - `honors.json` - Your awards and publications
+- `software.json` - Your software and coding projects
 - `blog.json` - Your blog posts
 
 ## 🔧 How to Edit
@@ -250,7 +251,46 @@ All content is in the `src/data/` folder. Each file contains different parts of 
 
 ---
 
-### 7. Blog (`blog.json`)
+### 7. Software & Programs (`software.json`)
+
+**Structure:**
+This file has two main sections:
+- `software`: Projects where you developed a full software application
+- `codes`: Scripts, R packages, or code snippets
+
+**Fields for each item:**
+- `id`: Unique number
+- `title`: Name of the software/code
+- `logo`: Path to logo image (optional, use `""` if none)
+- `link`: URL to GitHub or project site
+- `image`: Path to screenshot (optional)
+- `description`: Brief explanation of the tool
+
+**Example:**
+```json
+{
+  "heading": "Software & Programs",
+  "software": [
+    {
+      "id": 1,
+      "title": "My Application",
+      "logo": "/images/logo.png",
+      "link": "https://github.com/my-app",
+      "image": "/images/screenshot.jpg",
+      "description": "Description of what this software does."
+    }
+  ],
+  "codes": []
+}
+```
+
+**Tips:**
+- You can have items in one list and leave the other empty `[]`
+- Images should be stored in the `public` folder
+
+---
+
+### 8. Blog (`blog.json`)
 
 **What it contains:**
 - Blog post titles
@@ -373,6 +413,7 @@ If you accidentally break something:
 | Add/remove education | `education.json` |
 | Update skills | `skills.json` |
 | Add awards/publications | `honors.json` |
+| Add software/code | `software.json` |
 | Add/edit blog posts | `blog.json` |
 
 ---

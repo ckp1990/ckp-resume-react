@@ -17,6 +17,7 @@ import blogData from './data/blog.json'
 import mediaData from './data/media.json'
 import affiliationsData from './data/affiliations.json'
 import teachingData from './data/teaching.json'
+import softwareData from './data/software.json'
 import { fetchGoogleDriveMedia, getGoogleDriveUrl } from './utils/googleDrive'
 import Subscribe from './components/Subscribe'
 import ShareButtons from './components/ShareButtons'
@@ -268,6 +269,7 @@ function App() {
               <a href="#education" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Education</a>
               <a href="#skills" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Skills</a>
               <a href="#publications" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Publications</a>
+              <a href="#software" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Software</a>
               <a href="#blog" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors">Blog</a>
               <a href="#subscribe" className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors font-semibold">Subscribe</a>
 
@@ -341,6 +343,13 @@ function App() {
                   className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
                 >
                   Publications
+                </a>
+                <a
+                  href="#software"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 transition-colors py-2 border-b border-gray-200 dark:border-gray-800"
+                >
+                  Software
                 </a>
                 <a
                   href="#blog"
@@ -771,6 +780,91 @@ function App() {
               <span>View All Publications on Google Scholar</span>
               <FaExternalLinkAlt className="text-sm" />
             </a>
+          </div>
+        </section>
+
+        {/* Software Section */}
+        <section id="software" className="mb-24 animate-slide-up animate-delay-375 scroll-mt-20">
+          <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
+            {softwareData.heading}
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* Software Column */}
+            <div>
+              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900 dark:text-red-500 border-b pb-2 border-gray-200 dark:border-gray-700">
+                Software
+              </h3>
+              <div className="space-y-6">
+                {softwareData.software.map((item) => (
+                  <div key={item.id} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300">
+                    <div className="flex items-center gap-4 mb-4">
+                      {item.logo && (
+                        <img src={item.logo} alt={`${item.title} logo`} className="w-12 h-12 object-contain" />
+                      )}
+                      <div>
+                        <h4 className="font-serif font-bold text-xl text-black dark:text-red-500">
+                          {item.title}
+                        </h4>
+                        {item.link && (
+                          <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900 dark:text-blue-400 hover:underline flex items-center gap-1">
+                            View Project <FaExternalLinkAlt className="text-xs" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    {item.image && (
+                      <div className="mb-4 rounded-md overflow-hidden border border-gray-100 dark:border-gray-800">
+                        <img src={item.image} alt={item.title} className="w-full h-auto object-cover" />
+                      </div>
+                    )}
+
+                    <p className="text-gray-700 dark:text-red-400 text-sm leading-relaxed">
+                      {parseText(item.description)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Codes & Programs Column */}
+            <div>
+              <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900 dark:text-red-500 border-b pb-2 border-gray-200 dark:border-gray-700">
+                Codes and Programs
+              </h3>
+              <div className="space-y-6">
+                {softwareData.codes.map((item) => (
+                  <div key={item.id} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300">
+                    <div className="flex items-center gap-4 mb-4">
+                      {item.logo && (
+                        <img src={item.logo} alt={`${item.title} logo`} className="w-12 h-12 object-contain" />
+                      )}
+                      <div>
+                        <h4 className="font-serif font-bold text-xl text-black dark:text-red-500">
+                          {item.title}
+                        </h4>
+                        {item.link && (
+                          <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900 dark:text-blue-400 hover:underline flex items-center gap-1">
+                            View Code <FaExternalLinkAlt className="text-xs" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    {item.image && (
+                      <div className="mb-4 rounded-md overflow-hidden border border-gray-100 dark:border-gray-800">
+                        <img src={item.image} alt={item.title} className="w-full h-auto object-cover" />
+                      </div>
+                    )}
+
+                    <p className="text-gray-700 dark:text-red-400 text-sm leading-relaxed">
+                      {parseText(item.description)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
