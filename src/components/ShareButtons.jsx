@@ -50,7 +50,7 @@ const ShareButtons = ({ title, slug }) => {
   }
 
   const iconClass = "w-5 h-5 transition-transform group-hover:scale-110"
-  const buttonClass = "p-2 rounded-full transition-all duration-300 hover:shadow-md flex items-center justify-center border border-transparent hover:border-gray-200 dark:hover:border-gray-700 focus:outline-none"
+  const buttonClass = "w-[48px] h-[48px] rounded-full transition-all duration-300 hover:shadow-md flex items-center justify-center border border-transparent hover:border-gray-200 dark:hover:border-gray-700 focus:outline-none"
 
   return (
     <div className="flex items-center gap-2 mt-4 flex-wrap" onClick={(e) => e.stopPropagation()}>
