@@ -276,7 +276,7 @@ function App() {
               {/* Dark Mode Toggle (Desktop) */}
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-full text-gray-700 dark:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
+                className="w-[48px] h-[48px] flex items-center justify-center rounded-full text-gray-700 dark:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
                 aria-label="Toggle dark mode"
               >
                 {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
@@ -287,7 +287,7 @@ function App() {
               {/* Dark Mode Toggle (Mobile) */}
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-full text-gray-700 dark:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
+                className="w-[48px] h-[48px] flex items-center justify-center rounded-full text-gray-700 dark:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
                 aria-label="Toggle dark mode"
               >
                 {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
@@ -296,7 +296,7 @@ function App() {
               {/* Mobile menu button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 p-2"
+                className="text-gray-700 dark:text-red-500 hover:text-blue-900 dark:hover:text-blue-400 w-[48px] h-[48px] flex items-center justify-center"
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? (
@@ -411,7 +411,7 @@ function App() {
             {/* Email and Location */}
             <div className="flex flex-wrap justify-center gap-4 font-mono text-sm">
               <a href={`mailto:${personalData.email}`}
-                 className="px-4 py-2 bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:border-blue-900 dark:hover:border-blue-500 rounded transition-all duration-300 text-black dark:text-red-500 flex items-center gap-2">
+                 className="px-4 py-3 bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:border-blue-900 dark:hover:border-blue-500 rounded transition-all duration-300 text-black dark:text-red-500 flex items-center gap-2">
                 <FaEnvelope className="w-4 h-4" />
                 {personalData.email}
               </a>
@@ -807,7 +807,7 @@ function App() {
                           {item.title}
                         </h4>
                         {item.link && (
-                          <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900 dark:text-blue-400 hover:underline flex items-center gap-1">
+                          <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900 dark:text-blue-400 hover:underline inline-flex items-center gap-1 py-3 min-h-[44px]">
                             View Project <FaExternalLinkAlt className="text-xs" />
                           </a>
                         )}
@@ -845,7 +845,7 @@ function App() {
                           {item.title}
                         </h4>
                         {item.link && (
-                          <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900 dark:text-blue-400 hover:underline flex items-center gap-1">
+                          <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900 dark:text-blue-400 hover:underline inline-flex items-center gap-1 py-3 min-h-[44px]">
                             View Code <FaExternalLinkAlt className="text-xs" />
                           </a>
                         )}
@@ -1172,7 +1172,7 @@ function App() {
                   placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-full bg-white dark:bg-slate-900 text-gray-700 dark:text-red-300 focus:outline-none focus:ring-2 focus:ring-blue-900 dark:focus:ring-blue-500 transition-shadow"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-700 rounded-full bg-white dark:bg-slate-900 text-gray-700 dark:text-red-300 focus:outline-none focus:ring-2 focus:ring-blue-900 dark:focus:ring-blue-500 transition-shadow"
                 />
               </div>
             )}
@@ -1295,7 +1295,7 @@ function App() {
                             Read more →
                           </div>
 
-                          <div className="scale-90 origin-right">
+                          <div>
                             <ShareButtons title={post.title} slug={post.slug} />
                           </div>
                         </div>
