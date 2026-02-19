@@ -30,17 +30,18 @@ const Subscribe = () => {
     setError('')
 
     // Check if Google Forms is configured
-    const { googleFormActionUrl, entryName, entryEmail } = subscriptionData
+    const { googleFormActionUrl, entryName, entryEmail, fvv, pageHistory, fbzx } = subscriptionData
 
     if (googleFormActionUrl && entryName && entryEmail) {
       try {
         const formData = new FormData()
         formData.append(entryName, name)
         formData.append(entryEmail, email)
+
         // Add hidden fields required by some Google Forms
-        formData.append('fvv', '1')
-        formData.append('pageHistory', '0')
-        formData.append('fbzx', '-3386094067435634951') // Standard public token often seen, but usually ignored for external posts
+        if (fvv) formData.append('fvv', fvv)
+        if (pageHistory) formData.append('pageHistory', pageHistory)
+        if (fbzx) formData.append('fbzx', fbzx)
 
         await fetch(googleFormActionUrl, {
           method: 'POST',
