@@ -232,6 +232,23 @@ src/
 - ❌ Use an unrestricted API key
 - ❌ Hardcode credentials in your source files
 
+### 🛡️ Security Fix (Build-Time Fetching)
+
+To improve security, this project has been updated to fetch Google Drive media data at **build time** instead of on the client side.
+
+**Why?**
+Client-side secrets (prefixed with `VITE_`) are bundled into the JavaScript sent to the browser. This makes it possible for anyone to extract your API key. By moving the fetching logic to a build script:
+1. The API key is only used on the build server (GitHub Actions).
+2. The key is never sent to the user's browser.
+3. Your Google Drive structure remains private.
+
+**What changed?**
+- `scripts/fetch-google-drive.js`: A new script that fetches data during build.
+- `package.json`: Added `prebuild` step to run the fetch script.
+- `src/utils/googleDrive.js`: No longer contains `VITE_GOOGLE_DRIVE_API_KEY`. It now reads from the pre-generated `src/data/googleDriveMedia.json`.
+
+**Note:** Since the data is fetched during build, adding new files to your Google Drive folder will no longer automatically appear on the site until you **trigger a new build** (e.g., by pushing a small change or manually running the GitHub Action).
+
 ## ⚠️ API Quotas and Limits
 
 **Google Drive API Free Tier:**
