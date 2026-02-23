@@ -9,14 +9,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
  * This prevents exposing the API key on the client side.
  */
 async function fetchGoogleDriveMedia() {
-  const API_KEY = process.env.GOOGLE_DRIVE_API_KEY || process.env.VITE_GOOGLE_DRIVE_API_KEY
-  const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID || process.env.VITE_GOOGLE_DRIVE_FOLDER_ID
+  const API_KEY = process.env.GOOGLE_DRIVE_API_KEY
+  const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID
 
   const outputPath = path.resolve(__dirname, '../src/data/googleDriveMedia.json')
 
   // If no credentials, create an empty file if it doesn't exist and exit
   if (!API_KEY || !FOLDER_ID) {
-    console.warn('⚠️ Google Drive API key or folder ID not found in environment.')
+    console.warn('⚠️ Google Drive API key or folder ID not found in environment. Ensure GOOGLE_DRIVE_API_KEY and GOOGLE_DRIVE_FOLDER_ID are set.')
     if (!fs.existsSync(outputPath)) {
       fs.writeFileSync(outputPath, JSON.stringify([], null, 2))
       console.log('Created empty googleDriveMedia.json placeholder.')

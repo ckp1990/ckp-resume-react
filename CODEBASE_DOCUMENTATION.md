@@ -71,7 +71,7 @@ Styling is handled almost exclusively via **Tailwind CSS**.
 
 ### Google Drive API
 The project can optionally connect to Google Drive to populate the Media gallery.
-- **Configuration:** Requires `VITE_GOOGLE_DRIVE_API_KEY` and `VITE_GOOGLE_DRIVE_FOLDER_ID` in a `.env` file.
+- **Configuration:** Requires `GOOGLE_DRIVE_API_KEY` and `GOOGLE_DRIVE_FOLDER_ID` in a `.env` file.
 - **Fallback:** If these variables are missing or the API fails, the app gracefully falls back to `src/data/media.json`.
 
 ## 7. Development and Build Scripts
