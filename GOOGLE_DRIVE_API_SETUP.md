@@ -117,10 +117,10 @@ Your Google Drive folder **must be publicly accessible** for the API to work.
 
    ```env
    # Google Drive API Key (from Step 3)
-   VITE_GOOGLE_DRIVE_API_KEY=AIzaSyC-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   GOOGLE_DRIVE_API_KEY=AIzaSyC-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
    # Google Drive Folder ID (from your folder URL)
-   VITE_GOOGLE_DRIVE_FOLDER_ID=1CEo9edtNeIX003OtmDoHDxFb3h0yPpUI
+   GOOGLE_DRIVE_FOLDER_ID=1CEo9edtNeIX003OtmDoHDxFb3h0yPpUI
    ```
 
    **To get your Folder ID:**
@@ -170,13 +170,13 @@ For GitHub Pages deployment, you need to add your environment variables to GitHu
    - Add each secret:
 
    **Secret 1:**
-   - Name: `VITE_GOOGLE_DRIVE_API_KEY`
+   - Name: `GOOGLE_DRIVE_API_KEY`
    - Value: Your API key (e.g., `AIzaSyC-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`)
    - Click "Add secret"
 
    **Secret 2:**
    - Click "New repository secret" again
-   - Name: `VITE_GOOGLE_DRIVE_FOLDER_ID`
+   - Name: `GOOGLE_DRIVE_FOLDER_ID`
    - Value: Your folder ID (e.g., `1CEo9edtNeIX003OtmDoHDxFb3h0yPpUI`)
    - Click "Add secret"
 
@@ -188,8 +188,8 @@ For GitHub Pages deployment, you need to add your environment variables to GitHu
    - name: Build
      run: npm run build
      env:
-       VITE_GOOGLE_DRIVE_API_KEY: ${{ secrets.VITE_GOOGLE_DRIVE_API_KEY }}
-       VITE_GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.VITE_GOOGLE_DRIVE_FOLDER_ID }}
+       GOOGLE_DRIVE_API_KEY: ${{ secrets.GOOGLE_DRIVE_API_KEY }}
+       GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
    ```
 
 5. **Commit and Push**
@@ -221,6 +221,7 @@ src/
 
 ### ✅ DO:
 - ✅ Keep your API key in `.env` (never in source code)
+- ✅ Use `GOOGLE_DRIVE_...` prefix (NOT `VITE_...`) to prevent bundling
 - ✅ Restrict your API key to specific domains
 - ✅ Restrict your API key to only Google Drive API
 - ✅ Use GitHub Secrets for deployment
@@ -245,7 +246,7 @@ Client-side secrets (prefixed with `VITE_`) are bundled into the JavaScript sent
 **What changed?**
 - `scripts/fetch-google-drive.js`: A new script that fetches data during build.
 - `package.json`: Added `prebuild` step to run the fetch script.
-- `src/utils/googleDrive.js`: No longer contains `VITE_GOOGLE_DRIVE_API_KEY`. It now reads from the pre-generated `src/data/googleDriveMedia.json`.
+- `src/utils/googleDrive.js`: No longer contains `GOOGLE_DRIVE_API_KEY`. It now reads from the pre-generated `src/data/googleDriveMedia.json`.
 
 **Note:** Since the data is fetched during build, adding new files to your Google Drive folder will no longer automatically appear on the site until you **trigger a new build** (e.g., by pushing a small change or manually running the GitHub Action).
 
