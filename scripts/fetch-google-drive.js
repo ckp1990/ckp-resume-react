@@ -29,61 +29,106 @@ async function fetchGoogleDriveMedia() {
   try {
     // Supported MIME types
     const imageMimeTypes = [
-      'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/svg+xml'
+      'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/svg+xml',
+      'image/heic', 'image/heif'
     ]
     const videoMimeTypes = [
       'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm'
     ]
 
-    const allMediaTypes = [...imageMimeTypes, ...videoMimeTypes]
-    const mimeQuery = allMediaTypes.map(type => `mimeType='${type}'`).join(' or ')
-    const query = `'${FOLDER_ID}' in parents and (${mimeQuery}) and trashed=false`
+    let allFiles = []
+    let nextPageToken = null
+    let pageCount = 0
 
-    const apiUrl = new URL('https://www.googleapis.com/drive/v3/files')
-    apiUrl.searchParams.append('q', query)
-    apiUrl.searchParams.append('key', API_KEY)
-    apiUrl.searchParams.append('fields', 'files(id,name,mimeType,createdTime,description)')
-    apiUrl.searchParams.append('orderBy', 'createdTime desc')
-    apiUrl.searchParams.append('pageSize', '100')
+    // Pagination loop
+    do {
+      const apiUrl = new URL('https://www.googleapis.com/drive/v3/files')
+      // Fetch all non-trashed files in the folder (we filter by MIME type later for better logging)
+      const query = `'${FOLDER_ID}' in parents and trashed=false`
 
-    const response = await fetch(apiUrl.toString())
+      apiUrl.searchParams.append('q', query)
+      apiUrl.searchParams.append('key', API_KEY)
+      apiUrl.searchParams.append('fields', 'nextPageToken, files(id,name,mimeType,createdTime,description)')
+      apiUrl.searchParams.append('orderBy', 'createdTime desc')
+      apiUrl.searchParams.append('pageSize', '100') // Max per page
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}))
-      console.error('❌ Google Drive API error:', response.status, errorData)
-      // Don't fail the build, just use what's there or empty
-      if (!fs.existsSync(outputPath)) {
-        fs.writeFileSync(outputPath, JSON.stringify([], null, 2))
+      if (nextPageToken) {
+        apiUrl.searchParams.append('pageToken', nextPageToken)
       }
-      return
-    }
 
-    const data = await response.json()
+      const response = await fetch(apiUrl.toString())
 
-    if (!data.files || data.files.length === 0) {
-      console.warn('⚠️ No media files found in the Google Drive folder.')
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('❌ Google Drive API error:', response.status, errorData)
+
+        // If we fail on the first page, we can't do much.
+        // If we fail on subsequent pages, we might want to keep what we have, but for now we'll just log and continue if possible or break.
+        if (allFiles.length > 0) {
+            console.warn('⚠️ Partial fetch due to error on page ' + (pageCount + 1))
+            break
+        }
+
+        if (!fs.existsSync(outputPath)) {
+          fs.writeFileSync(outputPath, JSON.stringify([], null, 2))
+        }
+        return
+      }
+
+      const data = await response.json()
+      const files = data.files || []
+      allFiles = allFiles.concat(files)
+      nextPageToken = data.nextPageToken
+      pageCount++
+      console.log(`  Fetched page ${pageCount}: ${files.length} files found.`)
+
+    } while (nextPageToken)
+
+    console.log(`✅ Total files found in folder: ${allFiles.length}`)
+
+    if (allFiles.length === 0) {
+      console.warn('⚠️ No files found in the Google Drive folder.')
       fs.writeFileSync(outputPath, JSON.stringify([], null, 2))
       return
     }
 
-    // Transform data
-    const mediaItems = data.files.map((file, index) => {
-      const isVideo = videoMimeTypes.includes(file.mimeType)
-      const type = isVideo ? 'video' : 'image'
-      const title = file.name.replace(/\.[^/.]+$/, '')
+    // Filter and transform data
+    const mediaItems = []
+    let skippedCount = 0
+    const skippedTypes = {}
 
-      return {
-        id: index + 1,
-        title: title,
-        description: file.description || '',
-        type: type,
-        googleDriveId: file.id,
-        category: 'Photos'
+    allFiles.forEach((file) => {
+      const isImage = imageMimeTypes.includes(file.mimeType)
+      const isVideo = videoMimeTypes.includes(file.mimeType)
+
+      if (isImage || isVideo) {
+        const type = isVideo ? 'video' : 'image'
+        // Remove file extension for title display
+        const title = file.name.replace(/\.[^/.]+$/, '')
+
+        mediaItems.push({
+          id: mediaItems.length + 1, // strict sequential ID for the filtered list
+          title: title,
+          description: file.description || '',
+          type: type,
+          googleDriveId: file.id,
+          category: 'Photos'
+        })
+      } else {
+        skippedCount++
+        skippedTypes[file.mimeType] = (skippedTypes[file.mimeType] || 0) + 1
       }
     })
 
+    if (skippedCount > 0) {
+      console.log(`ℹ️ Skipped ${skippedCount} files not matching allowed MIME types:`)
+      Object.entries(skippedTypes).forEach(([type, count]) => {
+        console.log(`   - ${type}: ${count}`)
+      })
+    }
+
     fs.writeFileSync(outputPath, JSON.stringify(mediaItems, null, 2))
-    console.log(`✅ Successfully fetched ${mediaItems.length} media items and saved to googleDriveMedia.json`)
+    console.log(`✅ Successfully processed ${mediaItems.length} valid media items and saved to googleDriveMedia.json`)
 
   } catch (error) {
     console.error('❌ Error fetching Google Drive media:', error)
