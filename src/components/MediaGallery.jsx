@@ -4,17 +4,6 @@ import { getGoogleDriveUrl } from '../utils/googleDrive'
 const MediaGallery = ({ mediaItems, mediaLoading, heading }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
 
-  // Auto-play carousel
-  useEffect(() => {
-    if (!mediaItems || mediaItems.length === 0) return
-
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % mediaItems.length)
-    }, 5000) // Change slide every 5 seconds
-
-    return () => clearInterval(interval)
-  }, [mediaItems?.length])
-
   // Initialize random slide when media is loaded
   useEffect(() => {
     if (mediaItems && mediaItems.length > 0) {
@@ -59,7 +48,7 @@ const MediaGallery = ({ mediaItems, mediaLoading, heading }) => {
           <svg className="w-24 h-24 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          <p className="font-sans text-lg">No media items yet. Add some from the CMS or check your Google Drive API configuration!</p>
+          <p className="font-sans text-lg">No images available</p>
         </div>
       </section>
     )

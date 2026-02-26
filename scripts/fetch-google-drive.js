@@ -27,14 +27,13 @@ async function fetchGoogleDriveMedia() {
   console.log(`🚀 Fetching media from Google Drive folder: ${FOLDER_ID}...`)
 
   try {
-    // Supported MIME types
+    // Supported MIME types - Strictly images only
     const imageMimeTypes = [
       'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/svg+xml',
       'image/heic', 'image/heif'
     ]
-    const videoMimeTypes = [
-      'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm'
-    ]
+
+    // Video MIME types removed to enforce image-only restriction
 
     let allFiles = []
     let nextPageToken = null
@@ -99,10 +98,8 @@ async function fetchGoogleDriveMedia() {
 
     allFiles.forEach((file) => {
       const isImage = imageMimeTypes.includes(file.mimeType)
-      const isVideo = videoMimeTypes.includes(file.mimeType)
 
-      if (isImage || isVideo) {
-        const type = isVideo ? 'video' : 'image'
+      if (isImage) {
         // Remove file extension for title display
         const title = file.name.replace(/\.[^/.]+$/, '')
 
@@ -110,7 +107,7 @@ async function fetchGoogleDriveMedia() {
           id: mediaItems.length + 1, // strict sequential ID for the filtered list
           title: title,
           description: file.description || '',
-          type: type,
+          type: 'image',
           googleDriveId: file.id,
           category: 'Photos'
         })
