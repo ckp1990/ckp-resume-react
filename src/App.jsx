@@ -20,6 +20,7 @@ import teachingData from './data/teaching.json'
 import softwareData from './data/software.json'
 import { fetchGoogleDriveMedia, getGoogleDriveUrl } from './utils/googleDrive'
 import { parseText } from './utils/textParser'
+import { fetchGoogleDriveMedia } from './utils/googleDrive'
 import Subscribe from './components/Subscribe'
 import ShareButtons from './components/ShareButtons'
 import MediaGallery from './components/MediaGallery'
@@ -28,8 +29,6 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedPost, setSelectedPost] = useState(null)
   const [currentView, setCurrentView] = useState('home')
-  const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [lightboxIndex, setLightboxIndex] = useState(0)
   const [mediaItems, setMediaItems] = useState(mediaData.items)
   const [mediaLoading, setMediaLoading] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
@@ -152,41 +151,6 @@ function App() {
   }, [])
 
 
-  // Lightbox handlers
-  const openLightbox = (index) => {
-    setLightboxIndex(index)
-    setLightboxOpen(true)
-  }
-
-  const closeLightbox = () => {
-    setLightboxOpen(false)
-  }
-
-  const nextMedia = () => {
-    setLightboxIndex((prev) => (prev + 1) % mediaItems.length)
-  }
-
-  const prevMedia = () => {
-    setLightboxIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length)
-  }
-
-  // Keyboard navigation for lightbox
-  React.useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!lightboxOpen) return
-
-      if (e.key === 'Escape') {
-        closeLightbox()
-      } else if (e.key === 'ArrowRight') {
-        nextMedia()
-      } else if (e.key === 'ArrowLeft') {
-        prevMedia()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [lightboxOpen])
 
 
   return (
@@ -1157,155 +1121,6 @@ function App() {
         )}
       </div>
 
-      {/* Lightbox Modal */}
-      {lightboxOpen && mediaItems.length > 0 && (
-        <div
-          className="fixed inset-0 z-[100] bg-black bg-opacity-95 flex items-center justify-center"
-          onClick={closeLightbox}
-        >
-          {/* Close Button */}
-          <button
-            onClick={closeLightbox}
-            className="absolute top-4 right-4 z-[110] text-white hover:text-gray-300 transition-colors"
-            aria-label="Close lightbox"
-          >
-            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-
-          {/* Media Counter */}
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-[110] text-white text-lg font-mono">
-            {lightboxIndex + 1} / {mediaItems.length}
-          </div>
-
-          {/* Previous Button */}
-          {mediaItems.length > 1 && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                prevMedia()
-              }}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-[110] text-white hover:text-gray-300 transition-colors p-2"
-              aria-label="Previous media"
-            >
-              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-          )}
-
-          {/* Media Content */}
-          <div
-            className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center p-8"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {(() => {
-              const currentItem = mediaItems[lightboxIndex]
-              const mediaUrl = getGoogleDriveUrl(currentItem.googleDriveId, currentItem.type)
-
-              return (
-                <div className="relative w-full h-full flex flex-col items-center justify-center">
-                  {/* Media Display */}
-                  <div className="relative w-full h-full flex items-center justify-center mb-4">
-                    {mediaUrl ? (
-                      currentItem.type === 'image' ? (
-                        <img
-                          src={mediaUrl}
-                          alt={currentItem.title}
-                          className="max-w-full max-h-full object-contain"
-                        />
-                      ) : currentItem.type === 'video' ? (
-                        <iframe
-                          src={mediaUrl}
-                          className="w-full h-full max-w-4xl max-h-[70vh]"
-                          allow="autoplay"
-                          title={currentItem.title}
-                        />
-                      ) : null
-                    ) : (
-                      <div className="text-white text-center">
-                        <svg className="w-24 h-24 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <p>No media available</p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Media Info */}
-                  <div className="text-center text-white max-w-2xl">
-                    <h3 className="font-serif font-bold text-2xl mb-2">
-                      {currentItem.title}
-                    </h3>
-                    {currentItem.description && (
-                      <p className="text-gray-300 text-sm mb-2">
-                        {currentItem.description}
-                      </p>
-                    )}
-                    {currentItem.category && (
-                      <span className="inline-block px-3 py-1 bg-blue-900 text-white rounded-full text-xs">
-                        {currentItem.category}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              )
-            })()}
-          </div>
-
-          {/* Next Button */}
-          {mediaItems.length > 1 && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                nextMedia()
-              }}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-[110] text-white hover:text-gray-300 transition-colors p-2"
-              aria-label="Next media"
-            >
-              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          )}
-
-          {/* Thumbnail Strip at Bottom (Optional - for easy navigation) */}
-          {mediaItems.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-[110] flex gap-2 max-w-[90vw] overflow-x-auto px-4">
-              {mediaItems.map((item, idx) => {
-                const thumbUrl = getGoogleDriveUrl(item.googleDriveId, item.type)
-                return (
-                  <div
-                    key={item.id}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      setLightboxIndex(idx)
-                    }}
-                    className={`flex-shrink-0 w-16 h-16 cursor-pointer border-2 transition-all ${
-                      idx === lightboxIndex ? 'border-blue-500 scale-110' : 'border-white border-opacity-50 hover:border-opacity-100'
-                    }`}
-                  >
-                    {item.type === 'image' && thumbUrl ? (
-                      <img
-                        src={thumbUrl}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-700 flex items-center justify-center">
-                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   )
 }
