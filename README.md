@@ -35,6 +35,34 @@ npm run build
 npm run preview
 ```
 
+## Google Drive Integration (Photos Gallery)
+
+The "Photos" section of the website fetches images directly from a Google Drive folder. To enable this feature, you must configure the following credentials:
+
+### 1. Required Credentials
+- **Google Drive API Key**: An API key from Google Cloud Console with access to the Google Drive API.
+- **Folder ID**: The ID of the public Google Drive folder containing your images. (The ID is the long string at the end of the folder URL).
+
+### 2. GitHub Configuration (Production)
+To make images appear on your live website:
+1. Go to your GitHub Repository > **Settings** > **Secrets and variables** > **Actions**.
+2. Click **New repository secret**.
+3. Add `GOOGLE_DRIVE_API_KEY` with your API key value.
+4. Add `GOOGLE_DRIVE_FOLDER_ID` with your folder ID value.
+5. The next time the site builds (or when you manually run the workflow), the images will be fetched.
+
+### 3. Local Development (Optional)
+To see images while developing locally:
+1. Create a file named `.env` in the root directory of the project.
+2. Add the following lines:
+   ```env
+   GOOGLE_DRIVE_API_KEY=your_api_key_here
+   GOOGLE_DRIVE_FOLDER_ID=your_folder_id_here
+   ```
+3. Restart the development server (`npm run dev`).
+
+> **Note:** If these credentials are missing or incorrect, the "Photos" section will display "No images available".
+
 ## Content Management
 
 **Easy to Update - No Coding Required!**
