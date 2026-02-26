@@ -18,6 +18,8 @@ import mediaData from './data/media.json'
 import affiliationsData from './data/affiliations.json'
 import teachingData from './data/teaching.json'
 import softwareData from './data/software.json'
+import { fetchGoogleDriveMedia, getGoogleDriveUrl } from './utils/googleDrive'
+import { parseText } from './utils/textParser'
 import { fetchGoogleDriveMedia } from './utils/googleDrive'
 import Subscribe from './components/Subscribe'
 import ShareButtons from './components/ShareButtons'
@@ -150,42 +152,6 @@ function App() {
 
 
 
-  // Helper function to parse HTML tags in text
-  const parseText = (text) => {
-    if (!text) return null
-
-    // Replace <strong> tags
-    let parts = text.split(/(<strong>.*?<\/strong>)/g)
-    parts = parts.flatMap(part => {
-      if (part.startsWith('<strong>') && part.endsWith('</strong>')) {
-        const content = part.replace(/<\/?strong>/g, '')
-        return <span key={Math.random()} className="font-semibold dark:text-red-500">{content}</span>
-      }
-      // Replace <em> tags
-      if (part.includes('<em>') || part.includes('</em>')) {
-        return part.split(/(<em>.*?<\/em>)/g).map((emPart, i) => {
-          if (emPart.startsWith('<em>') && emPart.endsWith('</em>')) {
-            const content = emPart.replace(/<\/?em>/g, '')
-            return <span key={i} className="text-gray-700 italic dark:text-red-400">{content}</span>
-          }
-          return emPart
-        })
-      }
-      // Replace <code> tags
-      if (part.includes('<code>') || part.includes('</code>')) {
-        return part.split(/(<code>.*?<\/code>)/g).map((codePart, i) => {
-          if (codePart.startsWith('<code>') && codePart.endsWith('</code>')) {
-            const content = codePart.replace(/<\/?code>/g, '')
-            return <span key={i} className="font-mono font-semibold dark:text-red-500">{content}</span>
-          }
-          return codePart
-        })
-      }
-      return part
-    })
-
-    return parts
-  }
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-black transition-colors duration-300">
