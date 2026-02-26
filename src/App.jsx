@@ -14,13 +14,11 @@ import educationData from './data/education.json'
 import skillsData from './data/skills.json'
 import honorsData from './data/honors.json'
 import blogData from './data/blog.json'
-import mediaData from './data/media.json'
 import affiliationsData from './data/affiliations.json'
 import teachingData from './data/teaching.json'
 import softwareData from './data/software.json'
-import { fetchGoogleDriveMedia, getGoogleDriveUrl } from './utils/googleDrive'
-import { parseText } from './utils/textParser'
 import { fetchGoogleDriveMedia } from './utils/googleDrive'
+import { parseText } from './utils/textParser'
 import Subscribe from './components/Subscribe'
 import ShareButtons from './components/ShareButtons'
 import MediaGallery from './components/MediaGallery'
@@ -29,7 +27,7 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedPost, setSelectedPost] = useState(null)
   const [currentView, setCurrentView] = useState('home')
-  const [mediaItems, setMediaItems] = useState(mediaData.items)
+  const [mediaItems, setMediaItems] = useState([])
   const [mediaLoading, setMediaLoading] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
   const [showAllBlogs, setShowAllBlogs] = useState(false)
@@ -139,9 +137,9 @@ function App() {
         setMediaItems(driveMedia)
         console.log('Media loaded from Google Drive API')
       } else {
-        // Fallback to media.json
-        setMediaItems(mediaData.items)
-        console.log('Using fallback media from media.json')
+        // No media found
+        setMediaItems([])
+        console.log('No media found from Google Drive API')
       }
 
       setMediaLoading(false)
@@ -929,7 +927,7 @@ function App() {
         <MediaGallery
           mediaItems={mediaItems}
           mediaLoading={mediaLoading}
-          heading={mediaData.heading}
+          heading="Photos"
         />
 
         {/* Blog Section */}
