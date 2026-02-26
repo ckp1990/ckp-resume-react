@@ -211,35 +211,6 @@ collections:
                     options: ["FaTrophy", "FaAward", "FaMedal", "FaStar", "FaCertificate"]
                     hint: "Icon for this award"
 
-  # Media Gallery Section
-  - name: "media"
-    label: "Media Gallery"
-    files:
-      - label: "Media Gallery"
-        name: "media"
-        file: "src/data/media.json"
-        fields:
-          - {label: "Heading", name: "heading", widget: "string", default: "Media Gallery"}
-          - label: "Media Items"
-            name: "items"
-            widget: "list"
-            hint: "Add images and videos from Google Drive"
-            fields:
-              - {label: "ID", name: "id", widget: "number", hint: "Unique media ID"}
-              - {label: "Title", name: "title", widget: "string", hint: "Title of the media item"}
-              - {label: "Description", name: "description", widget: "text", required: false, hint: "Optional description"}
-              - label: "Type"
-                name: "type"
-                widget: "select"
-                options: ["image", "video"]
-                default: "image"
-                hint: "Select media type"
-              - label: "Google Drive File ID"
-                name: "googleDriveId"
-                widget: "string"
-                hint: "Extract file ID from Google Drive share link (the part after /d/ or ?id=)"
-              - {label: "Category", name: "category", widget: "string", required: false, hint: "Optional category (e.g., Photos, Research, Fieldwork)"}
-
   # Blog Section
   - name: "blog"
     label: "Blog"

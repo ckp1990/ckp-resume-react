@@ -21,7 +21,7 @@ The project follows a standard Vite + React project structure:
 ├── public/                 # Static assets (favicon, etc.)
 ├── src/
 │   ├── data/               # JSON files containing all website content
-│   ├── utils/              # Utility functions (e.g., Google Drive API)
+│   ├── utils/              # Utility functions (e.g., text parser)
 │   ├── App.jsx             # Main application component
 │   ├── main.jsx            # Application entry point
 │   └── index.css           # Global styles and Tailwind imports
@@ -40,11 +40,6 @@ This is the monolithic main component that orchestrates the entire single-page a
 - **Section Rendering:** Renders various sections (Hero, About, Experience, Education, etc.) by mapping over data imported from `src/data/`.
 - **Interactivity:** Handles user interactions like opening the lightbox, filtering blog posts, and toggling the mobile menu.
 
-### `src/utils/googleDrive.js`
-This module provides integration with the Google Drive API to dynamically fetch media (photos and videos) for the portfolio/media section.
-- **`fetchGoogleDriveMedia()`**: Fetches a list of files from a specified Google Drive folder. It handles filtering by MIME type (images/videos) and transforms the API response into the application's internal data format.
-- **`getGoogleDriveUrl()`**: Generates the appropriate display URL for a file (thumbnail for images, preview link for videos).
-
 ## 4. Data Management
 
 The application uses a "JSON as Database" approach. Content is stored in the `src/data/` directory, allowing non-developers to update the site without touching React code.
@@ -58,7 +53,6 @@ The application uses a "JSON as Database" approach. Content is stored in the `sr
 | `skills.json` | Technical skills and certifications |
 | `honors.json` | Awards and publications list |
 | `blog.json` | Blog posts with Markdown content |
-| `media.json` | Fallback media items (used if Google Drive API is not active) |
 
 ## 5. Styling and Theming
 
@@ -68,11 +62,6 @@ Styling is handled almost exclusively via **Tailwind CSS**.
 - **Animations:** Custom animations (fade-in, slide-up) are likely defined in the Tailwind config or CSS, adding visual polish to page loads.
 
 ## 6. External Integrations
-
-### Google Drive API
-The project can optionally connect to Google Drive to populate the Media gallery.
-- **Configuration:** Requires `GOOGLE_DRIVE_API_KEY` and `GOOGLE_DRIVE_FOLDER_ID` in a `.env` file.
-- **Fallback:** If these variables are missing or the API fails, the app gracefully falls back to `src/data/media.json`.
 
 ## 7. Development and Build Scripts
 
