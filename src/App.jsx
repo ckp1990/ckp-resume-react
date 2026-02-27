@@ -17,18 +17,14 @@ import blogData from './data/blog.json'
 import affiliationsData from './data/affiliations.json'
 import teachingData from './data/teaching.json'
 import softwareData from './data/software.json'
-import { fetchGoogleDriveMedia } from './utils/googleDrive'
 import { parseText } from './utils/textParser'
 import Subscribe from './components/Subscribe'
 import ShareButtons from './components/ShareButtons'
-import MediaGallery from './components/MediaGallery'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedPost, setSelectedPost] = useState(null)
   const [currentView, setCurrentView] = useState('home')
-  const [mediaItems, setMediaItems] = useState([])
-  const [mediaLoading, setMediaLoading] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
   const [showAllBlogs, setShowAllBlogs] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -125,31 +121,6 @@ function App() {
     const IconComponent = iconMap[iconName] || FaTrophy
     return IconComponent
   }
-
-  // Fetch media from Google Drive on component mount
-  useEffect(() => {
-    const loadMedia = async () => {
-      setMediaLoading(true)
-      const driveMedia = await fetchGoogleDriveMedia()
-
-      if (driveMedia && driveMedia.length > 0) {
-        // Successfully fetched from Google Drive API
-        setMediaItems(driveMedia)
-        console.log('Media loaded from Google Drive API')
-      } else {
-        // No media found
-        setMediaItems([])
-        console.log('No media found from Google Drive API')
-      }
-
-      setMediaLoading(false)
-    }
-
-    loadMedia()
-  }, [])
-
-
-
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-black transition-colors duration-300">
@@ -923,12 +894,6 @@ function App() {
             })}
           </div>
         </section>
-
-        <MediaGallery
-          mediaItems={mediaItems}
-          mediaLoading={mediaLoading}
-          heading="Photos"
-        />
 
         {/* Blog Section */}
         <section id="blog" className="mb-16 animate-slide-up animate-delay-600 scroll-mt-20">
