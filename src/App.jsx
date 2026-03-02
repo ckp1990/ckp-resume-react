@@ -20,6 +20,37 @@ import softwareData from './data/software.json'
 import { parseText } from './utils/textParser'
 import Subscribe from './components/Subscribe'
 import ShareButtons from './components/ShareButtons'
+import { getIcon } from './utils/iconMap'
+
+const AwardItem = ({ award, defaultIcon }) => {
+  // Support both string format and object format
+  const isString = typeof award === 'string'
+  const text = isString ? award : award.text
+  const iconName = isString ? defaultIcon : (award.icon || defaultIcon)
+  const url = isString ? null : award.url
+  const IconComponent = getIcon(iconName)
+
+  return (
+    <div className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
+      <div className="flex items-start gap-3">
+        <IconComponent className="text-blue-900 dark:text-blue-400 text-2xl flex-shrink-0" />
+        {url ? (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-900 dark:text-blue-400 hover:underline text-lg flex items-center gap-2 flex-1"
+          >
+            <span>{text}</span>
+            <FaExternalLinkAlt className="text-sm flex-shrink-0" />
+          </a>
+        ) : (
+          <span className="text-black dark:text-red-500 text-lg">{text}</span>
+        )}
+      </div>
+    </div>
+  )
+}
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -105,21 +136,6 @@ function App() {
       localStorage.setItem('theme', 'dark')
       setDarkMode(true)
     }
-  }
-
-  // Icon mapping for awards
-  const iconMap = {
-    'FaTrophy': FaTrophy,
-    'FaAward': FaAward,
-    'FaMedal': FaMedal,
-    'FaStar': FaStar,
-    'FaCertificate': FaCertificate
-  }
-
-  // Helper function to get icon component by name
-  const getIcon = (iconName) => {
-    const IconComponent = iconMap[iconName] || FaTrophy
-    return IconComponent
   }
 
   return (
@@ -863,35 +879,13 @@ function App() {
             {honorsData.awards.heading}
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {honorsData.awards.items.map((award, index) => {
-              // Support both string format and object format
-              const isString = typeof award === 'string'
-              const text = isString ? award : award.text
-              const iconName = isString ? honorsData.awards.icon : (award.icon || honorsData.awards.icon)
-              const url = isString ? null : award.url
-              const IconComponent = getIcon(iconName)
-
-              return (
-                <div key={index} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
-                  <div className="flex items-start gap-3">
-                    <IconComponent className="text-blue-900 dark:text-blue-400 text-2xl flex-shrink-0" />
-                    {url ? (
-                      <a
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-900 dark:text-blue-400 hover:underline text-lg flex items-center gap-2 flex-1"
-                      >
-                        <span>{text}</span>
-                        <FaExternalLinkAlt className="text-sm flex-shrink-0" />
-                      </a>
-                    ) : (
-                      <span className="text-black dark:text-red-500 text-lg">{text}</span>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
+            {honorsData.awards.items.map((award, index) => (
+              <AwardItem
+                key={index}
+                award={award}
+                defaultIcon={honorsData.awards.icon}
+              />
+            ))}
           </div>
         </section>
 
