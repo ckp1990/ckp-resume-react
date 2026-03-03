@@ -59,6 +59,15 @@ function App() {
   const [darkMode, setDarkMode] = useState(false)
   const [showAllBlogs, setShowAllBlogs] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [currentCodeSlide, setCurrentCodeSlide] = useState(0)
+
+  const handleNextCodeSlide = () => {
+    setCurrentCodeSlide((prev) => (prev + 1) % softwareData.codes.length)
+  }
+
+  const handlePrevCodeSlide = () => {
+    setCurrentCodeSlide((prev) => (prev - 1 + softwareData.codes.length) % softwareData.codes.length)
+  }
 
   // Handle URL hash changes for routing
   useEffect(() => {
@@ -718,36 +727,82 @@ function App() {
               <h3 className="font-serif font-bold text-2xl md:text-3xl mb-6 text-blue-900 dark:text-red-500 border-b pb-2 border-gray-200 dark:border-gray-700">
                 Codes and Programs
               </h3>
-              <div className="space-y-6">
-                {softwareData.codes.map((item) => (
-                  <div key={item.id} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300">
-                    <div className="flex items-center gap-4 mb-4">
-                      {item.logo && (
-                        <img src={item.logo} alt={`${item.title} logo`} className="w-12 h-12 object-contain" />
-                      )}
-                      <div>
-                        <h4 className="font-serif font-bold text-xl text-black dark:text-red-500">
-                          {item.title}
-                        </h4>
-                        {item.link && (
-                          <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900 dark:text-blue-400 hover:underline inline-flex items-center gap-1 py-3 min-h-[44px]">
-                            View Code <FaExternalLinkAlt className="text-xs" />
-                          </a>
+              <div className="space-y-6 relative overflow-hidden">
+                <div
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{ transform: `translateX(-${currentCodeSlide * 100}%)` }}
+                >
+                  {softwareData.codes.map((item) => (
+                    <div key={item.id} className="min-w-full w-full flex-shrink-0 px-2">
+                      <div className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300 h-full">
+                        <div className="flex items-center gap-4 mb-4">
+                          {item.logo && (
+                            <img src={item.logo} alt={`${item.title} logo`} className="w-12 h-12 object-contain" />
+                          )}
+                          <div>
+                            <h4 className="font-serif font-bold text-xl text-black dark:text-red-500">
+                              {item.title}
+                            </h4>
+                            {item.link && (
+                              <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900 dark:text-blue-400 hover:underline inline-flex items-center gap-1 py-3 min-h-[44px]">
+                                View Code <FaExternalLinkAlt className="text-xs" />
+                              </a>
+                            )}
+                          </div>
+                        </div>
+
+                        {item.image && (
+                          <div className="mb-4 rounded-md overflow-hidden border border-gray-100 dark:border-gray-800">
+                            <img src={item.image} alt={item.title} className="w-full h-auto object-cover" />
+                          </div>
                         )}
+
+                        <p className="text-gray-700 dark:text-red-400 text-sm leading-relaxed">
+                          {parseText(item.description)}
+                        </p>
                       </div>
                     </div>
+                  ))}
+                </div>
 
-                    {item.image && (
-                      <div className="mb-4 rounded-md overflow-hidden border border-gray-100 dark:border-gray-800">
-                        <img src={item.image} alt={item.title} className="w-full h-auto object-cover" />
+                {softwareData.codes.length > 1 && (
+                  <div className="flex flex-col items-center gap-4 mt-6 px-2">
+                    <div className="flex justify-between w-full">
+                      <button
+                        onClick={handlePrevCodeSlide}
+                        className="px-4 py-2 bg-blue-50 dark:bg-slate-800 text-blue-900 dark:text-blue-400 rounded hover:bg-blue-100 dark:hover:bg-slate-700 transition-colors border border-blue-200 dark:border-slate-700"
+                        aria-label="Previous code"
+                      >
+                        Previous
+                      </button>
+
+                      <div className="flex items-center gap-2">
+                        {softwareData.codes.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentCodeSlide(index)}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                              currentCodeSlide === index
+                                ? 'bg-blue-900 text-white dark:bg-blue-600'
+                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-slate-800 dark:text-gray-400 dark:hover:bg-slate-700'
+                            }`}
+                            aria-label={`Go to slide ${index + 1}`}
+                          >
+                            {index + 1}
+                          </button>
+                        ))}
                       </div>
-                    )}
 
-                    <p className="text-gray-700 dark:text-red-400 text-sm leading-relaxed">
-                      {parseText(item.description)}
-                    </p>
+                      <button
+                        onClick={handleNextCodeSlide}
+                        className="px-4 py-2 bg-blue-50 dark:bg-slate-800 text-blue-900 dark:text-blue-400 rounded hover:bg-blue-100 dark:hover:bg-slate-700 transition-colors border border-blue-200 dark:border-slate-700"
+                        aria-label="Next code"
+                      >
+                        Next
+                      </button>
+                    </div>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>
