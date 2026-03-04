@@ -18,6 +18,14 @@
       "link": "https://github.com/ckp1990/Rmark-SCCS-2024.git",
       "image": "",
       "description": "This is an open public repository of the Workshop on Rmarkdown for learners." 
+    },
+    {
+      "id": 3,
+      "title": "Intermediate R Course",
+      "logo": "",
+      "link": "https://github.com/ckp1990/intermediate-R-Course.git",
+      "image": "",
+      "description": "This is  intermediate R course covering the application of R programming for statistical analysis. Participants will be introduced to the concept of the linear model followed by Generalized linear models, recreating models presented in published papers."
     }
   ]
 }
