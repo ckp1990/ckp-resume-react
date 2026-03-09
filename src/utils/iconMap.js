@@ -1,4 +1,5 @@
 import { FaTrophy, FaAward, FaMedal, FaStar, FaCertificate } from 'react-icons/fa'
+import { getIconFromMap } from './iconUtils.js'
 
 // Icon mapping for awards
 const iconMap = {
@@ -11,6 +12,5 @@ const iconMap = {
 
 // Helper function to get icon component by name
 export const getIcon = (iconName) => {
-  const IconComponent = iconMap[iconName] || FaTrophy
-  return IconComponent
+  return getIconFromMap(iconName, iconMap, FaTrophy)
 }
