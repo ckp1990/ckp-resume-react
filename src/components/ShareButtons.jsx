@@ -46,7 +46,7 @@ const ShareButtons = ({ title, slug }) => {
         return
     }
 
-    window.open(shareLink, '_blank', 'width=600,height=400')
+    window.open(shareLink, '_blank', 'width=600,height=400,noopener,noreferrer')
   }
 
   const iconClass = "w-5 h-5 transition-transform group-hover:scale-110"
