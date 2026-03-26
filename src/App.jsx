@@ -20,6 +20,7 @@ import softwareData from './data/software.json'
 import { parseText } from './utils/textParser'
 import Subscribe from './components/Subscribe'
 import ShareButtons from './components/ShareButtons'
+import AffiliationLogo from './components/AffiliationLogo'
 
 import AwardItem from "./components/AwardItem";
 
@@ -851,16 +852,7 @@ function App() {
               const LogoCard = (
                 <div className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-all duration-300 hover:shadow-lg flex items-center justify-center aspect-square">
                   <div className="w-full h-full flex items-center justify-center">
-                    <img
-                      src={institution.logo}
-                      alt={institution.name}
-                      className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 dark:group-hover:grayscale-0 dark:grayscale transition-all duration-300 group-hover:scale-105"
-                      onError={(e) => {
-                        // Fallback to text if image fails to load
-                        e.target.style.display = 'none'
-                        e.target.parentElement.innerHTML = `<div class="text-center text-gray-400 group-hover:text-blue-900 dark:group-hover:text-blue-400 transition-colors text-sm font-serif">${institution.name}</div>`
-                      }}
-                    />
+                    <AffiliationLogo institution={institution} />
                   </div>
                 </div>
               )
