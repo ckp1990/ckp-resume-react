@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import {
   FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar,
   FaCertificate, FaGraduationCap, FaExternalLinkAlt, FaLeaf, FaMoon,
@@ -32,6 +32,41 @@ function App() {
   const [showAllBlogs, setShowAllBlogs] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [currentCodeSlide, setCurrentCodeSlide] = useState(0)
+
+  // Memoize publications sorting and slicing
+  const scientificArticles = useMemo(() => {
+    return [...honorsData.publications.scientificArticles.items]
+      .sort((a, b) => (b.year || 0) - (a.year || 0))
+      .slice(0, 5)
+  }, [])
+
+  const bookChapters = useMemo(() => {
+    return [...honorsData.publications.bookChapters.items]
+      .sort((a, b) => (b.year || 0) - (a.year || 0))
+      .slice(0, 5)
+  }, [])
+
+  const otherLiterature = useMemo(() => {
+    return [...honorsData.publications.otherLiterature.items]
+      .sort((a, b) => (b.year || 0) - (a.year || 0))
+      .slice(0, 5)
+  }, [])
+
+  const lowerQuery = searchQuery.toLowerCase()
+
+  const filteredPosts = useMemo(() => {
+    return blogData.posts
+      .filter(post => post.published)
+      .filter(post =>
+        post.title.toLowerCase().includes(lowerQuery) ||
+        post.category.toLowerCase().includes(lowerQuery)
+      )
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+  }, [lowerQuery])
+
+  const visiblePosts = useMemo(() => {
+    return showAllBlogs || lowerQuery ? filteredPosts : filteredPosts.slice(0, 3)
+  }, [filteredPosts, showAllBlogs, lowerQuery])
 
   const handleNextCodeSlide = () => {
     setCurrentCodeSlide((prev) => (prev + 1) % softwareData.codes.length)
@@ -479,10 +514,7 @@ function App() {
                 {honorsData.publications.scientificArticles.heading}
               </h3>
               <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
-                {honorsData.publications.scientificArticles.items
-                  .sort((a, b) => (b.year || 0) - (a.year || 0))
-                  .slice(0, 5)
-                  .map((pub, index) => {
+                {scientificArticles.map((pub, index) => {
                     const title = pub.title
                     const authors = pub.authors
                     const year = pub.year
@@ -533,10 +565,7 @@ function App() {
                 {honorsData.publications.bookChapters.heading}
               </h3>
               <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
-                {honorsData.publications.bookChapters.items
-                  .sort((a, b) => (b.year || 0) - (a.year || 0))
-                  .slice(0, 5)
-                  .map((pub, index) => {
+                {bookChapters.map((pub, index) => {
                     const title = pub.title
                     const authors = pub.authors
                     const year = pub.year
@@ -587,10 +616,7 @@ function App() {
                 {honorsData.publications.otherLiterature.heading}
               </h3>
               <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
-                {honorsData.publications.otherLiterature.items
-                  .sort((a, b) => (b.year || 0) - (a.year || 0))
-                  .slice(0, 5)
-                  .map((pub, index) => {
+                {otherLiterature.map((pub, index) => {
                     const title = pub.title
                     const authors = pub.authors
                     const year = pub.year
@@ -997,16 +1023,6 @@ function App() {
             /* Blog Posts List View */
             <div className="space-y-6">
               {(() => {
-                const filteredPosts = blogData.posts
-                  .filter(post => post.published)
-                  .filter(post =>
-                    post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    post.category.toLowerCase().includes(searchQuery.toLowerCase())
-                  )
-                  .sort((a, b) => new Date(b.date) - new Date(a.date))
-
-                const visiblePosts = showAllBlogs || searchQuery ? filteredPosts : filteredPosts.slice(0, 3)
-
                 return (
                   <>
                     {visiblePosts.map((post) => (
