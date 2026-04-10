@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import {
-  FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar,
-  FaCertificate, FaGraduationCap, FaExternalLinkAlt, FaLeaf, FaMoon,
+  FaLinkedin, FaGithub, FaEnvelope, FaExternalLinkAlt, FaLeaf, FaMoon,
   FaSun, FaChevronDown, FaChevronUp, FaSearch
 } from 'react-icons/fa'
 import { SiOrcid, SiResearchgate, SiGooglescholar, SiKaggle } from 'react-icons/si'
