@@ -1,7 +1,6 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 const https = require('https');
-const http = require('http');
 
 // Configuration
 const BLOG_FILE_PATH = 'src/data/blog.json';
@@ -123,8 +122,10 @@ async function postToInstagram(post, link, imageUrl) {
 
 // Main Logic
 async function main() {
-  // Select http or https module based on the URL (Legacy GAS webhook support)
-  const client = WEBHOOK_URL && WEBHOOK_URL.startsWith('http:') ? http : https;
+  // Enforce HTTPS for webhook
+  if (WEBHOOK_URL && WEBHOOK_URL.startsWith('http:')) {
+    throw new Error('Insecure HTTP WEBHOOK_URL is not allowed. Please use HTTPS.');
+  }
 
   // 1. Get Current Content
   let currentBlogData;
@@ -193,7 +194,7 @@ async function main() {
         }
       };
 
-      const req = client.request(options, (res) => {
+      const req = https.request(options, (res) => {
         console.log(`Email notification sent. Status: ${res.statusCode}`);
       });
       req.on('error', (e) => console.error(`Error sending email notification: ${e}`));
