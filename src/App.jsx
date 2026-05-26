@@ -51,17 +51,36 @@ function App() {
       .slice(0, 5)
   }, [])
 
+  const processedPosts = useMemo(() => {
+    return blogData.posts
+      .filter(post => post.published)
+      .map(post => ({
+        ...post,
+        _lowerTitle: post.title.toLowerCase(),
+        _lowerCategory: post.category.toLowerCase(),
+        _timestamp: new Date(post.date).getTime()
+      }))
+      .sort((a, b) => b._timestamp - a._timestamp)
+  }, [])
+
+  const blogPostsMap = useMemo(() => {
+    const map = new Map()
+    blogData.posts.forEach(post => {
+      map.set(post.slug, post)
+    })
+    return map
+  }, [])
+
   const lowerQuery = searchQuery.toLowerCase()
 
   const filteredPosts = useMemo(() => {
-    return blogData.posts
-      .filter(post => post.published)
-      .filter(post =>
-        post.title.toLowerCase().includes(lowerQuery) ||
-        post.category.toLowerCase().includes(lowerQuery)
-      )
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
-  }, [lowerQuery])
+    if (!lowerQuery) return processedPosts
+
+    return processedPosts.filter(post =>
+      post._lowerTitle.includes(lowerQuery) ||
+      post._lowerCategory.includes(lowerQuery)
+    )
+  }, [lowerQuery, processedPosts])
 
   const visiblePosts = useMemo(() => {
     return showAllBlogs || lowerQuery ? filteredPosts : filteredPosts.slice(0, 3)
@@ -85,7 +104,7 @@ function App() {
       } else if (hash.startsWith('#blog/')) {
         // Handle blog deep linking
         const slug = hash.replace('#blog/', '')
-        const post = blogData.posts.find(p => p.slug === slug)
+        const post = blogPostsMap.get(slug)
 
         if (post) {
           setCurrentView('home')
