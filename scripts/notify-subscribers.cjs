@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { execSync } = require('child_process');
+const { execSync, execFileSync } = require('child_process');
 const https = require('https');
 
 // Configuration
@@ -140,7 +140,11 @@ async function main() {
   // 2. Get Previous Content (via git)
   let previousBlogData;
   try {
-    const previousContent = execSync(`git show ${BASE_SHA}:${BLOG_FILE_PATH}`, { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] });
+    // Validate BASE_SHA to prevent command injection
+    if (!/^[a-zA-Z0-9\^~@._\-\/]+$/.test(BASE_SHA)) {
+      throw new Error('Invalid BASE_SHA provided.');
+    }
+    const previousContent = execFileSync('git', ['show', `${BASE_SHA}:${BLOG_FILE_PATH}`], { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] });
     previousBlogData = JSON.parse(previousContent);
   } catch (e) {
     console.log(`Could not read previous version of blog.json from ${BASE_SHA}. Assuming all posts are new.`);
