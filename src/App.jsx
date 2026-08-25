@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   FaLinkedin, FaGithub, FaEnvelope, FaExternalLinkAlt, FaLeaf, FaMoon,
   FaSun, FaChevronDown, FaChevronUp, FaSearch
