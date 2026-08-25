@@ -53,15 +53,27 @@ function App() {
 
   const lowerQuery = searchQuery.toLowerCase()
 
-  const filteredPosts = useMemo(() => {
+  // Pre-process blog posts for better filtering performance
+  const processedPosts = useMemo(() => {
     return blogData.posts
       .filter(post => post.published)
-      .filter(post =>
-        post.title.toLowerCase().includes(lowerQuery) ||
-        post.category.toLowerCase().includes(lowerQuery)
-      )
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
-  }, [lowerQuery])
+      .map(post => ({
+        ...post,
+        _lowerTitle: post.title.toLowerCase(),
+        _lowerCategory: post.category.toLowerCase(),
+        _timestamp: new Date(post.date).getTime()
+      }))
+      .sort((a, b) => b._timestamp - a._timestamp)
+  }, [])
+
+  const filteredPosts = useMemo(() => {
+    if (!lowerQuery) return processedPosts
+
+    return processedPosts.filter(post =>
+      post._lowerTitle.includes(lowerQuery) ||
+      post._lowerCategory.includes(lowerQuery)
+    )
+  }, [processedPosts, lowerQuery])
 
   const visiblePosts = useMemo(() => {
     return showAllBlogs || lowerQuery ? filteredPosts : filteredPosts.slice(0, 3)
