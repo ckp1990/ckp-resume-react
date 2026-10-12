@@ -1,4 +1,4 @@
-import { FaTrophy, FaAward, FaMedal, FaStar, FaCertificate } from 'react-icons/fa/index.js'
+import { FaTrophy, FaAward, FaMedal, FaStar, FaCertificate } from 'react-icons/fa'
 
 // Icon mapping for awards
 const iconMap = {
