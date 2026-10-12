@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { execSync } = require('child_process');
+const { execSync, execFileSync } = require('child_process');
 const https = require('https');
 
 // Configuration
@@ -7,6 +7,11 @@ const BLOG_FILE_PATH = 'src/data/blog.json';
 const WEBHOOK_URL = process.env.GAS_WEBHOOK_URL;
 const SITE_URL = process.env.SITE_URL || 'https://chandankp.com';
 const BASE_SHA = process.env.BASE_SHA || 'HEAD^'; // Default to HEAD^ if not provided
+
+// Validate BASE_SHA to prevent command injection
+if (BASE_SHA && !/^[a-zA-Z0-9\^~@._\-\/]+$/.test(BASE_SHA)) {
+  throw new Error('Invalid BASE_SHA format. Only alphanumeric and basic git reference characters are allowed.');
+}
 
 // Social Media Configuration
 const INSTAGRAM_ACCESS_TOKEN = process.env.INSTAGRAM_ACCESS_TOKEN;
@@ -140,7 +145,7 @@ async function main() {
   // 2. Get Previous Content (via git)
   let previousBlogData;
   try {
-    const previousContent = execSync(`git show ${BASE_SHA}:${BLOG_FILE_PATH}`, { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] });
+    const previousContent = execFileSync('git', ['show', `${BASE_SHA}:${BLOG_FILE_PATH}`], { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] });
     previousBlogData = JSON.parse(previousContent);
   } catch (e) {
     console.log(`Could not read previous version of blog.json from ${BASE_SHA}. Assuming all posts are new.`);
