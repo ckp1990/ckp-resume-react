@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { getIcon } from './iconMap.js';
-import { FaTrophy, FaAward, FaMedal, FaStar, FaCertificate } from 'react-icons/fa/index.js';
+import { FaTrophy, FaAward, FaMedal, FaStar, FaCertificate } from 'react-icons/fa';
 
 test('getIcon returns correct icon component for valid names', () => {
   assert.strictEqual(getIcon('FaTrophy'), FaTrophy);
