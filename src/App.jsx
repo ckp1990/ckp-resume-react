@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
-  FaLinkedin, FaGithub, FaEnvelope, FaTrophy, FaAward, FaMedal, FaStar,
-  FaCertificate, FaGraduationCap, FaExternalLinkAlt, FaLeaf, FaMoon,
+  FaLinkedin, FaGithub, FaEnvelope, FaExternalLinkAlt, FaLeaf, FaMoon,
   FaSun, FaChevronDown, FaChevronUp, FaSearch
 } from 'react-icons/fa'
 import { SiOrcid, SiResearchgate, SiGooglescholar, SiKaggle } from 'react-icons/si'
@@ -21,8 +20,8 @@ import { parseText } from './utils/textParser'
 import Subscribe from './components/Subscribe'
 import ShareButtons from './components/ShareButtons'
 import AffiliationLogo from './components/AffiliationLogo'
-
 import AwardItem from "./components/AwardItem";
+import PublicationItem from "./components/PublicationItem";
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -32,6 +31,7 @@ function App() {
   const [showAllBlogs, setShowAllBlogs] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [currentCodeSlide, setCurrentCodeSlide] = useState(0)
+  const [currentTeachingSlide, setCurrentTeachingSlide] = useState(0)
 
   // Memoize publications sorting and slicing
   const scientificArticles = useMemo(() => {
@@ -46,6 +46,29 @@ function App() {
       .slice(0, 5)
   }, [])
 
+  const sortedWorkshops = useMemo(() => {
+    const parseDateString = (dateStr) => {
+      const yearMatch = dateStr.match(/\b(\d{4})\b/);
+      const year = yearMatch ? parseInt(yearMatch[1], 10) : 0;
+
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      let month = 0;
+      for (let i = 0; i < months.length; i++) {
+        if (dateStr.toLowerCase().includes(months[i].toLowerCase())) {
+          month = i;
+          break;
+        }
+      }
+
+      const dayMatch = dateStr.replace(/\b\d{4}\b/, '').match(/\b(\d{1,2})\b/);
+      const day = dayMatch ? parseInt(dayMatch[1], 10) : 1;
+
+      return new Date(year, month, day).getTime();
+    };
+
+    return [...teachingData.workshops].sort((a, b) => parseDateString(b.date) - parseDateString(a.date));
+  }, []);
+
   const otherLiterature = useMemo(() => {
     return [...honorsData.publications.otherLiterature.items]
       .sort((a, b) => (b.year || 0) - (a.year || 0))
@@ -54,16 +77,27 @@ function App() {
 
   const lowerQuery = searchQuery.toLowerCase()
 
-  const filteredPosts = useMemo(() => {
+  // Pre-process blog posts for better filtering performance
+  const processedPosts = useMemo(() => {
     return blogData.posts
-      .filter(post =>
-        post.published && (
-          post.title.toLowerCase().includes(lowerQuery) ||
-          post.category.toLowerCase().includes(lowerQuery)
-        )
-      )
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
-  }, [lowerQuery])
+      .filter(post => post.published)
+      .map(post => ({
+        ...post,
+        _lowerTitle: post.title.toLowerCase(),
+        _lowerCategory: post.category.toLowerCase(),
+        _timestamp: new Date(post.date).getTime()
+      }))
+      .sort((a, b) => b._timestamp - a._timestamp)
+  }, [])
+
+  const filteredPosts = useMemo(() => {
+    if (!lowerQuery) return processedPosts
+
+    return processedPosts.filter(post =>
+      post._lowerTitle.includes(lowerQuery) ||
+      post._lowerCategory.includes(lowerQuery)
+    )
+  }, [processedPosts, lowerQuery])
 
   const visiblePosts = useMemo(() => {
     return showAllBlogs || lowerQuery ? filteredPosts : filteredPosts.slice(0, 3)
@@ -75,6 +109,15 @@ function App() {
 
   const handlePrevCodeSlide = () => {
     setCurrentCodeSlide((prev) => (prev - 1 + softwareData.codes.length) % softwareData.codes.length)
+  }
+
+
+  const handleNextTeachingSlide = () => {
+    setCurrentTeachingSlide((prev) => (prev + 1) % sortedWorkshops.length)
+  }
+
+  const handlePrevTeachingSlide = () => {
+    setCurrentTeachingSlide((prev) => (prev - 1 + sortedWorkshops.length) % sortedWorkshops.length)
   }
 
   // Handle URL hash changes for routing
@@ -515,46 +558,9 @@ function App() {
                 {honorsData.publications.scientificArticles.heading}
               </h3>
               <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
-                {scientificArticles.map((pub, index) => {
-                    const title = pub.title
-                    const authors = pub.authors
-                    const year = pub.year
-                    const journal = pub.journal
-                    const url = pub.url || pub.link
-
-                    return (
-                      <li key={index} className="pl-4 marker:text-blue-900 dark:marker:text-blue-400 marker:font-bold">
-                        <div className="space-y-1">
-                          {url ? (
-                            <a
-                              href={url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-900 dark:text-blue-400 hover:underline font-serif text-xl font-semibold block"
-                            >
-                              {title}
-                            </a>
-                          ) : (
-                            <div className="text-black dark:text-red-500 font-serif text-xl font-semibold">
-                              {title}
-                            </div>
-                          )}
-
-                          {authors && (
-                            <div className="text-gray-700 dark:text-red-400 text-base italic">
-                              {authors}
-                            </div>
-                          )}
-
-                          <div className="text-gray-600 dark:text-red-300 text-base">
-                            {year && <span className="font-semibold">{year}</span>}
-                            {year && journal && <span className="mx-2">•</span>}
-                            {journal && <span className="italic">{journal}</span>}
-                          </div>
-                        </div>
-                      </li>
-                    )
-                  })}
+                {scientificArticles.map((pub, index) => (
+                  <PublicationItem key={index} pub={pub} />
+                ))}
               </ol>
             </div>
           )}
@@ -566,46 +572,9 @@ function App() {
                 {honorsData.publications.bookChapters.heading}
               </h3>
               <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
-                {bookChapters.map((pub, index) => {
-                    const title = pub.title
-                    const authors = pub.authors
-                    const year = pub.year
-                    const journal = pub.journal
-                    const url = pub.url || pub.link
-
-                    return (
-                      <li key={index} className="pl-4 marker:text-blue-900 dark:marker:text-blue-400 marker:font-bold">
-                        <div className="space-y-1">
-                          {url ? (
-                            <a
-                              href={url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-900 dark:text-blue-400 hover:underline font-serif text-xl font-semibold block"
-                            >
-                              {title}
-                            </a>
-                          ) : (
-                            <div className="text-black dark:text-red-500 font-serif text-xl font-semibold">
-                              {title}
-                            </div>
-                          )}
-
-                          {authors && (
-                            <div className="text-gray-700 dark:text-red-400 text-base italic">
-                              {authors}
-                            </div>
-                          )}
-
-                          <div className="text-gray-600 dark:text-red-300 text-base">
-                            {year && <span className="font-semibold">{year}</span>}
-                            {year && journal && <span className="mx-2">•</span>}
-                            {journal && <span className="italic">{journal}</span>}
-                          </div>
-                        </div>
-                      </li>
-                    )
-                  })}
+                {bookChapters.map((pub, index) => (
+                  <PublicationItem key={index} pub={pub} />
+                ))}
               </ol>
             </div>
           )}
@@ -617,46 +586,9 @@ function App() {
                 {honorsData.publications.otherLiterature.heading}
               </h3>
               <ol className="space-y-8 max-w-4xl list-decimal list-outside ml-6">
-                {otherLiterature.map((pub, index) => {
-                    const title = pub.title
-                    const authors = pub.authors
-                    const year = pub.year
-                    const journal = pub.journal
-                    const url = pub.url || pub.link
-
-                    return (
-                      <li key={index} className="pl-4 marker:text-blue-900 dark:marker:text-blue-400 marker:font-bold">
-                        <div className="space-y-1">
-                          {url ? (
-                            <a
-                              href={url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-900 dark:text-blue-400 hover:underline font-serif text-xl font-semibold block"
-                            >
-                              {title}
-                            </a>
-                          ) : (
-                            <div className="text-black dark:text-red-500 font-serif text-xl font-semibold">
-                              {title}
-                            </div>
-                          )}
-
-                          {authors && (
-                            <div className="text-gray-700 dark:text-red-400 text-base italic">
-                              {authors}
-                            </div>
-                          )}
-
-                          <div className="text-gray-600 dark:text-red-300 text-base">
-                            {year && <span className="font-semibold">{year}</span>}
-                            {year && journal && <span className="mx-2">•</span>}
-                            {journal && <span className="italic">{journal}</span>}
-                          </div>
-                        </div>
-                      </li>
-                    )
-                  })}
+                {otherLiterature.map((pub, index) => (
+                  <PublicationItem key={index} pub={pub} />
+                ))}
               </ol>
             </div>
           )}
@@ -807,64 +739,92 @@ function App() {
           </div>
         </section>
 
-        {/* Teaching and Workshop Section */}
+                {/* Teaching and Workshop Section */}
         <section id="teaching" className="mb-24 animate-slide-up animate-delay-380 scroll-mt-20">
           <h2 className="font-serif font-bold text-4xl md:text-5xl mb-12 text-blue-900 dark:text-red-500">
             {teachingData.heading}
           </h2>
 
-          <div className="space-y-6">
-            {teachingData.workshops.map((workshop) => (
-              <div key={workshop.id} className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
-                <h3 className="font-serif font-bold text-xl md:text-2xl text-black dark:text-red-500 mb-3">
-                  {workshop.title}
-                </h3>
+          <div className="relative">
+            {sortedWorkshops.map((workshop, index) => (
+              <div
+                key={workshop.id}
+                className={`transition-all duration-500 ease-in-out ${
+                  index === currentTeachingSlide
+                    ? 'opacity-100 translate-y-0 relative z-10'
+                    : 'opacity-0 absolute inset-0 pointer-events-none translate-y-8'
+                }`}
+              >
+                <div className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 hover:border-blue-900 dark:hover:border-blue-500 transition-colors duration-300">
+                  <h3 className="font-serif font-bold text-xl md:text-2xl text-black dark:text-red-500 mb-3 pr-12">
+                    {workshop.title}
+                  </h3>
 
-                <div className="space-y-2 text-gray-700 dark:text-red-300">
-                  <div className="flex items-start">
-                    <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
-                    <span className="font-sans">
-                      <strong>Event:</strong> {workshop.event}
-                    </span>
-                  </div>
-
-                  <div className="flex items-start">
-                    <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
-                    <span className="font-sans">
-                      <strong>Date:</strong> {workshop.date}
-                    </span>
-                  </div>
-
-                  <div className="flex items-start">
-                    <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
-                    <span className="font-sans">
-                      <strong>Venue:</strong> {workshop.venue}
-                    </span>
-                  </div>
-
-                  {workshop.description && (
-                    <div className="flex items-start mt-3">
+                  <div className="space-y-2 text-gray-700 dark:text-red-300">
+                    <div className="flex items-start">
                       <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
-                      <p className="text-gray-600 dark:text-red-300">{workshop.description}</p>
+                      <span className="font-sans">
+                        <strong>Event:</strong> {workshop.event}
+                      </span>
                     </div>
-                  )}
 
-                  {workshop.url && workshop.url.trim() !== '' && (
-                    <div className="mt-3">
-                      <a
-                        href={workshop.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-blue-900 dark:text-blue-400 hover:underline font-sans text-sm"
-                      >
-                        <span>View Details</span>
-                        <FaExternalLinkAlt className="text-xs" />
-                      </a>
+                    <div className="flex items-start">
+                      <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
+                      <span className="font-sans">
+                        <strong>Date:</strong> {workshop.date}
+                      </span>
                     </div>
-                  )}
+
+                    <div className="flex items-start">
+                      <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
+                      <span className="font-sans">
+                        <strong>Venue:</strong> {workshop.venue}
+                      </span>
+                    </div>
+
+                    {workshop.description && (
+                      <div className="flex items-start mt-3">
+                        <span className="text-blue-900 dark:text-blue-400 mr-2 flex-shrink-0">▸</span>
+                        <p className="text-gray-600 dark:text-red-300">{workshop.description}</p>
+                      </div>
+                    )}
+
+                    {workshop.url && workshop.url.trim() !== '' && (
+                      <div className="mt-3">
+                        <a
+                          href={workshop.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-blue-900 dark:text-blue-400 hover:underline font-sans text-sm"
+                        >
+                          <span>View Details</span>
+                          <FaExternalLinkAlt className="text-xs" />
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
+
+            {sortedWorkshops.length > 1 && (
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-20">
+                <button
+                  onClick={handlePrevTeachingSlide}
+                  className="w-10 h-10 flex items-center justify-center bg-blue-50 dark:bg-slate-800 text-blue-900 dark:text-blue-400 rounded-full hover:bg-blue-100 dark:hover:bg-slate-700 transition-colors border border-blue-200 dark:border-slate-700 shadow-sm"
+                  aria-label="Previous workshop"
+                >
+                  <FaChevronUp />
+                </button>
+                <button
+                  onClick={handleNextTeachingSlide}
+                  className="w-10 h-10 flex items-center justify-center bg-blue-50 dark:bg-slate-800 text-blue-900 dark:text-blue-400 rounded-full hover:bg-blue-100 dark:hover:bg-slate-700 transition-colors border border-blue-200 dark:border-slate-700 shadow-sm"
+                  aria-label="Next workshop"
+                >
+                  <FaChevronDown />
+                </button>
+              </div>
+            )}
           </div>
         </section>
 

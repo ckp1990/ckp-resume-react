@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import subscriptionData from '../data/subscription.json'
 
 const Subscribe = () => {

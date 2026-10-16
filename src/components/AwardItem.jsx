@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { getIcon } from '../utils/iconMap';
 import { getAwardItemProps } from '../utils/awardUtils';

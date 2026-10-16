@@ -18,23 +18,39 @@ export const parseText = (text) => {
  * @param {object} ReactInstance - Object with createElement method
  * @returns {Array|null} - Array of elements and strings
  */
+const tagConfigs = [
+  {
+    tag: 'strong',
+    className: 'font-semibold dark:text-red-500',
+    regex: /(<strong>.*?<\/strong>)/g,
+    replaceRegex: /(<\/?strong>)/g,
+    openTag: '<strong>',
+    closeTag: '</strong>'
+  },
+  {
+    tag: 'em',
+    className: 'text-gray-700 italic dark:text-red-400',
+    regex: /(<em>.*?<\/em>)/g,
+    replaceRegex: /(<\/?em>)/g,
+    openTag: '<em>',
+    closeTag: '</em>'
+  },
+  {
+    tag: 'code',
+    className: 'font-mono font-semibold dark:text-red-500',
+    regex: /(<code>.*?<\/code>)/g,
+    replaceRegex: /(<\/?code>)/g,
+    openTag: '<code>',
+    closeTag: '</code>'
+  }
+];
+
 export const parseTextWithReact = (text, ReactInstance) => {
   if (!text) return null;
 
   let nodes = [text];
 
-  const tagConfigs = [
-    { tag: 'strong', className: 'font-semibold dark:text-red-500' },
-    { tag: 'em', className: 'text-gray-700 italic dark:text-red-400' },
-    { tag: 'code', className: 'font-mono font-semibold dark:text-red-500' }
-  ];
-
-  tagConfigs.forEach(({ tag, className }) => {
-    const regex = new RegExp(`(<${tag}>.*?<\\/${tag}>)`, 'g');
-    const openTag = `<${tag}>`;
-    const closeTag = `</${tag}>`;
-    const replaceRegex = new RegExp(`(<\\/?${tag}>)`, 'g');
-
+  tagConfigs.forEach(({ tag, className, regex, replaceRegex, openTag, closeTag }) => {
     nodes = nodes.flatMap((node, index) => {
       if (typeof node !== 'string') return node;
       const parts = node.split(regex);
