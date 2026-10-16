@@ -56,10 +56,11 @@ function App() {
 
   const filteredPosts = useMemo(() => {
     return blogData.posts
-      .filter(post => post.published)
       .filter(post =>
-        post.title.toLowerCase().includes(lowerQuery) ||
-        post.category.toLowerCase().includes(lowerQuery)
+        post.published && (
+          post.title.toLowerCase().includes(lowerQuery) ||
+          post.category.toLowerCase().includes(lowerQuery)
+        )
       )
       .sort((a, b) => new Date(b.date) - new Date(a.date))
   }, [lowerQuery])
