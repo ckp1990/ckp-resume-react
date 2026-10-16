@@ -3,11 +3,11 @@
   "software": [
     {
       "id": 1,
-      "title": "Wildlife Tracker Pro",
+      "title": "Address book",
       "logo": "",
-      "link": "https://github.com/yourusername/wildlife-tracker",
+      "link": "https://github.com/ckp1990/address-book",
       "image": "",
-      "description": "A comprehensive tool for tracking wildlife population dynamics using hierarchical models. Features real-time data visualization and export capabilities."
+      "description": "Address Book Application. Currently in development stages."
     }
   ],
   "codes": [   

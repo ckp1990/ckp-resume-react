@@ -18,56 +18,52 @@ export const parseText = (text) => {
  * @param {object} ReactInstance - Object with createElement method
  * @returns {Array|null} - Array of elements and strings
  */
+const tagConfigs = [
+  {
+    tag: 'strong',
+    className: 'font-semibold dark:text-red-500',
+    regex: /(<strong>.*?<\/strong>)/g,
+    replaceRegex: /(<\/?strong>)/g,
+    openTag: '<strong>',
+    closeTag: '</strong>'
+  },
+  {
+    tag: 'em',
+    className: 'text-gray-700 italic dark:text-red-400',
+    regex: /(<em>.*?<\/em>)/g,
+    replaceRegex: /(<\/?em>)/g,
+    openTag: '<em>',
+    closeTag: '</em>'
+  },
+  {
+    tag: 'code',
+    className: 'font-mono font-semibold dark:text-red-500',
+    regex: /(<code>.*?<\/code>)/g,
+    replaceRegex: /(<\/?code>)/g,
+    openTag: '<code>',
+    closeTag: '</code>'
+  }
+];
+
 export const parseTextWithReact = (text, ReactInstance) => {
   if (!text) return null;
 
   let nodes = [text];
 
-  // Pass 1: Handle <strong> tags
-  nodes = nodes.flatMap((node, index) => {
-    if (typeof node !== 'string') return node;
-    const parts = node.split(/(<strong>.*?<\/strong>)/g);
-    return parts.map((part, i) => {
-      if (part.startsWith('<strong>') && part.endsWith('</strong>')) {
-        const content = part.replace(/<\/?strong>/g, '');
-        return ReactInstance.createElement('span', {
-          key: `strong-${index}-${i}`,
-          className: 'font-semibold dark:text-red-500'
-        }, content);
-      }
-      return part;
-    });
-  });
-
-  // Pass 2: Handle <em> tags
-  nodes = nodes.flatMap((node, index) => {
-    if (typeof node !== 'string') return node;
-    const parts = node.split(/(<em>.*?<\/em>)/g);
-    return parts.map((part, i) => {
-      if (part.startsWith('<em>') && part.endsWith('</em>')) {
-        const content = part.replace(/<\/?em>/g, '');
-        return ReactInstance.createElement('span', {
-          key: `em-${index}-${i}`,
-          className: 'text-gray-700 italic dark:text-red-400'
-        }, content);
-      }
-      return part;
-    });
-  });
-
-  // Pass 3: Handle <code> tags
-  nodes = nodes.flatMap((node, index) => {
-    if (typeof node !== 'string') return node;
-    const parts = node.split(/(<code>.*?<\/code>)/g);
-    return parts.map((part, i) => {
-      if (part.startsWith('<code>') && part.endsWith('</code>')) {
-        const content = part.replace(/<\/?code>/g, '');
-        return ReactInstance.createElement('span', {
-          key: `code-${index}-${i}`,
-          className: 'font-mono font-semibold dark:text-red-500'
-        }, content);
-      }
-      return part;
+  tagConfigs.forEach(({ tag, className, regex, replaceRegex, openTag, closeTag }) => {
+    nodes = nodes.flatMap((node, index) => {
+      if (typeof node !== 'string') return node;
+      const parts = node.split(regex);
+      return parts.map((part, i) => {
+        if (part.startsWith(openTag) && part.endsWith(closeTag)) {
+          const content = part.replace(replaceRegex, '');
+          return ReactInstance.createElement('span', {
+            key: `${tag}-${index}-${i}`,
+            className: className
+          }, content);
+        }
+        return part;
+      });
     });
   });
 
