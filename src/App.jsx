@@ -1034,11 +1034,12 @@ function App() {
             /* Blog Posts List View */
             <div className="space-y-6">
               {(() => {
+                const lowerQuery = searchQuery.toLowerCase()
                 const filteredPosts = blogData.posts
                   .filter(post => post.published)
                   .filter(post =>
-                    post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    post.category.toLowerCase().includes(searchQuery.toLowerCase())
+                    post.title.toLowerCase().includes(lowerQuery) ||
+                    post.category.toLowerCase().includes(lowerQuery)
                   )
                   .sort((a, b) => new Date(b.date) - new Date(a.date))
 
