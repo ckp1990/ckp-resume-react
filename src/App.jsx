@@ -103,6 +103,11 @@ function App() {
     return showAllBlogs || lowerQuery ? filteredPosts : filteredPosts.slice(0, 3)
   }, [filteredPosts, showAllBlogs, lowerQuery])
 
+  // Memoize blog posts map for O(1) lookup by slug
+  const blogPostsMap = useMemo(() => {
+    return new Map(blogData.posts.map(post => [post.slug, post]))
+  }, [])
+
   const handleNextCodeSlide = () => {
     setCurrentCodeSlide((prev) => (prev + 1) % softwareData.codes.length)
   }
@@ -130,7 +135,7 @@ function App() {
       } else if (hash.startsWith('#blog/')) {
         // Handle blog deep linking
         const slug = hash.replace('#blog/', '')
-        const post = blogData.posts.find(p => p.slug === slug)
+        const post = blogPostsMap.get(slug)
 
         if (post) {
           setCurrentView('home')
@@ -171,7 +176,7 @@ function App() {
 
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [currentView])
+  }, [currentView, blogPostsMap])
 
   // Initialize dark mode from local storage or system preference
   useEffect(() => {
